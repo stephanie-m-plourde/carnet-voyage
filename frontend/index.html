@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carnets de voyage · Famille Gagnon</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#f0ece4;--ink-soft:#c8bfb0;--ink-muted:#8a8070;
+  --paper:#0f0d0a;--paper-warm:#181410;--paper-card:#1c1815;
+  --accent:#e8b86d;--accent-soft:rgba(232,184,109,.15);--accent-glow:rgba(232,184,109,.35);
+  --red:#d4573c;--red-soft:rgba(212,87,60,.15);
+  --border:rgba(240,236,228,.08);--border-strong:rgba(240,236,228,.18);
+  --teal:#5cb8b2;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lora',serif;background:var(--paper);color:var(--ink);min-height:100vh;font-size:18px;line-height:1.7;}
+::selection{background:var(--accent-soft);color:var(--accent);}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--paper);}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px;}
+.view{display:none;}.view.active{display:block;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:400;font-size:16px;letter-spacing:.02em;cursor:pointer;color:var(--ink);white-space:nowrap;}
+.nav-logo em{font-style:italic;color:var(--accent);}
+.nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-search-wrap{position:relative;display:flex;align-items:center;}
+.nav-search-input{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;background:rgba(255,255,255,.06);border:1px solid var(--border-strong);color:var(--ink);padding:6px 32px 6px 12px;width:0;opacity:0;transition:width .3s ease,opacity .3s ease;outline:none;}
+.nav-search-input.open{width:200px;opacity:1;}
+.nav-search-input::placeholder{color:var(--ink-muted);}
+.nav-search-input:focus{border-color:var(--accent);}
+.nav-search-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);background:none;border:none;cursor:pointer;transition:color .2s;padding:0;}
+.nav-search-btn:hover{color:var(--accent);}
+.search-results-overlay{position:fixed;inset:0;z-index:150;display:none;}
+.search-results-overlay.open{display:block;}
+.search-results-panel{position:fixed;top:60px;left:50%;transform:translateX(-50%);width:600px;max-width:95vw;background:var(--paper-card);border:1px solid var(--border-strong);border-top:none;max-height:70vh;overflow-y:auto;z-index:151;}
+.search-results-header{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:.75rem 1.25rem;border-bottom:1px solid var(--border);}
+.search-result-item{padding:1rem 1.25rem;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s;}
+.search-result-item:hover{background:var(--paper-warm);}
+.search-result-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--ink);margin-bottom:.25rem;}
+.search-result-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--accent);}
+.search-result-excerpt{font-size:13px;color:var(--ink-muted);margin-top:.3rem;line-height:1.5;}
+.search-highlight{background:var(--accent-soft);color:var(--accent);}
+.search-empty{padding:2rem;text-align:center;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);}
+.nav-link{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;text-decoration:none;transition:color .2s;}
+.nav-link:hover{color:var(--accent);}
+.nav-admin-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border-strong);background:transparent;color:var(--ink-muted);cursor:pointer;transition:all .2s;}
+.nav-admin-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ── HOME HERO ── */
+.home-hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:60px;}
+.hero-bg-wrap{position:absolute;inset:0;z-index:0;}
+.hero-particles{position:absolute;inset:0;overflow:hidden;}
+.hero-particle{position:absolute;border-radius:50%;background:var(--accent);opacity:0;animation:drift linear infinite;}
+@keyframes drift{0%{opacity:0;transform:translateY(100vh) scale(0);}10%{opacity:.6;}90%{opacity:.3;}100%{opacity:0;transform:translateY(-20vh) scale(1.5);}}
+.hero-lines-h{position:absolute;inset:0;}
+.hero-lines-h::before,.hero-lines-h::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);}
+.hero-lines-h::before{top:30%;}
+.hero-lines-h::after{top:70%;}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:4rem 2rem 0;max-width:900px;}
+.hero-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:fadeUp .8s .3s ease forwards;}
+.hero-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(52px,9vw,120px);line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:.75rem;opacity:0;animation:fadeUp .9s .5s ease forwards;}
+.hero-title em{font-style:italic;color:var(--accent);font-weight:400;}
+.hero-title-line2{display:block;font-weight:400;font-style:italic;font-size:.65em;color:var(--ink-soft);}
+.hero-sub{font-family:'Lora',serif;font-style:italic;font-size:20px;color:var(--ink-muted);margin-bottom:5rem;line-height:1.6;opacity:0;animation:fadeUp .8s .7s ease forwards;}
+.hero-cta-wrap{display:flex;gap:1rem;justify-content:center;align-items:center;opacity:0;animation:fadeUp .8s .9s ease forwards;}
+.hero-cta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--paper);background:var(--accent);border:none;padding:14px 28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
+.hero-cta::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);opacity:0;transition:opacity .2s;}
+.hero-cta:hover::after{opacity:1;}
+.hero-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow);}
+.hero-cta-ghost{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);background:transparent;border:1px solid var(--border-strong);padding:14px 28px;cursor:pointer;transition:all .25s;}
+.hero-cta-ghost:hover{border-color:var(--ink-soft);color:var(--ink);}
+.hero-scroll{position:absolute;bottom:36px;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);animation:pulse 2.2s ease-in-out infinite;opacity:0;animation:fadeUp .8s 1.2s ease forwards,pulse 2.5s 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:.35;}50%{opacity:.8;}}
+.hero-scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);margin-top:6px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero-deco-num{position:absolute;font-family:'Playfair Display',serif;font-weight:900;font-size:320px;color:rgba(232,184,109,.03);line-height:1;pointer-events:none;user-select:none;top:50%;left:50%;transform:translate(-50%,-50%);}
+
+/* ── VOYAGES LIST (home) ── */
+.voyages-section{max-width:1160px;margin:0 auto;padding:5rem 2rem 8rem;}
+.voyages-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.voyages-title{font-family:'Playfair Display',serif;font-weight:700;font-size:38px;color:var(--ink);}
+.voyages-title em{font-style:italic;color:var(--accent);font-weight:400;}
+.voyages-count{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);}
+
+/* Voyage cards row */
+.voyage-row{margin-bottom:5rem;}
+.voyage-row-banner{position:relative;height:320px;overflow:hidden;margin-bottom:0;cursor:pointer;background:#0f0d0a;}
+.voyage-row-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
+.voyage-row-banner:hover img{transform:scale(1.03);}
+.voyage-row-banner-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,12,9,.68) 0%,rgba(15,12,9,.28) 60%,rgba(15,12,9,.04) 100%);}
+.voyage-row-banner-content{position:absolute;inset:0;display:flex;align-items:center;gap:1rem;padding:0 2rem;}
+.voyage-row-banner-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--paper-warm);}
+.voyage-row-flag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);padding:3px 8px;line-height:1.4;font-weight:400;}
+.voyage-row-info{}
+.voyage-row-name{font-family:'Playfair Display',serif;font-weight:700;font-size:34px;cursor:pointer;transition:color .2s;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5);display:block;line-height:1.1;}
+.voyage-row-name-plain{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;cursor:pointer;transition:color .2s;color:var(--ink);}
+.voyage-row-name-plain:hover{color:var(--accent);}
+.voyage-row-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.35rem;display:block;}
+.voyage-row-meta-plain{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);}
+.voyage-row-more-banner{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;background:none;border:1px solid rgba(255,255,255,.25);padding:6px 12px;margin-left:auto;}
+.voyage-row-more-banner:hover{color:#fff;border-color:rgba(255,255,255,.6);}
+.voyage-row-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:1.5rem;}
+.voyage-row-more{margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;transition:color .2s;background:none;border:none;}
+.voyage-row-more:hover{color:var(--accent);}
+
+/* Article mini-grid per voyage */
+.voyage-articles-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;border:1px solid var(--border);}
+.mini-card{background:var(--paper-card);cursor:pointer;overflow:hidden;transition:transform .3s,box-shadow .3s;border:1px solid var(--border);}
+.mini-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.mini-card-img{width:100%;height:170px;object-fit:cover;display:block;transition:transform .4s;}
+.mini-card:hover .mini-card-img{transform:scale(1.04);}
+.mini-card-img-ph{width:100%;height:170px;background:var(--paper-warm);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--border-strong);}
+.mini-card-body{padding:1rem 1.25rem;}
+.mini-card-cat{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem;}
+.mini-card-title{font-family:'Playfair Display',serif;font-weight:400;font-size:17px;line-height:1.3;color:var(--ink);margin-bottom:.5rem;}
+.mini-card-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);}
+.empty-voyage{padding:2rem;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);border:1px solid var(--border);}
+
+/* ── VOYAGE DETAIL PAGE ── */
+#view-voyage{padding-top:58px;}
+.voyage-detail-hero{position:relative;background:#0f0d0a;overflow:hidden;min-height:460px;display:flex;align-items:flex-end;}
+.voyage-detail-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--paper-warm),var(--paper));}
+.voyage-detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;}
+
+.voyage-detail-hero-content{position:relative;z-index:2;padding:3.5rem 3rem 3rem;max-width:900px;}
+.voyage-detail-flag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.12em;background:rgba(232,184,109,.2);border:1px solid var(--accent);color:var(--accent);padding:4px 10px;line-height:1.4;display:inline-block;margin-bottom:1rem;}
+.voyage-detail-name{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(40px,6vw,80px);line-height:1;color:#fff;margin-bottom:.6rem;text-shadow:0 2px 20px rgba(0,0,0,.4);}
+.voyage-detail-dates{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.voyage-detail-desc{font-family:'Lora',serif;font-style:italic;font-size:20px;color:rgba(240,236,228,.7);margin-top:.75rem;max-width:600px;line-height:1.6;}
+.voyage-back{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin:1.5rem 2rem;background:none;border:none;transition:color .2s;}
+.voyage-back:hover{color:var(--accent);}
+.voyage-articles-section{max-width:1160px;margin:0 auto;padding:2rem 2rem 6rem;}
+.voyage-articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2px;}
+.article-card{background:var(--paper-card);border:1px solid var(--border);cursor:pointer;overflow:hidden;transition:transform .3s,box-shadow .3s;}
+.article-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.5);}
+.article-card img,.article-card-ph{width:100%;height:220px;object-fit:cover;display:block;transition:transform .4s;}
+.article-card:hover img{transform:scale(1.04);}
+.article-card-ph{display:flex;align-items:center;justify-content:center;font-size:42px;color:var(--border-strong);}
+.article-card-body{padding:1.25rem 1.5rem;}
+.article-card-cat{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+.article-card-title{font-family:'Playfair Display',serif;font-weight:600;font-size:20px;line-height:1.3;color:var(--ink);margin-bottom:.6rem;}
+.article-card-excerpt{font-family:'Lora',serif;font-size:14px;color:var(--ink-muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:.9rem;}
+.article-card-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:.85rem;}
+.article-card-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);}
+.article-card-read{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);}
+.article-card.featured{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;}
+.article-card.featured img,.article-card.featured .article-card-ph{height:100%;min-height:320px;}
+.article-card.featured .article-card-body{padding:2.5rem;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,var(--paper-card),var(--paper-warm));}
+.article-card.featured .article-card-title{font-size:28px;}
+
+/* ── ARTICLE DETAIL ── */
+#view-article{padding-top:60px;}
+.art-back{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;display:inline-flex;align-items:center;gap:8px;margin:1.5rem 2rem;background:none;border:none;transition:color .2s;}
+.art-back:hover{color:var(--accent);}
+.art-back-hero{position:absolute;top:calc(60px + 1.2rem);left:2rem;color:rgba(255,255,255,.75);background:rgba(0,0,0,.3);padding:6px 14px;backdrop-filter:blur(4px);}
+.art-back-hero:hover{color:#fff;background:rgba(0,0,0,.5);}
+.art-cover-hero{position:relative;width:100%;background:#0f0d0a;overflow:hidden;}
+.art-cover-hero.has-cover{height:65vh;min-height:380px;}
+.art-cover-hero.no-cover{height:60px;background:transparent;}
+.art-cover-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.art-cover-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(15,13,10,.25) 0%,rgba(15,13,10,.05) 40%,rgba(15,13,10,.0) 100%);}
+.breadcrumb{max-width:1160px;margin:0 auto;padding:.9rem 2rem;display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);}
+.breadcrumb-sep{opacity:.4;}
+.breadcrumb-link{color:var(--ink-muted);cursor:pointer;transition:color .2s;background:none;border:none;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:0;}
+.breadcrumb-link:hover{color:var(--accent);}
+.breadcrumb-current{color:var(--ink-soft);}
+.art-header{max-width:760px;margin:2rem auto 3rem;padding:0 2rem;text-align:center;}
+.art-header-cat{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;}
+.art-header-voyage{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem;}
+.art-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(34px,5vw,64px);line-height:1.1;color:var(--ink);margin-bottom:.75rem;}
+.art-meta{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-muted);}
+.art-cover-ph{display:none;}
+.art-body{max-width:660px;margin:0 auto;padding:0 2rem 6rem;font-size:19px;line-height:1.9;color:var(--ink-soft);}
+.art-body p{margin-bottom:1.4rem;}
+.art-body h2{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;color:var(--ink);margin:2.5rem 0 .9rem;}
+.art-body blockquote{border-left:3px solid var(--accent);margin:1.5rem 0;padding-left:1.5rem;font-style:italic;color:var(--accent);font-family:'Lora',serif;}
+.art-body ul{margin:1rem 0 1rem 1.5rem;}
+.img-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:600;display:none;align-items:center;justify-content:center;}
+.img-modal-overlay.open{display:flex;}
+.img-modal-box{background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;width:520px;max-width:95vw;}
+.img-modal-title{font-family:'Playfair Display',serif;font-size:24px;color:var(--ink);margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;}
+.img-modal-close{font-family:'Space Mono',monospace;font-size:18px;color:var(--ink-muted);cursor:pointer;background:none;border:none;}
+.img-modal-close:hover{color:var(--ink);}
+.img-drop-zone{border:2px dashed var(--border-strong);padding:2rem;text-align:center;cursor:pointer;position:relative;background:var(--paper-warm);transition:all .2s;margin-bottom:1.25rem;}
+.img-drop-zone:hover{border-color:var(--accent);background:var(--accent-soft);}
+.img-drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-drop-zone-text{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);}
+.img-drop-preview{width:100%;max-height:160px;object-fit:cover;display:none;margin-bottom:1.25rem;border:1px solid var(--border);}
+.img-size-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:1.25rem;}
+.img-size-btn{border:1px solid var(--border-strong);background:transparent;padding:.65rem .5rem;cursor:pointer;text-align:left;transition:all .2s;}
+.img-size-btn:hover{border-color:var(--accent);}
+.img-size-btn.selected{border-color:var(--accent);background:var(--accent-soft);}
+.img-size-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--ink);display:block;margin-bottom:2px;}
+.img-size-sub{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);}
+.art-body a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.art-body a:hover{opacity:.8;}
+.wysiwyg-editor a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.art-body hr{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+.art-body .img-inline{margin:1.5rem 0;display:block;}
+.art-body .img-inline img{width:100%;max-height:480px;object-fit:cover;display:block;cursor:zoom-in;}
+.art-body .img-inline.left{float:left;width:45%;margin:0.4rem 2rem 1rem 0;}
+.art-body .img-inline.right{float:right;width:45%;margin:0.4rem 0 1rem 2rem;}
+.art-body .img-inline.left img,.art-body .img-inline.right img{max-height:320px;}
+.art-body .img-inline figcaption{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink-muted);margin-top:.4rem;font-style:italic;}
+.art-body::after{content:'';display:table;clear:both;}
+.art-gallery{max-width:1160px;margin:3rem auto;padding:0 2rem;}
+#panel-preview{display:none;}
+.preview-bar{background:#1c1815;border-bottom:1px solid var(--border-strong);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:60px;z-index:50;}
+.preview-bar-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.preview-bar-actions{display:flex;gap:.75rem;}
+.art-gallery-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
+.art-gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;}
+.art-gallery-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in;transition:transform .3s,opacity .2s;}
+.art-gallery-grid img:hover{transform:scale(1.02);opacity:.9;}
+.art-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;display:none;align-items:center;justify-content:center;cursor:zoom-out;}
+.art-lightbox.open{display:flex;}
+.art-lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;}
+.art-lightbox-close{position:absolute;top:1.5rem;right:2rem;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;background:none;border:none;transition:color .2s;}
+.art-lightbox-close:hover{color:#fff;}
+.img-preview-cover-btn{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.6);cursor:pointer;position:absolute;bottom:24px;left:0;right:0;margin:0 4px;transition:all .2s;}
+.img-preview-cover-btn:hover,.img-preview-cover-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
+
+/* ── ADMIN ── */
+#view-admin{padding-top:60px;min-height:100vh;background:#0f0d0a;}
+.admin-layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 60px);}
+.admin-sidebar{background:#0f0d0a;border-right:none;padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+.sidebar-section{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.5rem 1.5rem .25rem;margin-top:.75rem;}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:.65rem 1.5rem;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
+.admin-nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.05);}
+.admin-nav-item.active{color:#fff;border-left-color:var(--accent);background:rgba(255,255,255,.05);}
+.admin-main{padding:2.5rem;overflow-y:auto;background:#0f0d0a;}
+.admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.admin-page-title{font-family:'Playfair Display',serif;font-weight:700;font-size:32px;color:var(--ink);}
+
+/* Buttons */
+.btn-primary{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;background:var(--accent);color:var(--paper);border:none;cursor:pointer;transition:all .2s;}
+.btn-primary:hover{box-shadow:0 4px 20px var(--accent-glow);transform:translateY(-1px);}
+.btn-secondary{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 20px;background:transparent;color:var(--ink);border:1px solid var(--border-strong);cursor:pointer;transition:all .2s;}
+.btn-secondary:hover{border-color:var(--ink-soft);color:var(--ink);}
+.btn-ghost{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:9px 0;background:none;border:none;color:var(--ink-muted);cursor:pointer;transition:color .2s;}
+.btn-ghost:hover{color:var(--ink);}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
+.stat-card{background:#1c1815;border:1px solid var(--border);padding:1.2rem;position:relative;overflow:hidden;}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
+.stat-val{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:.2rem;}
+.stat-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);}
+
+/* Form */
+.admin-form{max-width:820px;}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{margin-bottom:1.4rem;}
+.form-label{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:.45rem;}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;background:var(--paper-warm);border:1px solid var(--border-strong);color:var(--ink);font-family:'Lora',serif;font-size:17px;outline:none;transition:border-color .2s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);}
+.form-textarea{min-height:260px;resize:vertical;line-height:1.6;}
+.form-select{font-family:'Space Mono',monospace;font-size:12px;}
+.form-hint{font-family:'Space Mono',monospace;font-size:10px;color:var(--ink-muted);margin-top:.35rem;letter-spacing:.05em;}
+.form-footer{display:flex;gap:.75rem;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+
+/* Upload */
+.upload-zone{border:2px dashed var(--border-strong);padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;background:#181410;position:relative;}
+.upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:var(--accent-soft);}
+.upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.upload-zone-icon{font-size:32px;color:var(--ink-muted);margin-bottom:.75rem;}
+.upload-zone-text{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);}
+.upload-zone-hint{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);margin-top:.35rem;}
+.img-previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-top:.75rem;}
+.img-preview{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--border-strong);cursor:grab;background:#1c1815;transition:opacity .2s,transform .2s;min-width:100px;}
+.img-preview.dragging{opacity:.4;transform:scale(.96);}
+.img-preview.drag-over-target{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent);}
+.img-preview-drag-hint{position:absolute;top:3px;left:3px;font-family:'Space Mono',monospace;font-size:8px;letter-spacing:.05em;color:rgba(255,255,255,.5);background:rgba(0,0,0,.4);padding:1px 4px;}
+.img-preview{position:relative;aspect-ratio:1;overflow:hidden;border:1px solid var(--border);}
+.img-preview img{width:100%;height:100%;object-fit:cover;}
+.img-preview-rm{position:absolute;top:3px;right:3px;width:20px;height:20px;background:var(--red);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;}
+.img-preview:hover .img-preview-rm{opacity:1;}
+.img-preview-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(192,57,43,.85);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:#fff;text-align:center;padding:2px;}
+
+/* Table */
+.admin-table{width:100%;border-collapse:collapse;border:1px solid var(--border);}
+.admin-table th{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:10px 14px;text-align:left;background:#1c1815;border-bottom:1px solid var(--border);}
+.admin-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink-soft);vertical-align:middle;background:#0f0d0a;}
+.admin-table tr:hover td{background:rgba(232,184,109,.08);}
+.td-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--ink);}
+.badge{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid;}
+.badge-pub{color:var(--teal);border-color:var(--teal);background:rgba(92,184,178,.1);}
+.badge-draft{color:var(--ink-muted);border-color:var(--border-strong);}
+.tbl-actions{display:flex;gap:6px;flex-wrap:wrap;}
+.tbl-btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--border);background:transparent;color:var(--ink-muted);cursor:pointer;transition:all .2s;}
+.tbl-btn:hover{border-color:var(--ink);color:var(--ink);}
+.tbl-btn.del:hover{border-color:var(--red);color:var(--red);}
+
+/* Voyage card (admin list) */
+.voyage-cards-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
+.voyage-admin-card{background:#1c1815;border:1px solid var(--border);padding:1.25rem;position:relative;transition:border-color .2s;}
+.voyage-admin-card:hover{border-color:var(--accent);}
+.voyage-admin-card-flag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);padding:3px 8px;display:inline-block;margin-bottom:.75rem;}
+.voyage-admin-card-name{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--ink);margin-bottom:.2rem;}
+.voyage-admin-card-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.9rem;}
+.voyage-admin-card-actions{display:flex;gap:.5rem;}
+
+/* Toolbar */
+.editor-toolbar{display:flex;gap:3px;padding:8px 10px;background:#1c1815;border:1px solid var(--border-strong);border-bottom:none;flex-wrap:wrap;align-items:center;}
+.tbar-btn{font-family:'Space Mono',monospace;font-size:10px;padding:5px 9px;background:transparent;border:1px solid transparent;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;border-radius:2px;}
+.tbar-btn:hover{border-color:var(--border-strong);color:rgba(255,255,255,.85);background:rgba(255,255,255,.06);}
+.tbar-btn.active{background:var(--accent);color:#0f0d0a;border-color:var(--accent);}
+.tbar-sep{width:1px;height:18px;background:rgba(255,255,255,.12);margin:0 4px;flex-shrink:0;}
+.wysiwyg-editor{min-height:420px;background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;color:var(--ink);font-family:'Lora',serif;font-size:18px;line-height:1.85;outline:none;overflow-y:auto;}
+.wysiwyg-editor:focus{border-color:var(--accent);}
+.wysiwyg-editor h2{font-family:'Playfair Display',serif;font-weight:700;font-size:26px;color:var(--ink);margin:2rem 0 .75rem;}
+.wysiwyg-editor blockquote{border-left:3px solid var(--accent);margin:1.5rem 0;padding-left:1.5rem;font-style:italic;color:var(--accent);}
+.wysiwyg-editor ul{margin:1rem 0 1rem 1.5rem;}
+.wysiwyg-editor hr{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+.wysiwyg-editor p{margin-bottom:1.2rem;}
+.wysiwyg-editor .inline-img-wrap{display:block;margin:1.5rem auto;line-height:0;}
+.wysiwyg-editor .inline-img-wrap.full img{width:100%;}
+.wysiwyg-editor .inline-img-wrap.wide{margin-left:-2rem;margin-right:-2rem;}
+.wysiwyg-editor .inline-img-wrap.wide img{width:100%;}
+.wysiwyg-editor .inline-img-wrap.medium{width:60%;}
+.wysiwyg-editor .inline-img-wrap.small{width:35%;}
+.wysiwyg-editor .inline-img-wrap.left{float:left;width:44%;margin:0.3rem 1.8rem 1rem 0;}
+.wysiwyg-editor .inline-img-wrap.right{float:right;width:44%;margin:0.3rem 0 1rem 1.8rem;}
+.wysiwyg-editor .inline-img-wrap img{width:100%;display:block;}
+.wysiwyg-editor .inline-img-wrap figcaption{font-family:'Space Mono',monospace;font-size:10px;color:var(--ink-muted);padding:4px 2px;line-height:1.4;font-style:italic;}
+.wysiwyg-editor::after{content:'';display:table;clear:both;}
+.art-body .inline-img-wrap{display:block;margin:1.5rem auto;line-height:0;}
+.art-body .inline-img-wrap.full img{width:100%;}
+.art-body .inline-img-wrap.wide{margin-left:-4rem;margin-right:-4rem;}
+.art-body .inline-img-wrap.wide img{width:100%;}
+.art-body .inline-img-wrap.medium{width:60%;}
+.art-body .inline-img-wrap.small{width:35%;}
+.art-body .inline-img-wrap.left{float:left;width:44%;margin:0.3rem 2rem 1rem 0;}
+.art-body .inline-img-wrap.right{float:right;width:44%;margin:0.3rem 0 1rem 2rem;}
+.art-body .inline-img-wrap img{width:100%;display:block;cursor:zoom-in;}
+.art-body .inline-img-wrap figcaption{font-family:'Space Mono',monospace;font-size:10px;color:var(--ink-muted);padding:4px 2px;line-height:1.4;font-style:italic;}
+.art-body::after{content:'';display:table;clear:both;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(6px);}
+.modal-box{background:var(--paper-card);width:420px;padding:2.5rem;border:1px solid var(--border-strong);}
+.modal-title{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;margin-bottom:.2rem;color:var(--ink);}
+.modal-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:2rem;}
+
+/* Toast */
+.toast{position:fixed;bottom:2rem;right:2rem;background:var(--paper-card);color:var(--ink);font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;padding:12px 20px;border-left:3px solid var(--accent);border:1px solid var(--border-strong);border-left:3px solid var(--accent);transform:translateX(160%);transition:transform .3s;z-index:999;}
+.toast.show{transform:translateX(0);}
+
+/* Divider */
+.divider{border:none;border-top:1px solid var(--border);margin:2rem 0;}
+
+/* ── ABOUT & CONTACT ── */
+#view-apropos, #view-contact{padding-top:60px;min-height:100vh;}
+.page-hero{position:relative;padding:6rem 2rem 4rem;text-align:center;overflow:hidden;}
+.page-hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.4;}
+.page-hero-inner{position:relative;z-index:2;}
+.page-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem;}
+.page-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(42px,6vw,80px);line-height:1.05;color:var(--ink);margin-bottom:1rem;}
+.page-title em{font-style:italic;color:var(--accent);font-weight:400;}
+.page-subtitle{font-family:'Lora',serif;font-style:italic;font-size:20px;color:var(--ink-muted);max-width:560px;margin:0 auto;line-height:1.65;}
+.page-content{max-width:860px;margin:0 auto;padding:4rem 2rem 7rem;}
+.about-intro{font-family:'Lora',serif;font-size:21px;line-height:1.85;color:var(--ink-soft);margin-bottom:3rem;font-style:italic;border-left:3px solid var(--accent);padding-left:1.75rem;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:3rem;}
+.about-block{background:var(--paper-card);border:1px solid var(--border);padding:2rem;}
+.about-block-icon{font-size:28px;margin-bottom:1rem;line-height:1;}
+.about-block-title{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--ink);margin-bottom:.75rem;}
+.about-block-text{font-family:'Lora',serif;font-size:16px;color:var(--ink-muted);line-height:1.7;}
+.about-family{display:flex;gap:2rem;align-items:flex-start;background:var(--paper-card);border:1px solid var(--border);padding:2rem;margin-bottom:3rem;}
+.about-family-badge{width:72px;height:72px;border-radius:50%;background:var(--accent-soft);border:2px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;}
+.about-family-text{font-family:'Lora',serif;font-size:17px;color:var(--ink-soft);line-height:1.75;}
+.about-family-text strong{font-family:'Playfair Display',serif;font-size:19px;color:var(--ink);display:block;margin-bottom:.4rem;}
+.about-quote{text-align:center;padding:3rem 2rem;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:3rem;}
+.about-quote-text{font-family:'Playfair Display',serif;font-style:italic;font-weight:400;font-size:clamp(22px,3vw,32px);color:var(--ink);line-height:1.4;margin-bottom:1rem;}
+.about-quote-attr{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
+.contact-card{background:var(--paper-card);border:1px solid var(--border);padding:2.5rem;margin-bottom:1rem;transition:border-color .2s;}
+.contact-card:hover{border-color:var(--accent);}
+.contact-card-head{display:flex;align-items:center;gap:1rem;margin-bottom:.75rem;}
+.contact-card-icon{width:44px;height:44px;background:var(--accent-soft);border:1px solid var(--accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.contact-card-title{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--ink);}
+.contact-card-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);}
+.contact-card-text{font-family:'Lora',serif;font-size:16px;color:var(--ink-muted);line-height:1.65;}
+.contact-form-wrap{background:var(--paper-card);border:1px solid var(--border);padding:2.5rem;margin-top:2rem;}
+.contact-form-title{font-family:'Playfair Display',serif;font-weight:700;font-size:24px;color:var(--ink);margin-bottom:.35rem;}
+.contact-form-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:2rem;}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.cf-success{display:none;text-align:center;padding:2rem;font-family:'Lora',serif;font-style:italic;font-size:18px;color:var(--accent);}
+
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr;}
+  .about-family{flex-direction:column;}
+  .cf-grid{grid-template-columns:1fr;}
+}
+
+@media(max-width:768px){
+  .article-card.featured{grid-template-columns:1fr;}
+  .article-card.featured .article-card-ph,.article-card.featured img{min-height:200px;height:200px;}
+  .admin-layout{grid-template-columns:1fr;}
+  .admin-sidebar{display:none;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .form-grid-2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo" onclick="showView('home');renderHome()">Carnets de voyage <em>· Famille Gagnon</em></div>
+  <div class="nav-right">
+    <span class="nav-link" onclick="showView('home');renderHome()">Accueil</span>
+    <span id="nav-voyage-link" class="nav-link" style="display:none" onclick="goBackToVoyage()"></span>
+    <span class="nav-link" onclick="showView('apropos')">À propos</span>
+    <span class="nav-link" onclick="showView('contact');checkContactConfig()">Contact</span>
+    <div class="nav-search-wrap">
+      <input type="text" id="nav-search-input" class="nav-search-input" placeholder="Rechercher…" oninput="doSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
+      <button class="nav-search-btn" onclick="toggleSearch()">Rechercher</button>
+    </div>
+    <button class="nav-admin-btn" onclick="openAdmin()">Admin ↗</button>
+  </div>
+  <div class="search-results-overlay" id="search-overlay" onclick="closeSearch()"></div>
+  <div class="search-results-panel" id="search-panel" style="display:none">
+    <div class="search-results-header" id="search-header">Résultats</div>
+    <div id="search-results-list"></div>
+  </div>
+</nav>
+
+<!-- ═══ HOME ═══ -->
+<div id="view-home" class="view active">
+  <div class="home-hero">
+    <div class="hero-bg-wrap">
+      <div class="hero-particles" id="hero-particles"></div>
+      <div class="hero-lines-h"></div>
+    </div>
+    <div class="hero-deco-num">∞</div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">2 adultes · 2 fillettes · 1 soif de monde</div>
+      <h1 class="hero-title">Voir le monde<br><span class="hero-title-line2">pour mieux le comprendre</span></h1>
+      <p class="hero-sub">Nous croyons que les plus belles leçons de vie ne sont pas dans les livres scolaires — elles sont dans la forêt du Costa Rica, sur les plages des Îles de la Madeleine, dans la rue de Kyoto — dans les yeux de nos filles qui découvrent que le monde est grand et magnifique.</p>
+      <div class="hero-cta-wrap">
+        <button class="hero-cta" onclick="document.getElementById('voyages-list').scrollIntoView({behavior:'smooth'})">Nos aventures</button>
+      </div>
+    </div>
+    <div class="hero-scroll">Défiler<div class="hero-scroll-line"></div></div>
+  </div>
+
+  <section class="voyages-section" id="voyages-list">
+    <div class="voyages-header">
+      <h2 class="voyages-title">Nos <em>aventures</em></h2>
+      <span class="voyages-count" id="home-voyages-count">0 voyage</span>
+    </div>
+    <div id="home-voyages-container"></div>
+    <div id="home-empty" style="display:none;text-align:center;padding:4rem 0;">
+      <div style="font-size:48px;opacity:.12;margin-bottom:1rem;"></div>
+      <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);">La prochaine aventure arrive bientôt…</p>
+    </div>
+  </section>
+</div>
+
+<!-- ═══ VOYAGE DETAIL ═══ -->
+<div id="view-voyage" class="view">
+  <nav class="breadcrumb">
+    <button class="breadcrumb-link" onclick="showView('home');renderHome()">Accueil</button>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current" id="bc-voyage-name"></span>
+  </nav>
+  <div class="voyage-detail-hero" id="voyage-hero">
+    <div class="voyage-detail-hero-bg" id="voyage-hero-bg"></div>
+    <img id="voyage-hero-img" src="" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:0;">
+    <div class="voyage-detail-hero-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,8,6,.88) 0%,rgba(10,8,6,.35) 55%,rgba(10,8,6,.08) 100%);z-index:1;"></div>
+    <div class="voyage-detail-hero-content" style="position:relative;z-index:2;">
+      <div class="voyage-detail-flag" id="vd-flag"></div>
+      <h1 class="voyage-detail-name" id="vd-name"></h1>
+      <div class="voyage-detail-dates" id="vd-dates"></div>
+      <div class="voyage-detail-desc" id="vd-desc"></div>
+    </div>
+  </div>
+  <div class="voyage-articles-section">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:30px;">Articles du voyage</h2>
+      <span id="vd-article-count" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);"></span>
+    </div>
+    <div class="voyage-articles-grid" id="vd-articles-grid"></div>
+    <div id="vd-empty" style="display:none;text-align:center;padding:3rem;border:1px solid var(--border);">
+      <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);">Les carnets de ce voyage arrivent bientôt…</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ARTICLE DETAIL ═══ -->
+<div id="view-article" class="view">
+  <div class="art-cover-hero no-cover" id="art-cover">
+    <div class="art-cover-hero-overlay"></div>
+  </div>
+  <nav class="breadcrumb" id="art-breadcrumb">
+    <button class="breadcrumb-link" onclick="showView('home');renderHome()">Accueil</button>
+    <span class="breadcrumb-sep">/</span>
+    <button class="breadcrumb-link" id="bc-voyage" onclick="returnToVoyage()"></button>
+    <span class="breadcrumb-sep">/</span>
+    <span class="breadcrumb-current" id="bc-article"></span>
+  </nav>
+  <div class="art-header">
+    <div class="art-header-cat" id="art-cat"></div>
+    <h1 class="art-title" id="art-title"></h1>
+    <div class="art-meta" id="art-meta"></div>
+  </div>
+  <div class="art-body" id="art-body"></div>
+  <div class="art-gallery" id="art-gallery" style="display:none">
+    <div class="art-gallery-label">Galerie photos</div>
+    <div class="art-gallery-grid" id="art-gallery-grid"></div>
+  </div>
+</div>
+
+<!-- ═══ À PROPOS ═══ -->
+<div id="view-apropos" class="view">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow">Qui sommes-nous</div>
+      <h1 class="page-title">La famille <em>Gagnon</em></h1>
+      <p class="page-subtitle" id="ap-view-subtitle">2 adultes, 2 fillettes, 1 conviction : voyager, c'est la meilleure école qui soit.</p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <p class="about-intro" id="ap-view-intro">« Nous sommes convaincus que pour nos enfants, les voyages seront une façon extraordinaire d'apprendre — à se repérer dans l'inconnu, à observer, à s'émerveiller, à comprendre que le monde est plus grand et plus beau qu'on ne l'imagine depuis chez soi. »</p>
+
+    <div class="about-family">
+      <div class="about-family-badge"></div>
+      <div class="about-family-text">
+        <strong>La famille Gagnon</strong>
+        <span id="ap-view-family">Deux adultes qui ont attrapé le virus du voyage bien avant d'avoir des enfants — et qui ont décidé de ne pas s'en guérir. Deux fillettes qui grandissent en croyant que le monde est un terrain de jeu infini. Ensemble, on bouge, on explore, on sort de notre zone de confort. Pas toujours confortablement. Toujours avec bonheur.</span>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-block">
+        <div class="about-block-icon"></div>
+        <div class="about-block-title" id="ap-view-b1-title">Notre philosophie</div>
+        <div class="about-block-text" id="ap-view-b1-text">Les voyages ne sont pas des vacances passives. On cherche à comprendre les endroits qu'on visite — leur histoire, leur nourriture, leurs gens. On s'éloigne des circuits balisés autant que possible.</div>
+      </div>
+      <div class="about-block">
+        <div class="about-block-icon"></div>
+        <div class="about-block-title" id="ap-view-b2-title">Voyager avec des enfants</div>
+        <div class="about-block-text" id="ap-view-b2-text">Oui, c'est plus compliqué. Oui, ça vaut chaque effort. Nos filles nous ont appris à voir les choses différemment — parce qu'une crise de larmes devant les torii de Kyoto, ça reste quand même une crise de larmes devant les torii de Kyoto.</div>
+      </div>
+      <div class="about-block">
+        <div class="about-block-icon"></div>
+        <div class="about-block-title" id="ap-view-b3-title">Pourquoi ce blog</div>
+        <div class="about-block-text" id="ap-view-b3-text">Pour garder une mémoire vivante de nos aventures. Pour que nos filles puissent relire un jour ces carnets et se souvenir de qui elles étaient quand elles ont vu la mer pour la première fois, ou qu'elles ont mangé du ramen à Tokyo.</div>
+      </div>
+      <div class="about-block">
+        <div class="about-block-icon"></div>
+        <div class="about-block-title" id="ap-view-b4-title">Nos destinations</div>
+        <div class="about-block-text" id="ap-view-b4-text">Du Costa Rica aux Îles de la Madeleine, du Japon à venir — on ne suit pas de logique géographique. On suit l'envie, la curiosité, et les billets d'avion en solde.</div>
+      </div>
+    </div>
+
+    <div class="about-quote">
+      <div class="about-quote-text" id="ap-view-quote">« Le voyage est la seule chose qu'on achète qui nous fait grandir. »</div>
+      <div class="about-quote-attr" id="ap-view-quote-attr">— Proverbe de famille</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<div id="view-contact" class="view">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <div class="page-eyebrow" id="ct-view-eyebrow">Nous écrire</div>
+      <h1 class="page-title">Dire <em>bonjour</em></h1>
+      <p class="page-subtitle" id="ct-view-subtitle">Une question sur l'une de nos destinations ? Une suggestion ? Juste envie d'échanger sur les voyages en famille ? On est là.</p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="contact-card">
+      <div class="contact-card-head">
+        <div class="contact-card-icon"></div>
+        <div>
+          <div class="contact-card-title" id="ct-view-card-title">Par courriel</div>
+          <div class="contact-card-sub" id="ct-view-card-sub">Réponse en 48h</div>
+        </div>
+      </div>
+      <div class="contact-card-text" id="ct-view-card-text">C'est le moyen le plus simple de nous joindre. On répond à tous les messages — surtout ceux qui parlent de voyages, de bonnes adresses ou d'astuces pour voyager avec des enfants.</div>
+    </div>
+
+
+
+    <div class="contact-form-wrap">
+      <div class="contact-form-title" id="ct-view-form-title">Envoyez-nous un message</div>
+      <div class="contact-form-sub" id="ct-view-form-sub">On vous répond avec plaisir</div>
+      <div id="cf-form">
+        <div id="cf-no-email" style="display:none;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--ink-muted);padding:1rem;border:1px solid var(--border);margin-bottom:1.5rem;">
+          Le formulaire n'est pas encore configuré. Allez dans Admin → À propos pour ajouter votre URL Formspree.
+        </div>
+        <div class="cf-grid">
+          <div class="form-group">
+            <label class="form-label">Prénom</label>
+            <input type="text" id="cf-prenom" name="prenom" class="form-input" placeholder="Votre prénom">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Courriel</label>
+            <input type="email" id="cf-email" name="email" class="form-input" placeholder="votre@courriel.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Sujet</label>
+          <input type="text" id="cf-sujet" name="sujet" class="form-input" placeholder="Ex: Question sur les Îles de la Madeleine…">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea id="cf-message" name="message" class="form-textarea" style="min-height:140px" placeholder="Votre message…"></textarea>
+        </div>
+        <button class="btn-primary" onclick="submitContact()">Envoyer le message →</button>
+      </div>
+      <div class="cf-success" id="cf-success" style="display:none;text-align:center;padding:2.5rem;">
+        <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--ink);margin-bottom:.75rem;">Message envoyé !</div>
+        <div style="font-family:'Lora',serif;font-style:italic;font-size:17px;color:var(--ink-muted);">Merci ! On vous répond très bientôt.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN ═══ -->
+<div id="view-admin" class="view">
+  <div id="login-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div style="font-size:36px;text-align:center;margin-bottom:1rem;opacity:.1;"></div>
+      <h2 class="modal-title">Administration</h2>
+      <div class="modal-sub">Carnets de voyage · Accès sécurisé</div>
+      <div class="form-group">
+        <label class="form-label">Mot de passe</label>
+        <input type="password" id="admin-pw" class="form-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')tryLogin()">
+      </div>
+      <button class="btn-primary" style="width:100%" onclick="tryLogin()">Entrer</button>
+      <div id="login-error" style="font-family:'DM Mono',monospace;font-size:11px;color:var(--red);margin-top:.75rem;display:none;">Mot de passe incorrect</div>
+
+    </div>
+  </div>
+
+  <div class="admin-layout" id="admin-content" style="display:none">
+    <div class="admin-sidebar">
+      <div class="sidebar-section">Général</div>
+      <div class="admin-nav-item active" onclick="showPanel('dashboard')" id="anav-dashboard">▦ &ensp;Tableau de bord</div>
+      <div class="sidebar-section">Voyages</div>
+      <div class="admin-nav-item" onclick="showPanel('voyages-list')" id="anav-voyages-list"> &ensp;Tous les voyages</div>
+      <div class="admin-nav-item" onclick="startNewVoyage()" id="anav-new-voyage">+ &ensp;Nouveau voyage</div>
+      <div class="sidebar-section">Articles</div>
+      <div class="admin-nav-item" onclick="showPanel('articles-list')" id="anav-articles-list">≡ &ensp;Tous les articles</div>
+      <div class="admin-nav-item" onclick="startNewArticle()" id="anav-new-article"> &ensp;Nouvel article</div>
+      <div class="sidebar-section">Médias</div>
+      <div class="admin-nav-item" onclick="showPanel('media')" id="anav-media">⊞ &ensp;Médiathèque</div>
+      <div class="sidebar-section">Site</div>
+      <div class="admin-nav-item" onclick="showPanel('apropos-edit')" id="anav-apropos-edit">≈ &ensp;À propos</div>
+      <div class="admin-nav-item" onclick="showPanel('contact-edit')" id="anav-contact-edit">&#9993; &ensp;Contact</div>
+      <div style="position:absolute;bottom:1.5rem;left:0;right:0;padding:0 1.5rem;">
+        <div onclick="showView('home');renderHome();
+applyAproposSaved();
+// Pre-configure Formspree if not already set
+(function() {
+  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+  if (!d['ap-formspree-url']) {
+    d['ap-formspree-url'] = 'https://formspree.io/f/mreoaldl';
+    localStorage.setItem('tb_apropos', JSON.stringify(d));
+  }
+})();
+checkContactConfig();
+applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;padding-top:.9rem;border-top:1px solid var(--border);">← Voir le blog</div>
+      </div>
+    </div>
+
+    <div class="admin-main">
+
+      <!-- DASHBOARD -->
+      <div id="panel-dashboard">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Tableau de bord</h2>
+          <div style="display:flex;gap:.5rem;">
+            <button class="btn-secondary" onclick="startNewVoyage()">+ Voyage</button>
+            <button class="btn-primary" onclick="startNewArticle()">+ Article</button>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-val" id="st-voyages">0</div><div class="stat-lbl">Voyages</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-total">0</div><div class="stat-lbl">Articles total</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-pub">0</div><div class="stat-lbl">Publiés</div></div>
+          <div class="stat-card"><div class="stat-val" id="st-media">0</div><div class="stat-lbl">Images</div></div>
+        </div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:22px;margin-bottom:.9rem;">Articles récents</h3>
+        <table class="admin-table"><thead><tr><th>Titre</th><th>Voyage</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="dash-tbody"></tbody></table>
+      </div>
+
+      <!-- VOYAGES LIST -->
+      <div id="panel-voyages-list" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Voyages</h2>
+          <button class="btn-primary" onclick="startNewVoyage()">+ Nouveau voyage</button>
+        </div>
+        <div class="voyage-cards-admin" id="voyages-admin-grid"></div>
+      </div>
+
+      <!-- NEW / EDIT VOYAGE -->
+      <div id="panel-voyage-form" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title" id="voyage-form-title">Nouveau voyage</h2>
+          <button class="btn-primary" onclick="saveVoyage()">Sauvegarder</button>
+        </div>
+        <div class="admin-form">
+          <div class="form-group">
+            <label class="form-label">Nom du voyage *</label>
+            <input type="text" id="vf-name" class="form-input" placeholder="Ex: Japon 2026, Portugal 2027…">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Icône / Symbole</label>
+              <input type="text" id="vf-flag" class="form-input" placeholder="Ex: QC, JP, CR…">
+              <div class="form-hint">Courte abréviation ou symbole affiché avant le nom</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Période</label>
+              <input type="text" id="vf-dates" class="form-input" placeholder="Ex: Avril – Mai 2026">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Description courte</label>
+            <textarea id="vf-desc" class="form-textarea" style="min-height:90px" placeholder="Un court résumé de ce voyage…"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Image de couverture du voyage</label>
+            <div class="upload-zone">
+              <input type="file" accept="image/*" onchange="handleVoyageCover(event)">
+              <div class="upload-zone-icon"></div>
+              <div class="upload-zone-text">Cliquer ou glisser une image</div>
+              <div class="upload-zone-hint">JPEG, PNG, WebP</div>
+            </div>
+            <div id="voyage-cover-preview" style="margin-top:.75rem;"></div>
+          </div>
+          <div class="form-footer">
+            <button class="btn-primary" onclick="saveVoyage()">Sauvegarder →</button>
+            <button class="btn-ghost" onclick="showPanel('voyages-list')">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARTICLES LIST -->
+      <div id="panel-articles-list" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Articles</h2>
+          <button class="btn-primary" onclick="startNewArticle()">+ Nouvel article</button>
+        </div>
+        <div style="display:flex;gap:.75rem;margin-bottom:1rem;align-items:center;">
+          <label style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);">Filtrer par voyage&nbsp;:</label>
+          <select id="articles-filter-voyage" class="form-select" style="width:auto;padding:6px 10px;" onchange="renderArticlesList()">
+            <option value="">Tous</option>
+          </select>
+        </div>
+        <table class="admin-table"><thead><tr><th>Titre</th><th>Voyage</th><th>Catégorie</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+        <tbody id="articles-list-tbody"></tbody></table>
+      </div>
+
+      <!-- NEW / EDIT ARTICLE -->
+      <div id="panel-article-form" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title" id="article-form-title">Nouvel article</h2>
+          <div style="display:flex;gap:.5rem;">
+            <button class="btn-secondary" onclick="previewArticle()">Prévisualiser</button>
+            <button class="btn-secondary" onclick="saveArticle('draft')">Brouillon</button>
+            <button class="btn-primary" onclick="saveArticle('published')">Publier</button>
+          </div>
+        </div>
+        <div class="admin-form">
+          <div class="form-group">
+            <label class="form-label">Voyage *</label>
+            <select id="af-voyage" class="form-select">
+              <option value="">— Choisir un voyage —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Titre *</label>
+            <input type="text" id="af-title" class="form-input" placeholder="Ex: Arrivée à Tokyo — le choc des contraires">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Catégorie</label>
+              <input type="text" id="af-cat" class="form-input" placeholder="Ex: Tokyo, Gastronomie, Culture…">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Date de l'entrée</label>
+              <input type="date" id="af-date" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Résumé / Accroche</label>
+            <textarea id="af-excerpt" class="form-textarea" style="min-height:70px" placeholder="Un court résumé pour la carte de l'article…"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contenu</label>
+            <div class="editor-toolbar">
+              <button class="tbar-btn" title="Gras" onclick="wysiwyg('bold')"><strong>G</strong></button>
+              <button class="tbar-btn" title="Italique" onclick="wysiwyg('italic')"><em>I</em></button>
+              <button class="tbar-btn" title="Souligné" onclick="wysiwyg('underline')"><u>S</u></button>
+              <div class="tbar-sep"></div>
+              <button class="tbar-btn" onclick="wysiwyg('h2')">Titre</button>
+              <button class="tbar-btn" onclick="wysiwyg('blockquote')">Citation</button>
+              <button class="tbar-btn" onclick="wysiwyg('ul')">Liste</button>
+              <button class="tbar-btn" onclick="wysiwyg('hr')">Séparateur</button>
+              <div class="tbar-sep"></div>
+              <button class="tbar-btn" title="Annuler (Ctrl+Z)" onclick="wysiwyg('undo')">&#8592; Annuler</button>
+              <button class="tbar-btn" title="Rétablir (Ctrl+Y)" onclick="wysiwyg('redo')">Rétablir &#8594;</button>
+              <div class="tbar-sep"></div>
+              <button class="tbar-btn" onclick="wysiwyg('link')" title="Insérer un lien">Lien</button>
+              <div class="tbar-sep"></div>
+              <button class="tbar-btn" onclick="openImageModal()">Photo</button>
+            </div>
+            <div id="af-body-editor" class="wysiwyg-editor" contenteditable="true" spellcheck="true" placeholder="Commencez à rédiger votre article ici…"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Photo de couverture</label>
+            <div class="upload-zone">
+              <input type="file" accept="image/*" onchange="handleCoverImage(event)">
+              <div class="upload-zone-icon"></div>
+              <div class="upload-zone-text">Photo principale — fond de l'article</div>
+              <div class="upload-zone-hint">1 seule image · s'affiche en grand en haut de l'article</div>
+            </div>
+            <div id="af-cover-preview" style="margin-top:.75rem;"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Galerie de photos</label>
+            <div class="upload-zone">
+              <input type="file" accept="image/*" multiple onchange="handleGalleryImages(event)">
+              <div class="upload-zone-icon"></div>
+              <div class="upload-zone-text">Cliquer ou glisser pour ajouter des photos</div>
+              <div class="upload-zone-hint">Plusieurs images acceptées · glisser-déposer pour réordonner</div>
+            </div>
+            <div class="img-previews" id="af-img-previews" style="margin-top:.75rem;min-height:30px;"></div>
+          </div>
+          <div class="form-footer">
+            <button class="btn-primary" onclick="saveArticle('published')">Publier →</button>
+            <button class="btn-secondary" onclick="saveArticle('draft')">Sauver brouillon</button>
+            <button class="btn-ghost" onclick="showPanel('articles-list')">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MEDIA -->
+      <div id="panel-media" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Médiathèque</h2>
+          <span id="media-count" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-muted);">0 image(s)</span>
+        </div>
+        <div style="max-width:380px;margin-bottom:2rem;">
+          <div class="upload-zone">
+            <input type="file" accept="image/*" multiple onchange="handleMediaUpload(event)">
+            <div class="upload-zone-icon"></div>
+            <div class="upload-zone-text">Ajouter des images</div>
+          </div>
+        </div>
+        <div id="media-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;"></div>
+      </div>
+
+      <!-- À PROPOS EDIT -->
+      <div id="panel-apropos-edit" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">À propos</h2>
+          <button class="btn-primary" onclick="saveApropos()">Sauvegarder →</button>
+        </div>
+        <div class="admin-form">
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">En-tête de la page</div>
+
+          <div class="form-group">
+            <label class="form-label">Sous-titre de l'en-tête</label>
+            <input type="text" id="ap-subtitle" class="form-input" placeholder="2 adultes, 2 fillettes…">
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Citation d'introduction</div>
+
+          <div class="form-group">
+            <label class="form-label">Texte de la citation</label>
+            <textarea id="ap-intro" class="form-textarea" style="min-height:100px"></textarea>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Bloc famille</div>
+
+          <div class="form-group">
+            <label class="form-label">Texte du bloc famille</label>
+            <textarea id="ap-family" class="form-textarea" style="min-height:120px"></textarea>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Les 4 blocs thématiques</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Titre — Bloc 1</label>
+              <input type="text" id="ap-b1-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Titre — Bloc 2</label>
+              <input type="text" id="ap-b2-title" class="form-input">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Texte — Bloc 1</label>
+              <textarea id="ap-b1-text" class="form-textarea" style="min-height:100px"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Texte — Bloc 2</label>
+              <textarea id="ap-b2-text" class="form-textarea" style="min-height:100px"></textarea>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Titre — Bloc 3</label>
+              <input type="text" id="ap-b3-title" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Titre — Bloc 4</label>
+              <input type="text" id="ap-b4-title" class="form-input">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Texte — Bloc 3</label>
+              <textarea id="ap-b3-text" class="form-textarea" style="min-height:100px"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Texte — Bloc 4</label>
+              <textarea id="ap-b4-text" class="form-textarea" style="min-height:100px"></textarea>
+            </div>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Formulaire de contact</div>
+
+          <div class="form-group">
+            <label class="form-label">Adresse courriel de réception</label>
+            <input type="email" id="ap-contact-email" class="form-input" placeholder="votre@courriel.com">
+            <div class="form-hint" style="margin-top:.5rem;line-height:1.6;">
+              Pour recevoir les messages du formulaire, vous devez créer un compte gratuit sur
+              <strong style="color:var(--ink);">formspree.io</strong> :<br>
+              1. Allez sur <strong>formspree.io</strong> → Créer un compte gratuit<br>
+              2. Cliquez <strong>+ New Form</strong> → entrez votre courriel → copiez l'URL obtenue (ex: https://formspree.io/f/xxxxxxxx)<br>
+              3. Collez cette URL ci-dessous
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">URL Formspree *</label>
+            <input type="text" id="ap-formspree-url" class="form-input" placeholder="https://formspree.io/f/xxxxxxxx">
+            <div class="form-hint">Une fois configuré, les messages du formulaire seront envoyés directement à votre courriel.</div>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Citation de fin</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Texte de la citation</label>
+              <input type="text" id="ap-quote" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Attribution</label>
+              <input type="text" id="ap-quote-attr" class="form-input" placeholder="— Proverbe de famille">
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button class="btn-primary" onclick="saveApropos()">Sauvegarder →</button>
+            <button class="btn-ghost" onclick="showPanel('dashboard')">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PREVIEW -->
+      <div id="panel-preview" style="display:none">
+        <div class="preview-bar">
+          <span class="preview-bar-label">Prévisualisation</span>
+          <div class="preview-bar-actions">
+            <button class="btn-secondary" onclick="backToEdit()">← Retour à l'édition</button>
+            <button class="btn-secondary" onclick="saveArticle('draft')">Brouillon</button>
+            <button class="btn-primary" onclick="saveArticle('published')">Publier</button>
+          </div>
+        </div>
+        <div style="max-width:860px;margin:0 auto;padding:3rem 2rem 6rem;">
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;" id="preview-voyage-label"></div>
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem;" id="preview-cat"></div>
+          <h1 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(32px,5vw,56px);line-height:1.1;color:var(--ink);margin-bottom:.75rem;" id="preview-title"></h1>
+          <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;color:var(--ink-muted);margin-bottom:3rem;" id="preview-meta"></div>
+          <div id="preview-cover" style="margin-bottom:3rem;width:calc(100% + 4rem);margin-left:-2rem;margin-right:-2rem;"></div>
+          <div class="art-body" id="preview-body"></div>
+          <div class="art-gallery" id="preview-gallery" style="display:none;padding:0;">
+            <div class="art-gallery-label">Galerie photos</div>
+            <div class="art-gallery-grid" id="preview-gallery-grid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTACT EDIT -->
+      <div id="panel-contact-edit" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Contact</h2>
+          <button class="btn-primary" onclick="saveContact()">Sauvegarder →</button>
+        </div>
+        <div class="admin-form">
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">En-tête de la page</div>
+
+          <div class="form-group">
+            <label class="form-label">Accroche (petite ligne au-dessus du titre)</label>
+            <input type="text" id="ct-eyebrow" class="form-input" placeholder="Nous écrire">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Sous-titre</label>
+            <textarea id="ct-subtitle" class="form-textarea" style="min-height:80px"></textarea>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Carte courriel</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Titre</label>
+              <input type="text" id="ct-card-title" class="form-input" placeholder="Par courriel">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sous-titre</label>
+              <input type="text" id="ct-card-sub" class="form-input" placeholder="Réponse en 48h">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Texte</label>
+            <textarea id="ct-card-text" class="form-textarea" style="min-height:90px"></textarea>
+          </div>
+
+          <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin:2rem 0 1.5rem;padding-bottom:.75rem;border-bottom:1px solid var(--border);">Formulaire de contact</div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label">Titre du formulaire</label>
+              <input type="text" id="ct-form-title" class="form-input" placeholder="Envoyez-nous un message">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sous-titre du formulaire</label>
+              <input type="text" id="ct-form-sub" class="form-input" placeholder="On vous répond avec plaisir">
+            </div>
+          </div>
+
+          <div class="form-footer">
+            <button class="btn-primary" onclick="saveContact()">Sauvegarder →</button>
+            <button class="btn-ghost" onclick="showPanel('dashboard')">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-main -->
+  </div><!-- /admin-layout -->
+</div>
+
+<div class="art-lightbox" id="art-lightbox" onclick="closeLightbox()">
+  <button class="art-lightbox-close" onclick="closeLightbox()">Fermer</button>
+  <img id="art-lightbox-img" src="" alt="">
+</div>
+
+<div id="img-modal" class="img-modal-overlay">
+  <div class="img-modal-box">
+    <div class="img-modal-title">
+      Inserer une photo
+      <button class="img-modal-close" onclick="closeImageModal()">&#x2715;</button>
+    </div>
+    <div class="img-drop-zone">
+      <input type="file" accept="image/*" id="img-modal-file" onchange="imgModalPreview(event)">
+      <div class="img-drop-zone-text" id="img-drop-text">Cliquer pour choisir une photo</div>
+      <img id="img-drop-preview" class="img-drop-preview" alt="">
+    </div>
+    <div class="form-group" style="margin-bottom:1.25rem;">
+      <label class="form-label">Legende (optionnel)</label>
+      <input type="text" id="img-modal-caption" class="form-input" placeholder="Decrire la photo...">
+    </div>
+    <label class="form-label" style="margin-bottom:.6rem;display:block;">Taille</label>
+    <div class="img-size-grid">
+      <button class="img-size-btn selected" data-size="full" onclick="selectImgSize(this)">
+        <span class="img-size-label">Normale</span>
+        <span class="img-size-sub">100% de la colonne</span>
+      </button>
+      <button class="img-size-btn" data-size="wide" onclick="selectImgSize(this)">
+        <span class="img-size-label">Pleine page</span>
+        <span class="img-size-sub">Depasse la colonne</span>
+      </button>
+      <button class="img-size-btn" data-size="medium" onclick="selectImgSize(this)">
+        <span class="img-size-label">Moyenne</span>
+        <span class="img-size-sub">60%, centree</span>
+      </button>
+      <button class="img-size-btn" data-size="small" onclick="selectImgSize(this)">
+        <span class="img-size-label">Petite</span>
+        <span class="img-size-sub">35%, centree</span>
+      </button>
+      <button class="img-size-btn" data-size="left" onclick="selectImgSize(this)">
+        <span class="img-size-label">Gauche</span>
+        <span class="img-size-sub">Texte a droite</span>
+      </button>
+      <button class="img-size-btn" data-size="right" onclick="selectImgSize(this)">
+        <span class="img-size-label">Droite</span>
+        <span class="img-size-sub">Texte a gauche</span>
+      </button>
+    </div>
+    <div style="display:flex;gap:.75rem;margin-top:1rem;">
+      <button class="btn-primary" style="flex:1" onclick="confirmInsertImage()">Inserer</button>
+      <button class="btn-ghost" onclick="closeImageModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div id="link-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:600;align-items:center;justify-content:center;">
+  <div style="background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;width:400px;">
+    <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--ink);margin-bottom:1.5rem;">Insérer un lien</div>
+    <div class="form-group">
+      <label class="form-label">Texte affiché</label>
+      <input type="text" id="link-text" class="form-input" placeholder="Ex: Cliquez ici">
+    </div>
+    <div class="form-group">
+      <label class="form-label">URL</label>
+      <input type="url" id="link-url" class="form-input" placeholder="https://…">
+    </div>
+    <div style="display:flex;gap:.75rem;margin-top:1.5rem;">
+      <button class="btn-primary" onclick="confirmInsertLink()">Insérer</button>
+      <button class="btn-ghost" onclick="closeLinkModal()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div id="confirm-modal" style="display:none;position:fixed;inset:0;background:rgba(26,23,20,.7);z-index:500;align-items:center;justify-content:center;">
+  <div style="background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;max-width:360px;width:90%;">
+    <p id="confirm-msg" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:1.5rem;line-height:1.4;"></p>
+    <div style="display:flex;gap:.75rem;justify-content:flex-end;">
+      <button id="confirm-cancel" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;background:transparent;border:1px solid var(--border-strong);color:var(--ink-muted);cursor:pointer;">Annuler</button>
+      <button id="confirm-ok" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 16px;background:var(--red);color:#fff;border:none;cursor:pointer;">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+// ─── API CONFIG ───────────────────────────────────────────
+const API = '';
+let jwtToken = localStorage.getItem('tb_jwt') || null;
+
+async function apiFetch(path, opts = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers||{}) };
+  if (jwtToken) headers['Authorization'] = 'Bearer ' + jwtToken;
+  const res = await fetch(API + path, { ...opts, headers });
+  if (!res.ok) { const e = await res.json().catch(()=>({error:res.statusText})); throw new Error(e.error||res.statusText); }
+  return res.json();
+}
+function normalizeVoyage(v) {
+  return { id:v.id, name:v.name, flag:v.flag||'', dates:v.dates||'', desc:v.description||'', cover:v.cover_url||null };
+}
+function normalizeArticle(a) {
+  return { id:a.id, voyageId:a.voyage_id, title:a.title, category:a.category||'',
+    excerpt:a.excerpt||'', body:a.body||'', inlineImages:a.inline_images||{},
+    status:a.status, date:a.article_date||a.created_at, cover:a.cover_url||null,
+    images:Array.isArray(a.images)?a.images.filter(Boolean):[] };
+}
+
+let adminOk = false;
+let voyages  = [];
+let articles = [];
+let media    = [];
+
+let editVoyageId = null;
+let editArticleId = null;
+let editArticleImages = [];
+let editArticleCover = null;
+let editVoyageCover = null;
+let currentVoyageId = null; // for detail view
+
+// ── BOOT — API ───────────────────────────────────────────
+async function loadPublicData() {
+  try {
+    const [v, a] = await Promise.all([
+      apiFetch('/api/voyages'),
+      apiFetch('/api/articles'),
+    ]);
+    voyages  = v.map(normalizeVoyage);
+    articles = a.map(normalizeArticle);
+  } catch(e) { console.error('Erreur chargement:', e); }
+  applyAproposSaved();
+  checkContactConfig();
+  renderHome();
+}
+
+async function loadAdminData() {
+  try {
+    const [v, a, m, s] = await Promise.all([
+      apiFetch('/api/voyages'),
+      apiFetch('/api/articles/admin'),
+      apiFetch('/api/media'),
+      apiFetch('/api/settings'),
+    ]);
+    voyages  = v.map(normalizeVoyage);
+    articles = a.map(normalizeArticle);
+    media    = m;
+    const stored = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+    localStorage.setItem('tb_apropos', JSON.stringify({ ...s, ...stored }));
+    applyAproposSaved();
+    renderVoyagesAdmin();
+    renderArticlesList();
+    refreshDash();
+  } catch(e) { console.error('Admin data error:', e); }
+}
+
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + name).classList.add('active');
+  window.scrollTo(0,0);
+  const vl = document.getElementById('nav-voyage-link');
+  vl.style.display = 'none';
+}
+
+// ── SEARCH ──────────────────────────────────────────
+function toggleSearch() {
+  const input = document.getElementById('nav-search-input');
+  input.classList.toggle('open');
+  if (input.classList.contains('open')) {
+    input.focus();
+  } else {
+    closeSearch();
+  }
+}
+
+function closeSearch() {
+  document.getElementById('nav-search-input').classList.remove('open');
+  document.getElementById('nav-search-input').value = '';
+  document.getElementById('search-overlay').classList.remove('open');
+  document.getElementById('search-panel').style.display = 'none';
+}
+
+function doSearch(query) {
+  const panel = document.getElementById('search-panel');
+  const list = document.getElementById('search-results-list');
+  const header = document.getElementById('search-header');
+  const overlay = document.getElementById('search-overlay');
+
+  if (!query.trim()) {
+    panel.style.display = 'none';
+    overlay.classList.remove('open');
+    return;
+  }
+
+  const q = query.toLowerCase();
+  const published = articles.filter(a => a.status === 'published');
+  const results = published.filter(a => {
+    const body = (a.body || '').replace(/<[^>]+>/g, '').toLowerCase();
+    return a.title.toLowerCase().includes(q) ||
+           (a.excerpt || '').toLowerCase().includes(q) ||
+           (a.category || '').toLowerCase().includes(q) ||
+           body.includes(q);
+  });
+
+  panel.style.display = 'block';
+  overlay.classList.add('open');
+  header.textContent = results.length + ' résultat' + (results.length !== 1 ? 's' : '') + ' pour "' + query + '"';
+
+  if (!results.length) {
+    list.innerHTML = '<div class="search-empty">Aucun article trouvé</div>';
+    return;
+  }
+
+  list.innerHTML = results.map(a => {
+    const v = voyages.find(x => x.id === a.voyageId);
+    const excerpt = (a.excerpt || (a.body||'').replace(/<[^>]+>/g,'')).substring(0, 120);
+    const escaped = query.replace(/[-.*+?^${}()|[\]\\]/g, '\\$&');
+    const hi = s => s.replace(new RegExp(escaped, 'gi'), m => '<mark class="search-highlight">' + m + '</mark>');
+    return '<div class="search-result-item" onclick="closeSearch();openArticle(\'' + a.id + '\')">' +
+      '<div class="search-result-title">' + hi(esc(a.title)) + '</div>' +
+      '<div class="search-result-meta">' + (v ? esc(v.name) : '') + (a.category ? ' &middot; ' + esc(a.category) : '') + '</div>' +
+      '<div class="search-result-excerpt">' + hi(esc(excerpt)) + '&#8230;</div>' +
+      '</div>';
+  }).join('');
+}
+
+function parseVoyageDate(v) {
+  const months = {janv:1,févr:2,'fév':2,mars:3,avr:4,avril:4,mai:5,juin:6,juil:7,'juill':7,août:8,sept:9,oct:10,nov:11,déc:12,december:12,novembre:11,octobre:10,janvier:1,février:2,juillet:7};
+  const str = (v.dates||'').toLowerCase();
+  const yearMatch = str.match(/\d{4}/);
+  const year = yearMatch ? parseInt(yearMatch[0]) : 9999;
+  let month = 13;
+  for (const [key, val] of Object.entries(months)) {
+    if (str.includes(key)) { month = val; break; }
+  }
+  return year * 100 + month;
+}
+
+function renderHome() {
+  const pub = [...voyages].sort((a,b) => parseVoyageDate(b) - parseVoyageDate(a));
+  document.getElementById('home-voyages-count').textContent = pub.length + ' voyage' + (pub.length>1?'s':'');
+  const container = document.getElementById('home-voyages-container');
+  const empty = document.getElementById('home-empty');
+  if (!pub.length) { container.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  container.innerHTML = pub.map(v => {
+    const arts = articles.filter(a => a.voyageId === v.id && a.status === 'published');
+    const preview = arts.slice(0,4);
+    const hasCover = !!v.cover;
+    const headerHtml = hasCover
+      ? `<div class="voyage-row-banner" onclick="openVoyage('${v.id}')">
+          <img src="${v.cover}" alt="${esc(v.name)}">
+          <div class="voyage-row-banner-overlay"></div>
+          <div class="voyage-row-banner-content">
+            <span class="voyage-row-flag">${v.flag||''}</span>
+            <div class="voyage-row-info">
+              <span class="voyage-row-name">${esc(v.name)}</span>
+              <span class="voyage-row-meta">${esc(v.dates||'')} · ${arts.length} article${arts.length!==1?'s':''}</span>
+            </div>
+            <button class="voyage-row-more-banner" onclick="event.stopPropagation();openVoyage('${v.id}')">Lire les carnets →</button>
+          </div>
+        </div>`
+      : `<div class="voyage-row-header">
+          <span class="voyage-row-flag" style="font-size:26px">${v.flag||''}</span>
+          <span class="voyage-row-name-plain" onclick="openVoyage('${v.id}')">${esc(v.name)}</span>
+          <span class="voyage-row-meta-plain">${esc(v.dates||'')} · ${arts.length} article${arts.length!==1?'s':''}</span>
+          <button class="voyage-row-more" onclick="openVoyage('${v.id}')">Lire les carnets →</button>
+        </div>`;
+    return `
+      <div class="voyage-row">
+        ${headerHtml}
+        ${preview.length
+          ? `<div class="voyage-articles-strip">${preview.map(a => miniCard(a)).join('')}</div>`
+          : `<div class="empty-voyage">Les carnets de ce voyage arrivent bientôt…</div>`
+        }
+      </div>`;
+  }).join('');
+}
+
+function miniCard(art) {
+  const cover = art.cover ? `<img class="mini-card-img" src="${art.cover}" alt="">` : (art.images&&art.images.length ? `<img class="mini-card-img" src="${art.images[0]}" alt="">` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`);
+  return `<div class="mini-card" onclick="openArticle('${art.id}')">
+    ${cover}
+    <div class="mini-card-body">
+      <div class="mini-card-cat">${esc(art.category||'')}</div>
+      <div class="mini-card-title">${esc(art.title)}</div>
+      <div class="mini-card-date">${fdate(art.date)}</div>
+    </div>
+  </div>`;
+}
+
+function openVoyage(id) {
+  const v = voyages.find(x => x.id === id);
+  if (!v) return;
+  currentVoyageId = id;
+
+  document.getElementById('vd-flag').textContent = v.flag||'';
+  document.getElementById('vd-name').textContent = v.name;
+  const bcVN = document.getElementById('bc-voyage-name');
+  if (bcVN) bcVN.textContent = v.name;
+  document.getElementById('vd-dates').textContent = v.dates||'';
+  document.getElementById('vd-desc').textContent = v.desc||'';
+
+  const heroImg = document.getElementById('voyage-hero-img');
+  const heroBg = document.getElementById('voyage-hero-bg');
+  if (v.cover) {
+    heroImg.src = v.cover;
+    heroImg.style.display = 'block';
+    if (heroBg) heroBg.style.display = 'none';
+  } else {
+    heroImg.style.display = 'none';
+    heroImg.src = '';
+    if (heroBg) heroBg.style.display = 'block';
+  }
+
+  const arts = articles.filter(a => a.voyageId === id && a.status === 'published');
+  document.getElementById('vd-article-count').textContent = arts.length + ' article' + (arts.length!==1?'s':'');
+
+  const grid = document.getElementById('vd-articles-grid');
+  const empty = document.getElementById('vd-empty');
+  if (!arts.length) { grid.innerHTML=''; empty.style.display='block'; return; }
+  empty.style.display='none';
+
+  grid.innerHTML = arts.map((art,i) => {
+    const cover = art.cover ? `<img src="${art.cover}" alt="">` : (art.images&&art.images.length ? `<img src="${art.images[0]}" alt="">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
+    if (i===0) return `<div class="article-card featured" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
+    return `<div class="article-card" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
+  }).join('');
+
+  // Update nav
+  const vl = document.getElementById('nav-voyage-link');
+  vl.textContent = v.name;
+  vl.style.display = 'inline';
+
+  showView('voyage');
+}
+
+function returnToVoyage() {
+  if (currentVoyageId) openVoyage(currentVoyageId);
+  else { showView('home'); renderHome(); }
+}
+
+function goBackToVoyage() {
+  if (currentVoyageId) openVoyage(currentVoyageId);
+}
+
+function openArticle(id) {
+  const art = articles.find(a => a.id === id);
+  if (!art) return;
+  const v = voyages.find(x => x.id === art.voyageId);
+
+  // Breadcrumb
+  const bcVoyage = document.getElementById('bc-voyage');
+  const bcArticle = document.getElementById('bc-article');
+  if (bcVoyage) bcVoyage.textContent = v ? v.name : '';
+  if (bcArticle) bcArticle.textContent = art.title.length > 40 ? art.title.substring(0,40)+'...' : art.title;
+  document.getElementById('art-cat').textContent = art.category||'';
+  document.getElementById('art-title').textContent = art.title;
+  document.getElementById('art-meta').textContent = fdate(art.date);
+
+  const cover = document.getElementById('art-cover');
+  const prevImg = cover.querySelector('img.cover-img');
+  if (prevImg) prevImg.remove();
+  if (art.cover) {
+    const img = document.createElement('img');
+    img.src = art.cover;
+    img.className = 'cover-img';
+    img.alt = '';
+    cover.insertBefore(img, cover.firstChild);
+    cover.classList.add('has-cover');
+    cover.classList.remove('no-cover');
+  } else {
+    cover.classList.add('no-cover');
+    cover.classList.remove('has-cover');
+  }
+
+  const bodyContent = art.body || '';
+  const bodyImgStore = art.inlineImages || {};
+  // Restore inline image placeholders
+  const bodyRestored = bodyContent.replace(/__INLINE_IMG__(img_[^"'<\s]+)/g, (m, key) => {
+    return bodyImgStore[key] || '';
+  });
+  document.getElementById('art-body').innerHTML = bodyRestored.trim().startsWith('<') ? bodyRestored : md2html(bodyRestored);
+  // Make inline images in body open lightbox
+  document.getElementById('art-body').querySelectorAll('.inline-img-wrap img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.onclick = () => openLightbox(img.src);
+  });
+
+  // Gallery
+  const gallery = art.images && art.images.length;
+  const galWrap = document.getElementById('art-gallery');
+  const galGrid = document.getElementById('art-gallery-grid');
+  if (gallery) {
+    galGrid.innerHTML = art.images.map(src => `<img src="${src}" alt="" onclick="openLightbox('${src}')">`).join('');
+    galWrap.style.display = 'block';
+  } else {
+    galWrap.style.display = 'none';
+  }
+
+  showView('article');
+}
+
+function glyphForArt(art) {
+  const v = voyages.find(x => x.id === art.voyageId);
+  return v&&v.flag ? v.flag : '';
+}
+
+// ══════════════════════════════════════
+// ADMIN
+// ══════════════════════════════════════
+function openAdmin() {
+  showView('admin');
+  if (!adminOk) {
+    document.getElementById('login-modal').style.display='flex';
+    document.getElementById('admin-content').style.display='none';
+  } else {
+    document.getElementById('login-modal').style.display='none';
+    document.getElementById('admin-content').style.display='grid';
+    refreshDash();
+  }
+}
+
+function tryLogin() {
+  const pw = document.getElementById('admin-pw').value;
+  apiFetch('/api/auth/login', { method:'POST', body:JSON.stringify({ password:pw }) })
+  .then(data => {
+    jwtToken = data.token;
+    localStorage.setItem('tb_jwt', jwtToken);
+    adminOk = true;
+    document.getElementById('login-modal').style.display = 'none';
+    loadAdminData().then(() => showPanel('dashboard'));
+  })
+  .catch(() => {
+    document.getElementById('login-error').style.display = 'block';
+  });
+}
+function showPanel(name) {
+  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','preview'].forEach(p => {
+    const el = document.getElementById('panel-'+p);
+    if (el) el.style.display = p===name?'block':'none';
+    const nav = document.getElementById('anav-'+p);
+    if (nav) nav.classList.toggle('active', p===name);
+  });
+  if (name==='dashboard') refreshDash();
+  if (name==='voyages-list') renderVoyagesAdmin();
+  if (name==='articles-list') { populateVoyageFilters(); renderArticlesList(); }
+  if (name==='media') renderMedia();
+  if (name==='apropos-edit') loadAproposForm();
+  if (name==='contact-edit') loadContactForm();
+}
+
+function refreshDash() {
+  const pub = articles.filter(a=>a.status==='published').length;
+  document.getElementById('st-voyages').textContent = voyages.length;
+  document.getElementById('st-total').textContent = articles.length;
+  document.getElementById('st-pub').textContent = pub;
+  document.getElementById('st-media').textContent = media.length;
+  document.getElementById('dash-tbody').innerHTML = articles.slice(0,6).map(artTableRow).join('');
+}
+
+// ── VOYAGES ADMIN ──
+function renderVoyagesAdmin() {
+  const grid = document.getElementById('voyages-admin-grid');
+  if (!voyages.length) { grid.innerHTML='<p style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--ink-muted);letter-spacing:.1em;">Aucun voyage. Créez-en un.</p>'; return; }
+  grid.innerHTML = voyages.map(v => {
+    const count = articles.filter(a=>a.voyageId===v.id).length;
+    return `<div class="voyage-admin-card">
+      <div class="voyage-admin-card-flag">${v.flag||''}</div>
+      <div class="voyage-admin-card-name">${esc(v.name)}</div>
+      <div class="voyage-admin-card-meta">${esc(v.dates||'')} · ${count} article${count!==1?'s':''}</div>
+      <div class="voyage-admin-card-actions">
+        <button class="tbl-btn" data-action="edit-voyage" data-id="${v.id}">Modifier</button>
+        <button class="tbl-btn del" data-action="delete-voyage" data-id="${v.id}">Supprimer</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function startNewVoyage() {
+  editVoyageId = null; editVoyageCover = null;
+  document.getElementById('voyage-form-title').textContent = 'Nouveau voyage';
+  document.getElementById('vf-name').value='';
+  document.getElementById('vf-flag').value='';
+  document.getElementById('vf-dates').value='';
+  document.getElementById('vf-desc').value='';
+  document.getElementById('voyage-cover-preview').innerHTML='';
+  showPanel('voyage-form');
+}
+
+function editVoyage(id) {
+  const v = voyages.find(x=>x.id===id);
+  if (!v) return;
+  editVoyageId = id; editVoyageCover = v.cover||null;
+  document.getElementById('voyage-form-title').textContent = 'Modifier le voyage';
+  document.getElementById('vf-name').value = v.name;
+  document.getElementById('vf-flag').value = v.flag||'';
+  document.getElementById('vf-dates').value = v.dates||'';
+  document.getElementById('vf-desc').value = v.desc||'';
+  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<img src="${v.cover}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">` : '';
+  showPanel('voyage-form');
+}
+
+function handleVoyageCover(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    editVoyageCover = ev.target.result;
+    document.getElementById('voyage-cover-preview').innerHTML = `<img src="${editVoyageCover}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">`;
+  };
+  reader.readAsDataURL(file);
+  e.target.value='';
+}
+
+function saveVoyage() {
+  const name = document.getElementById('vf-name').value.trim();
+  if (!name) { showToast('Le nom est obligatoire'); return; }
+  const data = {
+    name,
+    flag:        document.getElementById('vf-flag').value.trim(),
+    dates:       document.getElementById('vf-dates').value.trim(),
+    description: document.getElementById('vf-desc').value.trim(),
+    sort_year:   parseInt(document.getElementById('vf-dates').value)||0,
+    sort_month:  0,
+  };
+  const method = editVoyageId ? 'PUT' : 'POST';
+  const path   = editVoyageId ? '/api/voyages/' + editVoyageId : '/api/voyages';
+  apiFetch(path, { method, body: JSON.stringify(data) })
+  .then(async saved => {
+    if (editVoyageCover && editVoyageCover.startsWith('data:')) {
+      const blob = await (await fetch(editVoyageCover)).blob();
+      const fd   = new FormData(); fd.append('cover', blob, 'cover.jpg');
+      await fetch(API + '/api/voyages/' + saved.id + '/cover', {
+        method:'POST', headers:{ 'Authorization':'Bearer '+jwtToken }, body:fd,
+      });
+    }
+    showToast(editVoyageId ? 'Voyage mis à jour' : 'Voyage créé');
+    editVoyageId = null; editVoyageCover = null;
+    await loadAdminData();
+    showPanel('voyages-list');
+  })
+  .catch(e => showToast('Erreur: ' + e.message));
+}
+function deleteVoyage(id) {
+  showConfirm('Supprimer ce voyage et tous ses articles ?', () => {
+    apiFetch('/api/voyages/' + id, { method:'DELETE' })
+    .then(() => { showToast('Voyage supprimé'); loadAdminData(); })
+    .catch(e => showToast('Erreur: ' + e.message));
+  });
+}
+function populateVoyageFilters() {
+  ['af-voyage','articles-filter-voyage'].forEach(id => {
+    const sel = document.getElementById(id); if (!sel) return;
+    const val = sel.value;
+    sel.innerHTML = (id==='articles-filter-voyage'?'<option value="">Tous</option>':'<option value="">— Choisir un voyage —</option>') + voyages.map(v=>`<option value="${v.id}">${v.flag||''} ${esc(v.name)}</option>`).join('');
+    sel.value = val;
+  });
+}
+
+function renderArticlesList() {
+  const filter = document.getElementById('articles-filter-voyage')?.value || '';
+  const list = filter ? articles.filter(a=>a.voyageId===filter) : articles;
+  document.getElementById('articles-list-tbody').innerHTML = list.map(artTableRow).join('');
+}
+
+function artTableRow(a) {
+  const v = voyages.find(x=>x.id===a.voyageId);
+  return `<tr>
+    <td class="td-title">${esc(a.title)}</td>
+    <td style="font-size:13px;">${v?(v.flag||'')+' '+esc(v.name):'-'}</td>
+    <td style="font-size:13px;">${esc(a.category||'')}</td>
+    <td style="font-family:'DM Mono',monospace;font-size:11px;">${fdate(a.date)}</td>
+    <td><span class="badge ${a.status==='published'?'badge-pub':'badge-draft'}">${a.status==='published'?'Publié':'Brouillon'}</span></td>
+    <td><div class="tbl-actions">
+      <button class="tbl-btn" data-action="edit-article" data-id="${a.id}">Modifier</button>
+      <button class="tbl-btn" data-action="toggle-pub" data-id="${a.id}">${a.status==='published'?'Dépublier':'Publier'}</button>
+      <button class="tbl-btn del" data-action="delete-article" data-id="${a.id}">Supprimer</button>
+    </div></td>
+  </tr>`;
+}
+
+function startNewArticle() {
+  editArticleId = null; editArticleImages = []; editArticleCover = null;
+  document.getElementById('article-form-title').textContent = 'Nouvel article';
+  document.getElementById('af-title').value='';
+  document.getElementById('af-cat').value='';
+  document.getElementById('af-date').value=new Date().toISOString().slice(0,10);
+  document.getElementById('af-excerpt').value='';
+  const ed = document.getElementById('af-body-editor'); if(ed) ed.innerHTML='';
+  inlineImgStore = {};
+  renderArtImgPreviews();
+  populateVoyageFilters();
+  document.getElementById('af-voyage').value='';
+  showPanel('article-form');
+}
+
+function editArticle(id) {
+  const art = articles.find(a=>a.id===id); if (!art) return;
+  editArticleId = id;
+  editArticleCover = art.cover || null;
+  editArticleImages = (art.images||[]).map((u,i)=>({dataUrl:u,name:'img'+i}));
+  document.getElementById('article-form-title').textContent = 'Modifier l\'article';
+  populateVoyageFilters();
+  document.getElementById('af-voyage').value = art.voyageId||'';
+  document.getElementById('af-title').value = art.title;
+  document.getElementById('af-cat').value = art.category||'';
+  document.getElementById('af-date').value = art.date||'';
+  document.getElementById('af-excerpt').value = art.excerpt||'';
+  const edEl = document.getElementById('af-body-editor');
+  if (edEl) {
+    // Restore inline images from stored keys
+    const bodyHtml = art.body || '';
+    const imgStore = art.inlineImages || {};
+    inlineImgStore = Object.assign({}, imgStore);
+    // Replace placeholders with actual src
+    const restored = bodyHtml.replace(/__INLINE_IMG__(img_[^"'<\s]+)/g, (m, key) => {
+      return imgStore[key] || m;
+    });
+    edEl.innerHTML = restored;
+    // Re-attach data-img-key to figures
+    edEl.querySelectorAll('figure.inline-img-wrap img').forEach(img => {
+      if (!img.dataset.imgKey && img.src && img.src.startsWith('data:')) {
+        const key = genImgKey();
+        img.dataset.imgKey = key;
+        img.closest('figure').dataset.imgKey = key;
+        inlineImgStore[key] = img.src;
+      }
+    });
+  }
+  renderArtImgPreviews();
+  const cp = document.getElementById('af-cover-preview');
+  if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+  showPanel('article-form');
+}
+
+function saveArticle(status) {
+  const voyageId = document.getElementById('af-voyage').value;
+  const title    = document.getElementById('af-title').value.trim();
+  if (!voyageId) { showToast('Choisissez un voyage'); return; }
+  if (!title)    { showToast('Le titre est obligatoire'); return; }
+  const ed = document.getElementById('af-body-editor');
+  const clone = ed ? ed.cloneNode(true) : null;
+  if (clone) clone.querySelectorAll('figure[data-img-key] img').forEach(img => {
+    const key = img.dataset.imgKey;
+    if (key) img.src = '__INLINE_IMG__' + key;
+  });
+  const inlineImages = {};
+  if (ed) ed.querySelectorAll('figure[data-img-key] img').forEach(img => {
+    const key = img.dataset.imgKey;
+    if (key && inlineImgStore[key]) inlineImages[key] = inlineImgStore[key];
+    else if (key && img.src && img.src.startsWith('data:')) inlineImages[key] = img.src;
+  });
+  const data = {
+    voyageId, title,
+    category:      document.getElementById('af-cat').value.trim(),
+    article_date:  document.getElementById('af-date').value || null,
+    excerpt:       document.getElementById('af-excerpt').value.trim(),
+    body:          clone ? clone.innerHTML : '',
+    inline_images: inlineImages,
+    status,
+  };
+  const method = editArticleId ? 'PUT' : 'POST';
+  const path   = editArticleId ? '/api/articles/' + editArticleId : '/api/articles';
+  apiFetch(path, { method, body: JSON.stringify(data) })
+  .then(async saved => {
+    const artId = saved.id;
+    if (editArticleCover && editArticleCover.startsWith('data:')) {
+      const blob = await (await fetch(editArticleCover)).blob();
+      const fd = new FormData(); fd.append('cover', blob, 'cover.jpg');
+      await fetch(API + '/api/articles/' + artId + '/cover', {
+        method:'POST', headers:{ 'Authorization':'Bearer '+jwtToken }, body:fd,
+      });
+    }
+    if (editArticleImages.length) {
+      const fd = new FormData();
+      for (const img of editArticleImages) {
+        const blob = await (await fetch(img.dataUrl)).blob();
+        fd.append('images', blob, img.name || 'img.jpg');
+      }
+      await fetch(API + '/api/articles/' + artId + '/images', {
+        method:'POST', headers:{ 'Authorization':'Bearer '+jwtToken }, body:fd,
+      });
+    }
+    showToast(status === 'published' ? 'Article publié !' : 'Brouillon sauvegardé');
+    editArticleId = null; editArticleImages = []; editArticleCover = null;
+    await loadAdminData();
+    showPanel('articles-list');
+  })
+  .catch(e => showToast('Erreur: ' + e.message));
+}
+function deleteArticle(id) {
+  showConfirm('Supprimer cet article ?', () => {
+    apiFetch('/api/articles/' + id, { method:'DELETE' })
+    .then(() => { showToast('Article supprimé'); loadAdminData(); })
+    .catch(e => showToast('Erreur: ' + e.message));
+  });
+}
+function togglePub(id) {
+  const art = articles.find(a => a.id === id);
+  if (!art) return;
+  const newStatus = art.status === 'published' ? 'draft' : 'published';
+  apiFetch('/api/articles/' + id, { method:'PUT', body:JSON.stringify({ ...art, status:newStatus, voyage_id:art.voyageId, inline_images:art.inlineImages, article_date:art.date }) })
+  .then(() => { loadAdminData(); showToast(newStatus === 'published' ? 'Publié' : 'Dépublié'); })
+  .catch(e => showToast('Erreur: ' + e.message));
+}
+function handleCoverImage(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    editArticleCover = ev.target.result;
+    document.getElementById('af-cover-preview').innerHTML = `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>`;
+  };
+  r.readAsDataURL(file);
+  e.target.value='';
+}
+
+function removeCover() {
+  editArticleCover = null;
+  document.getElementById('af-cover-preview').innerHTML = '';
+}
+
+function handleGalleryImages(e) {
+  Array.from(e.target.files).forEach(file => {
+    if (!file.type.startsWith('image/')) return;
+    const r = new FileReader();
+    r.onload = ev => { editArticleImages.push({name:file.name,dataUrl:ev.target.result}); renderArtImgPreviews(); };
+    r.readAsDataURL(file);
+  });
+  e.target.value='';
+}
+
+// Keep old handler as alias for compatibility
+function handleArticleImages(e) { handleGalleryImages(e); }
+
+function renderArtImgPreviews() {
+  const c = document.getElementById('af-img-previews'); if (!c) return;
+  c.innerHTML = '';
+  editArticleImages.forEach((img, i) => {
+    const div = document.createElement('div');
+    div.className = 'img-preview';
+    div.draggable = true;
+    div.dataset.index = i;
+    div.innerHTML = '<img src="' + img.dataUrl + '" alt=""><span class="img-preview-drag-hint">⠿</span><button class="img-preview-rm" onclick="removeArtImg(' + i + ')">✕</button>';
+
+    div.addEventListener('dragstart', e => {
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', i);
+      setTimeout(() => div.classList.add('dragging'), 0);
+    });
+    div.addEventListener('dragend', () => div.classList.remove('dragging'));
+    div.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; div.classList.add('drag-over-target'); });
+    div.addEventListener('dragleave', () => div.classList.remove('drag-over-target'));
+    div.addEventListener('drop', e => {
+      e.preventDefault();
+      div.classList.remove('drag-over-target');
+      const fromIdx = parseInt(e.dataTransfer.getData('text/plain'));
+      const toIdx = parseInt(div.dataset.index);
+      if (fromIdx === toIdx) return;
+      const moved = editArticleImages.splice(fromIdx, 1)[0];
+      editArticleImages.splice(toIdx, 0, moved);
+      renderArtImgPreviews();
+    });
+    c.appendChild(div);
+  });
+}
+
+function removeArtImg(i) { editArticleImages.splice(i,1); renderArtImgPreviews(); }
+
+function openLightbox(src) {
+  document.getElementById('art-lightbox-img').src = src;
+  document.getElementById('art-lightbox').classList.add('open');
+}
+
+function closeLightbox() {
+  document.getElementById('art-lightbox').classList.remove('open');
+  document.getElementById('art-lightbox-img').src = '';
+}
+
+// ── MEDIA ──
+function handleMediaUpload(e) {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+  const fd = new FormData();
+  files.forEach(f => fd.append('files', f));
+  fetch(API + '/api/media', { method:'POST', headers:{ 'Authorization':'Bearer '+jwtToken }, body:fd })
+  .then(r => r.json())
+  .then(items => { media = [...items, ...media]; renderMedia(); showToast(items.length + ' photo(s) ajoutée(s)'); })
+  .catch(e => showToast('Erreur upload: ' + e.message));
+}
+function renderMedia() {
+  document.getElementById('media-count').textContent = media.length+' image(s)';
+  const grid = document.getElementById('media-grid');
+  if (!media.length) { grid.innerHTML='<p style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--ink-muted);letter-spacing:.1em;">Aucune image</p>'; return; }
+  grid.innerHTML = media.map((img,i) => `<div style="position:relative;aspect-ratio:1;overflow:hidden;cursor:pointer;">
+    <img src="${img.dataUrl}" alt="" style="width:100%;height:100%;object-fit:cover;transition:transform .3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+    <div onclick="deleteMedia(${i})" style="position:absolute;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#fff;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0'">Supprimer</div>
+  </div>`).join('');
+}
+
+function deleteMedia(i) {
+  const item = media[i];
+  if (!item) return;
+  showConfirm('Supprimer cette photo ?', () => {
+    apiFetch('/api/media/' + item.id, { method:'DELETE' })
+    .then(() => { media.splice(i, 1); renderMedia(); showToast('Photo supprimée'); })
+    .catch(e => showToast('Erreur: ' + e.message));
+  });
+}
+function insertMd(before, after) {
+  // Legacy - kept for compatibility
+  document.getElementById('af-body-editor') && document.getElementById('af-body-editor').focus();
+}
+
+function wysiwyg(cmd) {
+  const editor = document.getElementById('af-body-editor');
+  if (!editor) return;
+  editor.focus();
+  if (cmd === 'bold') document.execCommand('bold', false, null);
+  else if (cmd === 'italic') document.execCommand('italic', false, null);
+  else if (cmd === 'underline') document.execCommand('underline', false, null);
+  else if (cmd === 'ul') document.execCommand('insertUnorderedList', false, null);
+  else if (cmd === 'h2') {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+    const h2 = document.createElement('h2');
+    h2.textContent = sel.toString() || 'Sous-titre';
+    range.deleteContents();
+    range.insertNode(h2);
+    range.setStartAfter(h2); range.collapse(true);
+    sel.removeAllRanges(); sel.addRange(range);
+  }
+  else if (cmd === 'blockquote') document.execCommand('formatBlock', false, 'blockquote');
+  else if (cmd === 'hr') {
+    const hr = document.createElement('hr');
+    const p = document.createElement('p'); p.innerHTML = '<br>';
+    const sel = window.getSelection();
+    if (sel.rangeCount) {
+      const range = sel.getRangeAt(0);
+      range.deleteContents();
+      range.insertNode(p); range.insertNode(hr);
+      range.setStartAfter(p); range.collapse(true);
+      sel.removeAllRanges(); sel.addRange(range);
+    }
+  }
+  else if (cmd === 'undo') document.execCommand('undo', false, null);
+  else if (cmd === 'redo') document.execCommand('redo', false, null);
+  else if (cmd === 'link') openLinkModal();
+}
+
+let savedLinkRange = null;
+
+function openLinkModal() {
+  const editor = document.getElementById('af-body-editor');
+  if (!editor) return;
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount) {
+    savedLinkRange = sel.getRangeAt(0).cloneRange();
+    document.getElementById('link-text').value = sel.toString() || '';
+  }
+  document.getElementById('link-url').value = '';
+  const modal = document.getElementById('link-modal');
+  modal.style.display = 'flex';
+  setTimeout(() => document.getElementById('link-url').focus(), 50);
+}
+
+function closeLinkModal() {
+  document.getElementById('link-modal').style.display = 'none';
+  savedLinkRange = null;
+}
+
+function confirmInsertLink() {
+  const url = document.getElementById('link-url').value.trim();
+  const text = document.getElementById('link-text').value.trim();
+  if (!url) { showToast('Entrez une URL'); return; }
+
+  const editor = document.getElementById('af-body-editor');
+  editor.focus();
+
+  if (savedLinkRange) {
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(savedLinkRange);
+  }
+
+  const a = document.createElement('a');
+  a.href = url;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.textContent = text || url;
+
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount) {
+    const range = sel.getRangeAt(0);
+    range.deleteContents();
+    range.insertNode(a);
+    range.setStartAfter(a); range.collapse(true);
+    sel.removeAllRanges(); sel.addRange(range);
+  }
+
+  closeLinkModal();
+  showToast('Lien inséré');
+}
+
+let imgModalSrc = null;
+let imgModalSize = 'full';
+let imgModalSavedRange = null;
+
+function openImageModal() {
+  const editor = document.getElementById('af-body-editor');
+  if (!editor) return;
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount) imgModalSavedRange = sel.getRangeAt(0).cloneRange();
+  imgModalSrc = null; imgModalSize = 'full';
+  document.getElementById('img-modal-caption').value = '';
+  document.getElementById('img-drop-text').style.display = 'block';
+  const prev = document.getElementById('img-drop-preview');
+  prev.style.display = 'none'; prev.src = '';
+  document.getElementById('img-modal-file').value = '';
+  document.querySelectorAll('.img-size-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelector('[data-size="full"]').classList.add('selected');
+  document.getElementById('img-modal').classList.add('open');
+}
+
+function closeImageModal() {
+  document.getElementById('img-modal').classList.remove('open');
+  imgModalSrc = null; imgModalSavedRange = null;
+}
+
+function imgModalPreview(e) {
+  const file = e.target.files[0]; if (!file) return;
+  const r = new FileReader();
+  r.onload = ev => {
+    imgModalSrc = ev.target.result;
+    const prev = document.getElementById('img-drop-preview');
+    prev.src = imgModalSrc; prev.style.display = 'block';
+    document.getElementById('img-drop-text').style.display = 'none';
+  };
+  r.readAsDataURL(file);
+}
+
+function selectImgSize(btn) {
+  document.querySelectorAll('.img-size-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  imgModalSize = btn.dataset.size;
+}
+
+// Inline image store: key -> base64
+let inlineImgStore = {};
+
+function genImgKey() {
+  return 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
+}
+
+function confirmInsertImage() {
+  if (!imgModalSrc) { showToast('Choisissez une photo'); return; }
+  const caption = document.getElementById('img-modal-caption').value.trim();
+  const editor = document.getElementById('af-body-editor');
+  if (!editor) return;
+
+  // Store the image with a key
+  const key = genImgKey();
+  inlineImgStore[key] = imgModalSrc;
+
+  const fig = document.createElement('figure');
+  fig.className = 'inline-img-wrap ' + imgModalSize;
+  fig.contentEditable = 'false';
+  fig.dataset.imgKey = key;
+  const img = document.createElement('img');
+  img.src = imgModalSrc;
+  img.dataset.imgKey = key;
+  fig.appendChild(img);
+  if (caption) {
+    const cap = document.createElement('figcaption');
+    cap.textContent = caption;
+    fig.appendChild(cap);
+  }
+  editor.focus();
+  const sel = window.getSelection();
+  if (imgModalSavedRange) { sel.removeAllRanges(); sel.addRange(imgModalSavedRange); }
+  if (sel && sel.rangeCount) {
+    const range = sel.getRangeAt(0);
+    range.collapse(false);
+    range.insertNode(fig);
+    const p = document.createElement('p'); p.innerHTML = '<br>';
+    fig.after(p);
+    const nr = document.createRange();
+    nr.setStart(p, 0); nr.collapse(true);
+    sel.removeAllRanges(); sel.addRange(nr);
+  } else {
+    editor.appendChild(fig);
+  }
+  closeImageModal();
+  showToast('Photo inserée');
+}
+
+function wysiwygInsertImage(e, align) {}
+
+function md2html(md) {
+  // Handle inline images [[img:BASE64:align:caption]]
+  let h = md.replace(/\[\[img:([^:]+):([^:]*):([^\]]*)]]/g, (match, src, align, caption) => {
+    const cls = align === 'left' ? 'left' : align === 'right' ? 'right' : '';
+    return `<figure class="img-inline ${cls}"><img src="${src}" alt="${caption}" onclick="openLightbox('${src}')"><figcaption>${caption}</figcaption></figure>`;
+  });
+  h = h.replace(/&(?!amp;|lt;|gt;|quot;)/g,'&amp;').replace(/<(?![a-zA-Z/])/g,'&lt;')
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g,'<em>$1</em>')
+    .replace(/^---$/gm,'<hr>');
+  const parts = h.split(/\n\n+/);
+  return parts.map(p=>{ p=p.trim(); if(!p) return ''; if(/^<[hublrfi]/.test(p)) return p; return '<p>'+p.replace(/\n/g,'<br>')+'</p>'; }).join('\n');
+}
+
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fdate(d) { if(!d) return ''; try{ return new Date(d+'T12:00:00').toLocaleDateString('fr-CA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){return d;} }
+function loadAproposForm() {
+  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+  const defaults = {
+    'ap-subtitle': "2 adultes, 2 fillettes, 1 conviction : voyager, c'est la meilleure école qui soit.",
+    'ap-intro': "Nous sommes convaincus que pour nos enfants, les voyages seront une façon extraordinaire d'apprendre — à se repérer dans l'inconnu, à observer, à s'émerveiller, à comprendre que le monde est plus grand et plus beau qu'on ne l'imagine depuis chez soi.",
+    'ap-family': "Deux adultes qui ont attrapé le virus du voyage bien avant d'avoir des enfants — et qui ont décidé de ne pas s'en guérir. Deux fillettes qui grandissent en croyant que le monde est un terrain de jeu infini. Ensemble, on bouge, on explore, on sort de notre zone de confort. Pas toujours confortablement. Toujours avec bonheur.",
+    'ap-b1-title': "Notre philosophie",
+    'ap-b1-text': "Les voyages ne sont pas des vacances passives. On cherche à comprendre les endroits qu'on visite — leur histoire, leur nourriture, leurs gens. On s'éloigne des circuits balisés autant que possible.",
+    'ap-b2-title': "Voyager avec des enfants",
+    'ap-b2-text': "Oui, c'est plus compliqué. Oui, ça vaut chaque effort. Nos filles nous ont appris à voir les choses différemment — parce qu'une crise de larmes devant les torii de Kyoto, ça reste quand même une crise de larmes devant les torii de Kyoto.",
+    'ap-b3-title': "Pourquoi ce blog",
+    'ap-b3-text': "Pour garder une mémoire vivante de nos aventures. Pour que nos filles puissent relire un jour ces carnets et se souvenir de qui elles étaient quand elles ont vu la mer pour la première fois, ou qu'elles ont mangé du ramen à Tokyo.",
+    'ap-b4-title': "Nos destinations",
+    'ap-b4-text': "Du Costa Rica aux Îles de la Madeleine, du Japon à venir — on ne suit pas de logique géographique. On suit l'envie, la curiosité, et les billets d'avion en solde.",
+    'ap-quote': "Le voyage est la seule chose qu'on achète qui nous fait grandir.",
+    'ap-quote-attr': "— Proverbe de famille",
+    'ap-contact-email': "",
+    'ap-formspree-url': "https://formspree.io/f/mreoaldl"
+  };
+  Object.keys(defaults).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = d[id] || defaults[id];
+  });
+}
+
+function saveApropos() {
+  const fields = ['ap-subtitle','ap-intro','ap-family','ap-b1-title','ap-b1-text',
+    'ap-b2-title','ap-b2-text','ap-b3-title','ap-b3-text','ap-b4-title','ap-b4-text',
+    'ap-quote','ap-quote-attr','ap-contact-email','ap-formspree-url'];
+  const d = {};
+  fields.forEach(k => {
+    const el = document.getElementById(k);
+    if (el) d[k] = el.value;
+  });
+  localStorage.setItem('tb_apropos', JSON.stringify(d));
+  applyAproposSaved();
+  apiFetch('/api/settings', { method:'PUT', body:JSON.stringify(d) })
+  .then(() => showToast('Paramètres sauvegardés'))
+  .catch(() => showToast('Sauvegardé localement seulement'));
+}
+function applyAproposSaved() {
+  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+  if (!Object.keys(d).length) return;
+  const set = (viewId, val) => { const el = document.getElementById(viewId); if(el) el.textContent = val; };
+  if(d['ap-subtitle']) set('ap-view-subtitle', d['ap-subtitle']);
+  if(d['ap-intro']) set('ap-view-intro', '« ' + d['ap-intro'] + ' »');
+  if(d['ap-family']) set('ap-view-family', d['ap-family']);
+  if(d['ap-b1-title']) set('ap-view-b1-title', d['ap-b1-title']);
+  if(d['ap-b1-text']) set('ap-view-b1-text', d['ap-b1-text']);
+  if(d['ap-b2-title']) set('ap-view-b2-title', d['ap-b2-title']);
+  if(d['ap-b2-text']) set('ap-view-b2-text', d['ap-b2-text']);
+  if(d['ap-b3-title']) set('ap-view-b3-title', d['ap-b3-title']);
+  if(d['ap-b3-text']) set('ap-view-b3-text', d['ap-b3-text']);
+  if(d['ap-b4-title']) set('ap-view-b4-title', d['ap-b4-title']);
+  if(d['ap-b4-text']) set('ap-view-b4-text', d['ap-b4-text']);
+  if(d['ap-quote']) set('ap-view-quote', '« ' + d['ap-quote'] + ' »');
+  if(d['ap-quote-attr']) set('ap-view-quote-attr', d['ap-quote-attr']);
+}
+
+function previewArticle() {
+  const voyageId = document.getElementById('af-voyage').value;
+  const title = document.getElementById('af-title').value.trim();
+  const cat = document.getElementById('af-cat').value.trim();
+  const date = document.getElementById('af-date').value;
+  const body = document.getElementById('af-body-editor') ? document.getElementById('af-body-editor').innerHTML : '';
+  const v = voyages.find(x => x.id === voyageId);
+
+  document.getElementById('preview-voyage-label').textContent = v ? v.name : '';
+  document.getElementById('preview-cat').textContent = cat;
+  document.getElementById('preview-title').textContent = title || 'Sans titre';
+  document.getElementById('preview-meta').textContent = date ? fdate(date) : '';
+
+  // Cover
+  const coverEl = document.getElementById('preview-cover');
+  if (editArticleCover) {
+    coverEl.innerHTML = '<div style="position:relative;width:100%;height:55vh;min-height:300px;overflow:hidden;margin-bottom:0;"><img src="' + editArticleCover + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,10,.5),transparent);"></div></div>';
+  } else {
+    coverEl.innerHTML = '';
+  }
+
+  // Body
+  // Restore inline images in preview
+  const previewImgStore = {};
+  const edForPreview = document.getElementById('af-body-editor');
+  if (edForPreview) {
+    edForPreview.querySelectorAll('figure[data-img-key] img').forEach(img => {
+      const key = img.dataset.imgKey;
+      if (key) previewImgStore[key] = inlineImgStore[key] || img.src;
+    });
+  }
+  const bodyForPreview = body.replace(/__INLINE_IMG__(img_[^"'<\s]+)/g, (m, key) => previewImgStore[key] || '');
+  document.getElementById('preview-body').innerHTML = bodyForPreview;
+
+  // Gallery
+  const galWrap = document.getElementById('preview-gallery');
+  const galGrid = document.getElementById('preview-gallery-grid');
+  if (editArticleImages.length) {
+    galGrid.innerHTML = editArticleImages.map(i => '<img src="' + i.dataUrl + '" alt="" onclick="openLightbox(\'' + i.dataUrl + '\')">').join('');
+    galWrap.style.display = 'block';
+  } else {
+    galWrap.style.display = 'none';
+  }
+
+  // Switch panels
+  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit'].forEach(p => {
+    const el = document.getElementById('panel-' + p);
+    if (el) el.style.display = 'none';
+  });
+  document.getElementById('panel-preview').style.display = 'block';
+  document.getElementById('anav-new-article').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function backToEdit() {
+  document.getElementById('panel-preview').style.display = 'none';
+  document.getElementById('panel-article-form').style.display = 'block';
+  document.getElementById('anav-new-article').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function loadContactForm() {
+  const d = JSON.parse(localStorage.getItem('tb_contact') || '{}');
+  const defaults = {
+    'ct-eyebrow': "Nous écrire",
+    'ct-subtitle': "Une question sur l'une de nos destinations ? Une suggestion ? Juste envie d'échanger sur les voyages en famille ? On est là.",
+    'ct-card-title': "Par courriel",
+    'ct-card-sub': "Réponse en 48h",
+    'ct-card-text': "C'est le moyen le plus simple de nous joindre. On répond à tous les messages — surtout ceux qui parlent de voyages, de bonnes adresses ou d'astuces pour voyager avec des enfants.",
+    'ct-form-title': "Envoyez-nous un message",
+    'ct-form-sub': "On vous répond avec plaisir"
+  };
+  Object.keys(defaults).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = d[id] || defaults[id];
+  });
+}
+
+function saveContact() {
+  const fields = ['ct-eyebrow','ct-subtitle','ct-card-title','ct-card-sub','ct-card-text','ct-form-title','ct-form-sub'];
+  const d = {};
+  fields.forEach(id => { const el = document.getElementById(id); if(el) d[id] = el.value; });
+  localStorage.setItem('tb_contact', JSON.stringify(d));
+  applyContactSaved(d);
+  showToast('Contact sauvegardé ✓');
+  showPanel('dashboard');
+}
+
+function applyContactSaved(d) {
+  if (!d) d = JSON.parse(localStorage.getItem('tb_contact') || '{}');
+  if (!Object.keys(d).length) return;
+  const set = (id, val) => { const el = document.getElementById(id); if(el && val) el.textContent = val; };
+  set('ct-view-eyebrow', d['ct-eyebrow']);
+  set('ct-view-subtitle', d['ct-subtitle']);
+  set('ct-view-card-title', d['ct-card-title']);
+  set('ct-view-card-sub', d['ct-card-sub']);
+  set('ct-view-card-text', d['ct-card-text']);
+  set('ct-view-form-title', d['ct-form-title']);
+  set('ct-view-form-sub', d['ct-form-sub']);
+}
+
+function showToast(msg) { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800); }
+
+function submitContact() {
+  const prenom = document.getElementById('cf-prenom').value.trim();
+  const email = document.getElementById('cf-email').value.trim();
+  const msg = document.getElementById('cf-message').value.trim();
+  if (!prenom || !email || !msg) { showToast('Veuillez remplir tous les champs'); return; }
+
+  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+  const formspreeUrl = d['ap-formspree-url'] || '';
+
+  if (!formspreeUrl || !formspreeUrl.includes('formspree.io')) {
+    // No Formspree configured - show message
+    showToast('Formulaire non configuré — voir Admin > A propos');
+    return;
+  }
+
+  const btn = document.querySelector('#cf-form .btn-primary');
+  if (btn) { btn.textContent = 'Envoi en cours...'; btn.disabled = true; }
+
+  const sujet = document.getElementById('cf-sujet').value.trim();
+  fetch(formspreeUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({ prenom, email, sujet, message: msg })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok || data.next) {
+      document.getElementById('cf-form').style.display = 'none';
+      document.getElementById('cf-success').style.display = 'block';
+    } else {
+      showToast('Erreur lors de l\'envoi. Veuillez réessayer.');
+      if (btn) { btn.textContent = 'Envoyer le message →'; btn.disabled = false; }
+    }
+  })
+  .catch(() => {
+    showToast('Erreur de connexion. Vérifiez votre internet.');
+    if (btn) { btn.textContent = 'Envoyer le message →'; btn.disabled = false; }
+  });
+}
+
+function checkContactConfig() {
+  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
+  const noEmail = document.getElementById('cf-no-email');
+  if (noEmail) noEmail.style.display = d['ap-formspree-url'] ? 'none' : 'block';
+}
+
+// ── CONFIRM MODAL ──
+function showConfirm(msg, onOk) {
+  const modal = document.getElementById('confirm-modal');
+  document.getElementById('confirm-msg').textContent = msg;
+  modal.style.display = 'flex';
+  const ok = document.getElementById('confirm-ok');
+  const cancel = document.getElementById('confirm-cancel');
+  const close = () => { modal.style.display = 'none'; ok.onclick = null; cancel.onclick = null; };
+  ok.onclick = () => { close(); onOk(); };
+  cancel.onclick = close;
+  modal.onclick = e => { if (e.target === modal) close(); };
+}
+
+// ── EVENT DELEGATION for admin tables ──
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+  if (action === 'edit-voyage') editVoyage(id);
+  else if (action === 'delete-voyage') deleteVoyage(id);
+  else if (action === 'edit-article') editArticle(id);
+  else if (action === 'delete-article') deleteArticle(id);
+  else if (action === 'toggle-pub') togglePub(id);
+});
+
+// ── DRAG OVER styling ──
+document.querySelectorAll('.upload-zone').forEach(z=>{
+  z.addEventListener('dragover',e=>{e.preventDefault();z.classList.add('drag-over');});
+  z.addEventListener('dragleave',()=>z.classList.remove('drag-over'));
+  z.addEventListener('drop',e=>{e.preventDefault();z.classList.remove('drag-over');});
+});
+
+// ── INIT ──
+// Patch localStorage: update Japon cover photo if missing
+(function() {
+  try {
+    const stored = JSON.parse(localStorage.getItem('tb_voyages') || 'null');
+    if (stored) {
+      let changed = false;
+      stored.forEach(v => {
+        if (v.id === 'v1' && !v.cover) {
+          // Find the cover from demo data
+          const demo = voyages.find(x => x.id === 'v1');
+          if (demo && demo.cover) { v.cover = demo.cover; changed = true; }
+        }
+      });
+      if (changed) localStorage.setItem('tb_voyages', JSON.stringify(stored));
+    }
+  } catch(e) {}
+})();
+loadPublicData();
+
+// ── PARTICLES ──
+(function() {
+  const container = document.getElementById('hero-particles');
+  if (!container) return;
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'hero-particle';
+    const size = Math.random() * 3 + 1;
+    p.style.cssText = `
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}%;
+      animation-duration:${Math.random()*15+10}s;
+      animation-delay:${Math.random()*10}s;
+    `;
+    container.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

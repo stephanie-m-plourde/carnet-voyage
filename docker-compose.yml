@@ -1,0 +1,50 @@
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: carnets_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: carnets_voyage
+      POSTGRES_USER: carnets_user
+      POSTGRES_PASSWORD: carnets_secret_2026
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U carnets_user -d carnets_voyage"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: carnets_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DATABASE_URL: postgresql://carnets_user:carnets_secret_2026@db:5432/carnets_voyage
+      ADMIN_PASSWORD: admin123
+      JWT_SECRET: carnets_jwt_secret_gagnon_2026
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: carnets_web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  uploads_data:
