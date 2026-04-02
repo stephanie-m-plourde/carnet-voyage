@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
   else           { conditions.push(`a.status = 'published'`); }
 
   if (conditions.length) query += ' WHERE ' + conditions.join(' AND ');
-  query += ' GROUP BY a.id ORDER BY a.article_date DESC, a.created_at DESC';
+  query += ' GROUP BY a.id ORDER BY a.sort_order ASC, a.article_date DESC, a.created_at DESC';
 
   const { rows } = await pool.query(query, params);
   res.json(rows);
@@ -42,9 +42,19 @@ router.get('/admin', auth, async (req, res) => {
   `;
   const params = [];
   if (voyage_id) { params.push(voyage_id); query += ` WHERE a.voyage_id = $1`; }
-  query += ' GROUP BY a.id, v.name ORDER BY a.created_at DESC';
+  query += ' GROUP BY a.id, v.name ORDER BY a.sort_order ASC, a.created_at DESC';
   const { rows } = await pool.query(query, params);
   res.json(rows);
+});
+
+// PUT /api/articles/reorder — admin (must be before /:id)
+router.put('/reorder', auth, async (req, res) => {
+  const { order } = req.body;
+  if (!Array.isArray(order)) return res.status(400).json({ error: 'order must be an array' });
+  for (let i = 0; i < order.length; i++) {
+    await pool.query('UPDATE articles SET sort_order=$1, updated_at=NOW() WHERE id=$2', [i, order[i]]);
+  }
+  res.json({ success: true });
 });
 
 // GET /api/articles/:id

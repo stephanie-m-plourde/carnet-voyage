@@ -29,6 +29,7 @@ CREATE TABLE articles (
   cover_url     VARCHAR(500),
   status        VARCHAR(20) DEFAULT 'draft' CHECK (status IN ('draft','published')),
   article_date  DATE,
+  sort_order    INTEGER DEFAULT 0,
   created_at    TIMESTAMPTZ DEFAULT NOW(),
   updated_at    TIMESTAMPTZ DEFAULT NOW()
 );

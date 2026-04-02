@@ -34,5 +34,13 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message || 'Erreur serveur' });
 });
 
+// Auto-migration: add sort_order column if missing
+const pool = require('./db');
+(async () => {
+  try {
+    await pool.query(`ALTER TABLE articles ADD COLUMN IF NOT EXISTS sort_order INTEGER DEFAULT 0`);
+  } catch(e) { console.log('Migration note:', e.message); }
+})();
+
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => console.log(`API démarrée sur le port ${PORT}`));

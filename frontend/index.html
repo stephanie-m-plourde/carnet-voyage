@@ -6,29 +6,49 @@
 <title>Carnets de voyage · Famille Gagnon</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root{
+:root,[data-theme="dark"]{
   --ink:#f0ece4;--ink-soft:#c8bfb0;--ink-muted:#8a8070;
   --paper:#0f0d0a;--paper-warm:#181410;--paper-card:#1c1815;
   --accent:#e8b86d;--accent-soft:rgba(232,184,109,.15);--accent-glow:rgba(232,184,109,.35);
   --red:#d4573c;--red-soft:rgba(212,87,60,.15);
   --border:rgba(240,236,228,.08);--border-strong:rgba(240,236,228,.18);
   --teal:#5cb8b2;
+  --nav-bg:rgba(15,13,10,.85);--overlay-bg:rgba(0,0,0,.75);--overlay-strong:rgba(0,0,0,.92);
+  --shadow-card:rgba(0,0,0,.4);--hero-text:#fff;--input-bg:rgba(255,255,255,.06);
+  --badge-pub-bg:rgba(92,184,178,.12);--badge-draft-bg:rgba(232,184,109,.1);
+}
+[data-theme="light"]{
+  --ink:#1a1a1a;--ink-soft:#3d3d3d;--ink-muted:#777;
+  --paper:#faf8f5;--paper-warm:#f0ede8;--paper-card:#fff;
+  --accent:#c48a2a;--accent-soft:rgba(196,138,42,.12);--accent-glow:rgba(196,138,42,.25);
+  --red:#c0392b;--red-soft:rgba(192,57,43,.1);
+  --border:rgba(0,0,0,.08);--border-strong:rgba(0,0,0,.15);
+  --teal:#3a9e97;
+  --nav-bg:rgba(250,248,245,.9);--overlay-bg:rgba(0,0,0,.5);--overlay-strong:rgba(0,0,0,.85);
+  --shadow-card:rgba(0,0,0,.1);--hero-text:#fff;--input-bg:rgba(0,0,0,.04);
+  --badge-pub-bg:rgba(58,158,151,.1);--badge-draft-bg:rgba(196,138,42,.08);
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Lora',serif;background:var(--paper);color:var(--ink);min-height:100vh;font-size:18px;line-height:1.7;}
 ::selection{background:var(--accent-soft);color:var(--accent);}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-track{background:var(--paper);}
+[data-theme="light"] ::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);}
+[data-theme="light"] ::-webkit-scrollbar-track{background:var(--paper);}
 ::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:2px;}
 .view{display:none;}.view.active{display:block;}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;}
 .nav-logo{font-family:'Playfair Display',serif;font-weight:400;font-size:16px;letter-spacing:.02em;cursor:pointer;color:var(--ink);white-space:nowrap;}
 .nav-logo em{font-style:italic;color:var(--accent);}
 .nav-right{display:flex;align-items:center;gap:2rem;}
+.nav-right.search-active .nav-link,
+.nav-right.search-active .nav-admin-btn,
+.nav-right.search-active .nav-theme-btn{display:none;}
+.nav-right.search-active .nav-search-input.open{width:min(400px,50vw);}
 .nav-search-wrap{position:relative;display:flex;align-items:center;}
-.nav-search-input{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;background:rgba(255,255,255,.06);border:1px solid var(--border-strong);color:var(--ink);padding:6px 32px 6px 12px;width:0;opacity:0;transition:width .3s ease,opacity .3s ease;outline:none;}
+.nav-search-input{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;background:var(--input-bg);border:1px solid var(--border-strong);color:var(--ink);padding:6px 32px 6px 12px;width:0;opacity:0;transition:width .3s ease,opacity .3s ease;outline:none;}
 .nav-search-input.open{width:200px;opacity:1;}
 .nav-search-input::placeholder{color:var(--ink-muted);}
 .nav-search-input:focus{border-color:var(--accent);}
@@ -49,6 +69,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .nav-link:hover{color:var(--accent);}
 .nav-admin-btn{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid var(--border-strong);background:transparent;color:var(--ink-muted);cursor:pointer;transition:all .2s;}
 .nav-admin-btn:hover{border-color:var(--accent);color:var(--accent);}
+.nav-theme-btn{background:none;border:1px solid var(--border-strong);color:var(--ink-muted);cursor:pointer;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;}
+.nav-theme-btn:hover{border-color:var(--accent);color:var(--accent);}
 
 /* ── HOME HERO ── */
 .home-hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:60px;}
@@ -88,7 +110,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 
 /* Voyage cards row */
 .voyage-row{margin-bottom:5rem;}
-.voyage-row-banner{position:relative;height:320px;overflow:hidden;margin-bottom:0;cursor:pointer;background:#0f0d0a;}
+.voyage-row-banner{position:relative;height:320px;overflow:hidden;margin-bottom:0;cursor:pointer;background:var(--paper);}
 .voyage-row-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
 .voyage-row-banner:hover img{transform:scale(1.03);}
 .voyage-row-banner-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,12,9,.68) 0%,rgba(15,12,9,.28) 60%,rgba(15,12,9,.04) 100%);}
@@ -108,7 +130,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .voyage-row-more:hover{color:var(--accent);}
 
 /* Article mini-grid per voyage */
-.voyage-articles-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;border:1px solid var(--border);}
+.voyage-articles-wrap{position:relative;}
+.voyage-articles-strip{display:flex;overflow-x:hidden;scroll-behavior:smooth;gap:1px;border:1px solid var(--border);}
+.voyage-articles-strip .mini-card{min-width:260px;flex:1 0 calc(25% - 1px);max-width:calc(25% - 1px);}
+@media(max-width:1100px){.voyage-articles-strip .mini-card{flex:1 0 calc(33.333% - 1px);max-width:calc(33.333% - 1px);}}
+@media(max-width:760px){.voyage-articles-strip .mini-card{flex:1 0 calc(50% - 1px);max-width:calc(50% - 1px);}}
+.strip-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,opacity .2s;opacity:.85;}
+.strip-arrow:hover{background:rgba(0,0,0,.85);opacity:1;}
+.strip-arrow.left{left:6px;}
+.strip-arrow.right{right:6px;}
 .mini-card{background:var(--paper-card);cursor:pointer;overflow:hidden;transition:transform .3s,box-shadow .3s;border:1px solid var(--border);}
 .mini-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
 .mini-card-img{width:100%;height:170px;object-fit:cover;display:block;transition:transform .4s;}
@@ -118,11 +148,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .mini-card-cat{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem;}
 .mini-card-title{font-family:'Playfair Display',serif;font-weight:400;font-size:17px;line-height:1.3;color:var(--ink);margin-bottom:.5rem;}
 .mini-card-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);}
+.mini-card-img-wrap{position:relative;overflow:hidden;}
+.mini-card-zoom{position:absolute;bottom:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2;}
+.mini-card:hover .mini-card-zoom{opacity:1;}
+.mini-card-zoom:hover{background:var(--accent);}
 .empty-voyage{padding:2rem;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);border:1px solid var(--border);}
 
 /* ── VOYAGE DETAIL PAGE ── */
 #view-voyage{padding-top:58px;}
-.voyage-detail-hero{position:relative;background:#0f0d0a;overflow:hidden;min-height:460px;display:flex;align-items:flex-end;}
+.voyage-detail-hero{position:relative;background:var(--paper);overflow:hidden;min-height:460px;display:flex;align-items:flex-end;}
 .voyage-detail-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--paper-warm),var(--paper));}
 .voyage-detail-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1;}
 
@@ -158,7 +192,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .art-back:hover{color:var(--accent);}
 .art-back-hero{position:absolute;top:calc(60px + 1.2rem);left:2rem;color:rgba(255,255,255,.75);background:rgba(0,0,0,.3);padding:6px 14px;backdrop-filter:blur(4px);}
 .art-back-hero:hover{color:#fff;background:rgba(0,0,0,.5);}
-.art-cover-hero{position:relative;width:100%;background:#0f0d0a;overflow:hidden;}
+.art-cover-hero{position:relative;width:100%;background:var(--paper);overflow:hidden;}
 .art-cover-hero.has-cover{height:65vh;min-height:380px;}
 .art-cover-hero.no-cover{height:60px;background:transparent;}
 .art-cover-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
@@ -179,7 +213,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .art-body h2{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;color:var(--ink);margin:2.5rem 0 .9rem;}
 .art-body blockquote{border-left:3px solid var(--accent);margin:1.5rem 0;padding-left:1.5rem;font-style:italic;color:var(--accent);font-family:'Lora',serif;}
 .art-body ul{margin:1rem 0 1rem 1.5rem;}
-.img-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:600;display:none;align-items:center;justify-content:center;}
+.img-modal-overlay{position:fixed;inset:0;background:var(--overlay-bg);z-index:600;display:none;align-items:center;justify-content:center;}
 .img-modal-overlay.open{display:flex;}
 .img-modal-box{background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;width:520px;max-width:95vw;}
 .img-modal-title{font-family:'Playfair Display',serif;font-size:24px;color:var(--ink);margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;}
@@ -209,14 +243,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .art-body::after{content:'';display:table;clear:both;}
 .art-gallery{max-width:1160px;margin:3rem auto;padding:0 2rem;}
 #panel-preview{display:none;}
-.preview-bar{background:#1c1815;border-bottom:1px solid var(--border-strong);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:60px;z-index:50;}
+.preview-bar{background:var(--paper-card);border-bottom:1px solid var(--border-strong);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:60px;z-index:50;}
 .preview-bar-label{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);}
-.preview-bar-actions{display:flex;gap:.75rem;}
+.preview-bar-actions{display:flex;gap:.75rem;align-items:center;}
+.preview-device-toggle{display:flex;gap:2px;background:var(--input-bg);border-radius:6px;padding:2px;}
+.preview-device-btn{width:32px;height:32px;border:none;background:transparent;color:var(--ink-muted);cursor:pointer;border-radius:4px;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.preview-device-btn.active{background:var(--accent);color:#0f0d0a;}
+.preview-mobile-frame{max-width:390px !important;margin:0 auto !important;border:2px solid var(--border-strong);border-radius:24px;padding:2rem 1.25rem 4rem !important;box-shadow:0 0 60px rgba(0,0,0,.4);}
 .art-gallery-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
 .art-gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;}
 .art-gallery-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;cursor:zoom-in;transition:transform .3s,opacity .2s;}
 .art-gallery-grid img:hover{transform:scale(1.02);opacity:.9;}
-.art-lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:300;display:none;align-items:center;justify-content:center;cursor:zoom-out;}
+.art-lightbox{position:fixed;inset:0;background:var(--overlay-strong);z-index:300;display:none;align-items:center;justify-content:center;cursor:zoom-out;}
 .art-lightbox.open{display:flex;}
 .art-lightbox img{max-width:90vw;max-height:88vh;object-fit:contain;}
 .art-lightbox-close{position:absolute;top:1.5rem;right:2rem;font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);cursor:pointer;background:none;border:none;transition:color .2s;}
@@ -225,14 +263,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .img-preview-cover-btn:hover,.img-preview-cover-btn.active{background:var(--accent);border-color:var(--accent);color:#000;}
 
 /* ── ADMIN ── */
-#view-admin{padding-top:60px;min-height:100vh;background:#0f0d0a;}
+#view-admin{padding-top:60px;min-height:100vh;background:var(--paper);}
 .admin-layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 60px);}
-.admin-sidebar{background:#0f0d0a;border-right:none;padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
-.sidebar-section{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.5rem 1.5rem .25rem;margin-top:.75rem;}
-.admin-nav-item{display:flex;align-items:center;gap:10px;padding:.65rem 1.5rem;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.45);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
-.admin-nav-item:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.05);}
-.admin-nav-item.active{color:#fff;border-left-color:var(--accent);background:rgba(255,255,255,.05);}
-.admin-main{padding:2.5rem;overflow-y:auto;background:#0f0d0a;}
+.admin-sidebar{background:var(--paper);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+.sidebar-section{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-muted);opacity:.5;padding:.5rem 1.5rem .25rem;margin-top:.75rem;}
+.admin-nav-item{display:flex;align-items:center;gap:10px;padding:.65rem 1.5rem;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink-muted);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
+.admin-nav-item:hover{color:var(--ink);background:var(--input-bg);}
+.admin-nav-item.active{color:var(--ink);border-left-color:var(--accent);background:var(--input-bg);}
+.admin-main{padding:2.5rem;overflow-y:auto;background:var(--paper);}
 .admin-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
 .admin-page-title{font-family:'Playfair Display',serif;font-weight:700;font-size:32px;color:var(--ink);}
 
@@ -246,7 +284,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 
 /* Stats */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem;}
-.stat-card{background:#1c1815;border:1px solid var(--border);padding:1.2rem;position:relative;overflow:hidden;}
+.stat-card{background:var(--paper-card);border:1px solid var(--border);padding:1.2rem;position:relative;overflow:hidden;}
 .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent);}
 .stat-val{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:.2rem;}
 .stat-lbl{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);}
@@ -264,7 +302,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .form-footer{display:flex;gap:.75rem;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
 
 /* Upload */
-.upload-zone{border:2px dashed var(--border-strong);padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;background:#181410;position:relative;}
+.upload-zone{border:2px dashed var(--border-strong);padding:2.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--paper-warm);position:relative;}
 .upload-zone:hover,.upload-zone.drag-over{border-color:var(--accent);background:var(--accent-soft);}
 .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .upload-zone-icon{font-size:32px;color:var(--ink-muted);margin-bottom:.75rem;}
@@ -283,9 +321,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 
 /* Table */
 .admin-table{width:100%;border-collapse:collapse;border:1px solid var(--border);}
-.admin-table th{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:10px 14px;text-align:left;background:#1c1815;border-bottom:1px solid var(--border);}
-.admin-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink-soft);vertical-align:middle;background:#0f0d0a;}
+.admin-table th{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);padding:10px 14px;text-align:left;background:var(--paper-card);border-bottom:1px solid var(--border);}
+.admin-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink-soft);vertical-align:middle;background:var(--paper);}
 .admin-table tr:hover td{background:rgba(232,184,109,.08);}
+.admin-table tr.drag-over td{border-top:2px solid var(--accent);}
+.admin-table tr[draggable="true"]{cursor:grab;}
+.admin-table tr[draggable="true"]:active{cursor:grabbing;}
+.drag-handle{cursor:grab;color:var(--ink-muted);font-size:16px;user-select:none;padding-right:6px;}
 .td-title{font-family:'Playfair Display',serif;font-size:16px;color:var(--ink);}
 .badge{display:inline-block;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border:1px solid;}
 .badge-pub{color:var(--teal);border-color:var(--teal);background:rgba(92,184,178,.1);}
@@ -297,7 +339,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 
 /* Voyage card (admin list) */
 .voyage-cards-admin{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;}
-.voyage-admin-card{background:#1c1815;border:1px solid var(--border);padding:1.25rem;position:relative;transition:border-color .2s;}
+.voyage-admin-card{background:var(--paper-card);border:1px solid var(--border);padding:1.25rem;position:relative;transition:border-color .2s;}
 .voyage-admin-card:hover{border-color:var(--accent);}
 .voyage-admin-card-flag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);padding:3px 8px;display:inline-block;margin-bottom:.75rem;}
 .voyage-admin-card-name{font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:var(--ink);margin-bottom:.2rem;}
@@ -305,9 +347,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .voyage-admin-card-actions{display:flex;gap:.5rem;}
 
 /* Toolbar */
-.editor-toolbar{display:flex;gap:3px;padding:8px 10px;background:#1c1815;border:1px solid var(--border-strong);border-bottom:none;flex-wrap:wrap;align-items:center;}
-.tbar-btn{font-family:'Space Mono',monospace;font-size:10px;padding:5px 9px;background:transparent;border:1px solid transparent;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;border-radius:2px;}
-.tbar-btn:hover{border-color:var(--border-strong);color:rgba(255,255,255,.85);background:rgba(255,255,255,.06);}
+.editor-toolbar{display:flex;gap:3px;padding:8px 10px;background:var(--paper-card);border:1px solid var(--border-strong);border-bottom:none;flex-wrap:wrap;align-items:center;}
+.tbar-btn{font-family:'Space Mono',monospace;font-size:10px;padding:5px 9px;background:transparent;border:1px solid transparent;color:var(--ink-muted);cursor:pointer;transition:all .15s;border-radius:2px;}
+.tbar-btn:hover{border-color:var(--border-strong);color:var(--ink-soft);background:var(--input-bg);}
 .tbar-btn.active{background:var(--accent);color:#0f0d0a;border-color:var(--accent);}
 .tbar-sep{width:1px;height:18px;background:rgba(255,255,255,.12);margin:0 4px;flex-shrink:0;}
 .wysiwyg-editor{min-height:420px;background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;color:var(--ink);font-family:'Lora',serif;font-size:18px;line-height:1.85;outline:none;overflow-y:auto;}
@@ -327,6 +369,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .wysiwyg-editor .inline-img-wrap.right{float:right;width:44%;margin:0.3rem 0 1rem 1.8rem;}
 .wysiwyg-editor .inline-img-wrap img{width:100%;display:block;}
 .wysiwyg-editor .inline-img-wrap figcaption{font-family:'Space Mono',monospace;font-size:10px;color:var(--ink-muted);padding:4px 2px;line-height:1.4;font-style:italic;}
+.wysiwyg-editor .inline-img-wrap{position:relative;}
+.wysiwyg-editor .inline-img-wrap .inline-img-rm{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;cursor:pointer;font-size:16px;line-height:1;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2;}
+.wysiwyg-editor .inline-img-wrap:hover .inline-img-rm{opacity:1;}
+.wysiwyg-editor .inline-img-wrap .inline-img-rm:hover{background:var(--accent);}
 .wysiwyg-editor::after{content:'';display:table;clear:both;}
 .art-body .inline-img-wrap{display:block;margin:1.5rem auto;line-height:0;}
 .art-body .inline-img-wrap.full img{width:100%;}
@@ -341,7 +387,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
 .art-body::after{content:'';display:table;clear:both;}
 
 /* Modal */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(6px);}
+.modal-overlay{position:fixed;inset:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(6px);}
 .modal-box{background:var(--paper-card);width:420px;padding:2.5rem;border:1px solid var(--border-strong);}
 .modal-title{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;margin-bottom:.2rem;color:var(--ink);}
 .modal-sub{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:2rem;}
@@ -420,6 +466,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
       <button class="nav-search-btn" onclick="toggleSearch()">Rechercher</button>
     </div>
     <button class="nav-admin-btn" onclick="openAdmin()">Admin ↗</button>
+    <button class="nav-theme-btn" id="theme-toggle" onclick="toggleTheme()" title="Mode clair / sombre">&#9789;</button>
   </div>
   <div class="search-results-overlay" id="search-overlay" onclick="closeSearch()"></div>
   <div class="search-results-panel" id="search-panel" style="display:none">
@@ -657,7 +704,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(15,13,10,.85
       <div class="admin-nav-item" onclick="showPanel('apropos-edit')" id="anav-apropos-edit">≈ &ensp;À propos</div>
       <div class="admin-nav-item" onclick="showPanel('contact-edit')" id="anav-contact-edit">&#9993; &ensp;Contact</div>
       <div style="position:absolute;bottom:1.5rem;left:0;right:0;padding:0 1.5rem;">
-        <div onclick="showView('home');renderHome();
+        <div onclick="loadPublicData();showView('home');
 applyAproposSaved();
 // Pre-configure Formspree if not already set
 (function() {
@@ -758,7 +805,7 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
             <option value="">Tous</option>
           </select>
         </div>
-        <table class="admin-table"><thead><tr><th>Titre</th><th>Voyage</th><th>Catégorie</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
+        <table class="admin-table"><thead><tr><th></th><th>Titre</th><th>Voyage</th><th>Catégorie</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead>
         <tbody id="articles-list-tbody"></tbody></table>
       </div>
 
@@ -766,7 +813,8 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
       <div id="panel-article-form" style="display:none">
         <div class="admin-topbar">
           <h2 class="admin-page-title" id="article-form-title">Nouvel article</h2>
-          <div style="display:flex;gap:.5rem;">
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <span id="autosave-indicator" style="font-family:'DM Mono',monospace;font-size:9px;color:var(--ink-muted);opacity:0.5;margin-right:.5rem;"></span>
             <button class="btn-secondary" onclick="previewArticle()">Prévisualiser</button>
             <button class="btn-secondary" onclick="saveArticle('draft')">Brouillon</button>
             <button class="btn-primary" onclick="saveArticle('published')">Publier</button>
@@ -978,12 +1026,16 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
         <div class="preview-bar">
           <span class="preview-bar-label">Prévisualisation</span>
           <div class="preview-bar-actions">
+            <div class="preview-device-toggle">
+              <button class="preview-device-btn active" onclick="setPreviewDevice('desktop',this)" title="Bureau">&#9633;</button>
+              <button class="preview-device-btn" onclick="setPreviewDevice('mobile',this)" title="Mobile">&#9647;</button>
+            </div>
             <button class="btn-secondary" onclick="backToEdit()">← Retour à l'édition</button>
             <button class="btn-secondary" onclick="saveArticle('draft')">Brouillon</button>
             <button class="btn-primary" onclick="saveArticle('published')">Publier</button>
           </div>
         </div>
-        <div style="max-width:860px;margin:0 auto;padding:3rem 2rem 6rem;">
+        <div id="preview-frame" style="max-width:860px;margin:0 auto;padding:3rem 2rem 6rem;transition:all .3s;">
           <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;" id="preview-voyage-label"></div>
           <div style="font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem;" id="preview-cat"></div>
           <h1 style="font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(32px,5vw,56px);line-height:1.1;color:var(--ink);margin-bottom:.75rem;" id="preview-title"></h1>
@@ -1131,7 +1183,7 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
 
 <div class="toast" id="toast"></div>
 
-<div id="confirm-modal" style="display:none;position:fixed;inset:0;background:rgba(26,23,20,.7);z-index:500;align-items:center;justify-content:center;">
+<div id="confirm-modal" style="display:none;position:fixed;inset:0;background:var(--overlay-bg);z-index:500;align-items:center;justify-content:center;">
   <div style="background:var(--paper-card);border:1px solid var(--border-strong);padding:2rem;max-width:360px;width:90%;">
     <p id="confirm-msg" style="font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink);margin-bottom:1.5rem;line-height:1.4;"></p>
     <div style="display:flex;gap:.75rem;justify-content:flex-end;">
@@ -1210,6 +1262,13 @@ async function loadAdminData() {
     renderVoyagesAdmin();
     renderArticlesList();
     refreshDash();
+    // Check for unsaved draft
+    if (hasAutosave()) {
+      showConfirm('Un brouillon non sauvegardé a été trouvé. Voulez-vous le restaurer ?', () => {
+        populateVoyageFilters();
+        restoreAutosave();
+      }, () => { clearAutosave(); });
+    }
   } catch(e) { console.error('Admin data error:', e); }
 }
 
@@ -1226,6 +1285,7 @@ function toggleSearch() {
   const input = document.getElementById('nav-search-input');
   input.classList.toggle('open');
   if (input.classList.contains('open')) {
+    document.querySelector('.nav-right').classList.add('search-active');
     input.focus();
   } else {
     closeSearch();
@@ -1237,6 +1297,7 @@ function closeSearch() {
   document.getElementById('nav-search-input').value = '';
   document.getElementById('search-overlay').classList.remove('open');
   document.getElementById('search-panel').style.display = 'none';
+  document.querySelector('.nav-right').classList.remove('search-active');
 }
 
 function doSearch(query) {
@@ -1305,11 +1366,10 @@ function renderHome() {
 
   container.innerHTML = pub.map(v => {
     const arts = articles.filter(a => a.voyageId === v.id && a.status === 'published');
-    const preview = arts.slice(0,4);
     const hasCover = !!v.cover;
     const headerHtml = hasCover
       ? `<div class="voyage-row-banner" onclick="openVoyage('${v.id}')">
-          <img src="${v.cover}" alt="${esc(v.name)}">
+          <img src="${v.cover}" alt="${esc(v.name)}" loading="lazy">
           <div class="voyage-row-banner-overlay"></div>
           <div class="voyage-row-banner-content">
             <span class="voyage-row-flag">${v.flag||''}</span>
@@ -1326,19 +1386,33 @@ function renderHome() {
           <span class="voyage-row-meta-plain">${esc(v.dates||'')} · ${arts.length} article${arts.length!==1?'s':''}</span>
           <button class="voyage-row-more" onclick="openVoyage('${v.id}')">Lire les carnets →</button>
         </div>`;
+    const stripId = 'strip-' + v.id;
     return `
       <div class="voyage-row">
         ${headerHtml}
-        ${preview.length
-          ? `<div class="voyage-articles-strip">${preview.map(a => miniCard(a)).join('')}</div>`
+        ${arts.length
+          ? `<div class="voyage-articles-wrap">
+              ${arts.length > 4 ? `<button class="strip-arrow left" onclick="event.stopPropagation();scrollStrip('${stripId}',-1)">&#8249;</button>` : ''}
+              <div class="voyage-articles-strip" id="${stripId}">${arts.map(a => miniCard(a)).join('')}</div>
+              ${arts.length > 4 ? `<button class="strip-arrow right" onclick="event.stopPropagation();scrollStrip('${stripId}',1)">&#8250;</button>` : ''}
+            </div>`
           : `<div class="empty-voyage">Les carnets de ce voyage arrivent bientôt…</div>`
         }
       </div>`;
   }).join('');
 }
 
+function scrollStrip(id, dir) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const card = el.querySelector('.mini-card');
+  const step = card ? card.offsetWidth + 1 : 280;
+  el.scrollBy({ left: dir * step * 2, behavior: 'smooth' });
+}
+
 function miniCard(art) {
-  const cover = art.cover ? `<img class="mini-card-img" src="${art.cover}" alt="">` : (art.images&&art.images.length ? `<img class="mini-card-img" src="${art.images[0]}" alt="">` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`);
+  const imgSrc = art.cover || (art.images&&art.images.length ? art.images[0] : null);
+  const cover = imgSrc ? `<div class="mini-card-img-wrap"><img class="mini-card-img" src="${imgSrc}" alt="" loading="lazy"><button class="mini-card-zoom" onclick="event.stopPropagation();openLightbox('${imgSrc}')" title="Agrandir">&#8689;</button></div>` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`;
   return `<div class="mini-card" onclick="openArticle('${art.id}')">
     ${cover}
     <div class="mini-card-body">
@@ -1382,7 +1456,7 @@ function openVoyage(id) {
   empty.style.display='none';
 
   grid.innerHTML = arts.map((art,i) => {
-    const cover = art.cover ? `<img src="${art.cover}" alt="">` : (art.images&&art.images.length ? `<img src="${art.images[0]}" alt="">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
+    const cover = art.cover ? `<img src="${art.cover}" alt="" loading="lazy">` : (art.images&&art.images.length ? `<img src="${art.images[0]}" alt="" loading="lazy">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
     if (i===0) return `<div class="article-card featured" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
     return `<div class="article-card" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
   }).join('');
@@ -1452,7 +1526,7 @@ function openArticle(id) {
   const galWrap = document.getElementById('art-gallery');
   const galGrid = document.getElementById('art-gallery-grid');
   if (gallery) {
-    galGrid.innerHTML = art.images.map(src => `<img src="${src}" alt="" onclick="openLightbox('${src}')">`).join('');
+    galGrid.innerHTML = art.images.map(src => `<img src="${src}" alt="" loading="lazy" onclick="openLightbox('${src}')">`).join('');
     galWrap.style.display = 'block';
   } else {
     galWrap.style.display = 'none';
@@ -1625,7 +1699,9 @@ function renderArticlesList() {
 
 function artTableRow(a) {
   const v = voyages.find(x=>x.id===a.voyageId);
-  return `<tr>
+  return `<tr draggable="true" data-article-id="${a.id}" data-voyage-id="${a.voyageId||''}"
+    ondragstart="artDragStart(event)" ondragover="artDragOver(event)" ondragleave="artDragLeave(event)" ondrop="artDrop(event)" ondragend="artDragEnd(event)">
+    <td><span class="drag-handle">&#9776;</span></td>
     <td class="td-title">${esc(a.title)}</td>
     <td style="font-size:13px;">${v?(v.flag||'')+' '+esc(v.name):'-'}</td>
     <td style="font-size:13px;">${esc(a.category||'')}</td>
@@ -1639,7 +1715,141 @@ function artTableRow(a) {
   </tr>`;
 }
 
+let draggedArticleRow = null;
+function artDragStart(e) {
+  draggedArticleRow = e.currentTarget;
+  e.dataTransfer.effectAllowed = 'move';
+  e.currentTarget.style.opacity = '0.4';
+}
+function artDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const tr = e.currentTarget;
+  if (tr !== draggedArticleRow) tr.classList.add('drag-over');
+}
+function artDragLeave(e) { e.currentTarget.classList.remove('drag-over'); }
+function artDrop(e) {
+  e.preventDefault();
+  const target = e.currentTarget;
+  target.classList.remove('drag-over');
+  if (!draggedArticleRow || target === draggedArticleRow) return;
+  const tbody = target.parentNode;
+  const rows = [...tbody.querySelectorAll('tr')];
+  const fromIdx = rows.indexOf(draggedArticleRow);
+  const toIdx = rows.indexOf(target);
+  if (fromIdx < toIdx) target.after(draggedArticleRow);
+  else tbody.insertBefore(draggedArticleRow, target);
+  saveArticleOrder();
+}
+function artDragEnd(e) {
+  e.currentTarget.style.opacity = '1';
+  document.querySelectorAll('#articles-list-tbody tr').forEach(r => r.classList.remove('drag-over'));
+  draggedArticleRow = null;
+}
+function saveArticleOrder() {
+  const rows = [...document.querySelectorAll('#articles-list-tbody tr[data-article-id]')];
+  const order = rows.map(r => r.dataset.articleId);
+  apiFetch('/api/articles/reorder', { method: 'PUT', body: JSON.stringify({ order }) })
+    .then(() => {
+      // Update local articles array order
+      const orderMap = {};
+      order.forEach((id, i) => orderMap[id] = i);
+      articles.sort((a, b) => (orderMap[a.id] ?? 999) - (orderMap[b.id] ?? 999));
+      showToast('Ordre sauvegardé');
+    })
+    .catch(e => showToast('Erreur: ' + e.message));
+}
+
+// ── AUTOSAVE ──────────────────────────────────────────
+let autosaveTimer = null;
+const AUTOSAVE_KEY = 'tb_autosave_draft';
+
+function startAutosave() {
+  stopAutosave();
+  autosaveTimer = setInterval(autosaveDraft, 30000);
+}
+function stopAutosave() {
+  if (autosaveTimer) { clearInterval(autosaveTimer); autosaveTimer = null; }
+}
+function autosaveDraft() {
+  const panel = document.getElementById('panel-article-form');
+  if (!panel || panel.style.display === 'none') return;
+  const data = {
+    editArticleId,
+    voyageId: document.getElementById('af-voyage')?.value || '',
+    title: document.getElementById('af-title')?.value || '',
+    category: document.getElementById('af-cat')?.value || '',
+    date: document.getElementById('af-date')?.value || '',
+    excerpt: document.getElementById('af-excerpt')?.value || '',
+    body: document.getElementById('af-body-editor')?.innerHTML || '',
+    inlineImgStore: Object.assign({}, inlineImgStore),
+    cover: editArticleCover,
+    ts: Date.now()
+  };
+  localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(data));
+  // subtle indicator
+  const indicator = document.getElementById('autosave-indicator');
+  if (indicator) {
+    indicator.textContent = 'Brouillon sauvegardé ' + new Date().toLocaleTimeString('fr-CA', {hour:'2-digit',minute:'2-digit'});
+    indicator.style.opacity = '1';
+    setTimeout(() => indicator.style.opacity = '0.5', 2000);
+  }
+}
+function clearAutosave() {
+  localStorage.removeItem(AUTOSAVE_KEY);
+  stopAutosave();
+}
+function hasAutosave() {
+  const raw = localStorage.getItem(AUTOSAVE_KEY);
+  if (!raw) return false;
+  try {
+    const d = JSON.parse(raw);
+    // Expire après 24h
+    if (Date.now() - d.ts > 86400000) { localStorage.removeItem(AUTOSAVE_KEY); return false; }
+    return true;
+  } catch { return false; }
+}
+function restoreAutosave() {
+  const raw = localStorage.getItem(AUTOSAVE_KEY);
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    editArticleId = d.editArticleId || null;
+    document.getElementById('article-form-title').textContent = editArticleId ? 'Modifier l\'article' : 'Nouvel article';
+    document.getElementById('af-voyage').value = d.voyageId || '';
+    document.getElementById('af-title').value = d.title || '';
+    document.getElementById('af-cat').value = d.category || '';
+    document.getElementById('af-date').value = d.date || '';
+    document.getElementById('af-excerpt').value = d.excerpt || '';
+    const ed = document.getElementById('af-body-editor');
+    if (ed) ed.innerHTML = d.body || '';
+    if (d.inlineImgStore) inlineImgStore = d.inlineImgStore;
+    if (d.cover) editArticleCover = d.cover;
+    editArticleImages = [];
+    renderArtImgPreviews();
+    const cp = document.getElementById('af-cover-preview');
+    if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+    // Re-add remove buttons to inline images
+    if (ed) ed.querySelectorAll('figure.inline-img-wrap').forEach(fig => {
+      fig.contentEditable = 'false';
+      if (!fig.querySelector('.inline-img-rm')) {
+        const k = fig.dataset.imgKey;
+        const rmBtn = document.createElement('button');
+        rmBtn.className = 'inline-img-rm';
+        rmBtn.innerHTML = '&times;';
+        rmBtn.title = 'Supprimer cette photo';
+        rmBtn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); removeInlineImage(fig, k); };
+        fig.insertBefore(rmBtn, fig.firstChild);
+      }
+    });
+    showToast('Brouillon restauré');
+    showPanel('article-form');
+    startAutosave();
+  } catch(e) { console.error('Autosave restore error:', e); }
+}
+
 function startNewArticle() {
+  clearAutosave();
   editArticleId = null; editArticleImages = []; editArticleCover = null;
   document.getElementById('article-form-title').textContent = 'Nouvel article';
   document.getElementById('af-title').value='';
@@ -1652,6 +1862,7 @@ function startNewArticle() {
   populateVoyageFilters();
   document.getElementById('af-voyage').value='';
   showPanel('article-form');
+  startAutosave();
 }
 
 function editArticle(id) {
@@ -1677,13 +1888,24 @@ function editArticle(id) {
       return imgStore[key] || m;
     });
     edEl.innerHTML = restored;
-    // Re-attach data-img-key to figures
-    edEl.querySelectorAll('figure.inline-img-wrap img').forEach(img => {
-      if (!img.dataset.imgKey && img.src && img.src.startsWith('data:')) {
+    // Re-attach data-img-key to figures and add remove buttons
+    edEl.querySelectorAll('figure.inline-img-wrap').forEach(fig => {
+      const img = fig.querySelector('img');
+      if (img && !img.dataset.imgKey && img.src && img.src.startsWith('data:')) {
         const key = genImgKey();
         img.dataset.imgKey = key;
-        img.closest('figure').dataset.imgKey = key;
+        fig.dataset.imgKey = key;
         inlineImgStore[key] = img.src;
+      }
+      fig.contentEditable = 'false';
+      if (!fig.querySelector('.inline-img-rm')) {
+        const k = fig.dataset.imgKey;
+        const rmBtn = document.createElement('button');
+        rmBtn.className = 'inline-img-rm';
+        rmBtn.innerHTML = '&times;';
+        rmBtn.title = 'Supprimer cette photo';
+        rmBtn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); removeInlineImage(fig, k); };
+        fig.insertBefore(rmBtn, fig.firstChild);
       }
     });
   }
@@ -1691,6 +1913,7 @@ function editArticle(id) {
   const cp = document.getElementById('af-cover-preview');
   if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
   showPanel('article-form');
+  startAutosave();
 }
 
 function saveArticle(status) {
@@ -1711,7 +1934,7 @@ function saveArticle(status) {
     else if (key && img.src && img.src.startsWith('data:')) inlineImages[key] = img.src;
   });
   const data = {
-    voyageId, title,
+    voyage_id: voyageId, title,
     category:      document.getElementById('af-cat').value.trim(),
     article_date:  document.getElementById('af-date').value || null,
     excerpt:       document.getElementById('af-excerpt').value.trim(),
@@ -1742,6 +1965,7 @@ function saveArticle(status) {
       });
     }
     showToast(status === 'published' ? 'Article publié !' : 'Brouillon sauvegardé');
+    clearAutosave();
     editArticleId = null; editArticleImages = []; editArticleCover = null;
     await loadAdminData();
     showPanel('articles-list');
@@ -1970,7 +2194,11 @@ function openImageModal() {
   const editor = document.getElementById('af-body-editor');
   if (!editor) return;
   const sel = window.getSelection();
-  if (sel && sel.rangeCount) imgModalSavedRange = sel.getRangeAt(0).cloneRange();
+  imgModalSavedRange = null;
+  if (sel && sel.rangeCount) {
+    const r = sel.getRangeAt(0);
+    if (editor.contains(r.commonAncestorContainer)) imgModalSavedRange = r.cloneRange();
+  }
   imgModalSrc = null; imgModalSize = 'full';
   document.getElementById('img-modal-caption').value = '';
   document.getElementById('img-drop-text').style.display = 'block';
@@ -2008,6 +2236,11 @@ function selectImgSize(btn) {
 // Inline image store: key -> base64
 let inlineImgStore = {};
 
+function removeInlineImage(fig, key) {
+  if (key && inlineImgStore[key]) delete inlineImgStore[key];
+  fig.remove();
+}
+
 function genImgKey() {
   return 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2,7);
 }
@@ -2026,6 +2259,12 @@ function confirmInsertImage() {
   fig.className = 'inline-img-wrap ' + imgModalSize;
   fig.contentEditable = 'false';
   fig.dataset.imgKey = key;
+  const rmBtn = document.createElement('button');
+  rmBtn.className = 'inline-img-rm';
+  rmBtn.innerHTML = '&times;';
+  rmBtn.title = 'Supprimer cette photo';
+  rmBtn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); removeInlineImage(fig, key); };
+  fig.appendChild(rmBtn);
   const img = document.createElement('img');
   img.src = imgModalSrc;
   img.dataset.imgKey = key;
@@ -2036,19 +2275,27 @@ function confirmInsertImage() {
     fig.appendChild(cap);
   }
   editor.focus();
-  const sel = window.getSelection();
-  if (imgModalSavedRange) { sel.removeAllRanges(); sel.addRange(imgModalSavedRange); }
-  if (sel && sel.rangeCount) {
-    const range = sel.getRangeAt(0);
-    range.collapse(false);
-    range.insertNode(fig);
+  let inserted = false;
+  if (imgModalSavedRange) {
+    try {
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(imgModalSavedRange);
+      const range = sel.getRangeAt(0);
+      range.collapse(false);
+      range.insertNode(fig);
+      const p = document.createElement('p'); p.innerHTML = '<br>';
+      fig.after(p);
+      const nr = document.createRange();
+      nr.setStart(p, 0); nr.collapse(true);
+      sel.removeAllRanges(); sel.addRange(nr);
+      inserted = true;
+    } catch(e) { /* fallback below */ }
+  }
+  if (!inserted) {
     const p = document.createElement('p'); p.innerHTML = '<br>';
-    fig.after(p);
-    const nr = document.createRange();
-    nr.setStart(p, 0); nr.collapse(true);
-    sel.removeAllRanges(); sel.addRange(nr);
-  } else {
     editor.appendChild(fig);
+    editor.appendChild(p);
   }
   closeImageModal();
   showToast('Photo inserée');
@@ -2188,7 +2435,21 @@ function previewArticle() {
   window.scrollTo(0, 0);
 }
 
+function setPreviewDevice(mode, btn) {
+  document.querySelectorAll('.preview-device-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const frame = document.getElementById('preview-frame');
+  if (mode === 'mobile') {
+    frame.classList.add('preview-mobile-frame');
+  } else {
+    frame.classList.remove('preview-mobile-frame');
+  }
+}
+
 function backToEdit() {
+  document.getElementById('preview-frame').classList.remove('preview-mobile-frame');
+  document.querySelectorAll('.preview-device-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.preview-device-btn')?.classList.add('active');
   document.getElementById('panel-preview').style.display = 'none';
   document.getElementById('panel-article-form').style.display = 'block';
   document.getElementById('anav-new-article').classList.add('active');
@@ -2284,7 +2545,7 @@ function checkContactConfig() {
 }
 
 // ── CONFIRM MODAL ──
-function showConfirm(msg, onOk) {
+function showConfirm(msg, onOk, onCancel) {
   const modal = document.getElementById('confirm-modal');
   document.getElementById('confirm-msg').textContent = msg;
   modal.style.display = 'flex';
@@ -2292,8 +2553,8 @@ function showConfirm(msg, onOk) {
   const cancel = document.getElementById('confirm-cancel');
   const close = () => { modal.style.display = 'none'; ok.onclick = null; cancel.onclick = null; };
   ok.onclick = () => { close(); onOk(); };
-  cancel.onclick = close;
-  modal.onclick = e => { if (e.target === modal) close(); };
+  cancel.onclick = () => { close(); if (onCancel) onCancel(); };
+  modal.onclick = e => { if (e.target === modal) { close(); if (onCancel) onCancel(); } };
 }
 
 // ── EVENT DELEGATION for admin tables ──
@@ -2334,6 +2595,27 @@ document.querySelectorAll('.upload-zone').forEach(z=>{
     }
   } catch(e) {}
 })();
+
+// ── THEME ──────────────────────────────────────────
+function initTheme() {
+  const saved = localStorage.getItem('tb_theme');
+  const theme = saved || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeIcon(theme);
+}
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme') || 'dark';
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('tb_theme', next);
+  updateThemeIcon(next);
+}
+function updateThemeIcon(theme) {
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.innerHTML = theme === 'dark' ? '&#9788;' : '&#9789;';
+}
+initTheme();
+
 loadPublicData();
 
 // ── PARTICLES ──
