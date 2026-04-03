@@ -1,14 +1,15 @@
 // routes/media.js
-const router  = require('express').Router();
-const pool    = require('../db');
-const auth    = require('../middleware/auth');
-const multer  = require('multer');
-const sharp   = require('sharp');
-const path    = require('path');
-const fs      = require('fs');
+const router         = require('express').Router();
+const pool           = require('../db');
+const auth           = require('../middleware/auth');
+const { validateUUID } = require('../middleware/validate');
+const sharp          = require('sharp');
+const path           = require('path');
+const fs             = require('fs');
+const createUpload   = require('../middleware/upload');
 
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
-const upload  = multer({ storage: multer.memoryStorage(), limits: { fileSize: 15 * 1024 * 1024 } });
+const upload    = createUpload();
 
 router.get('/', auth, async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM media ORDER BY created_at DESC');
@@ -31,7 +32,7 @@ router.post('/', auth, upload.array('files', 20), async (req, res) => {
   res.status(201).json(items);
 });
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, validateUUID('id'), async (req, res) => {
   const { rows } = await pool.query('DELETE FROM media WHERE id=$1 RETURNING url', [req.params.id]);
   if (rows[0]) {
     const filepath = path.join(uploadDir, path.basename(rows[0].url));

@@ -1,8 +1,17 @@
-const router = require('express').Router();
-const jwt    = require('jsonwebtoken');
+const router    = require('express').Router();
+const jwt       = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,                   // 10 tentatives par fenêtre
+  message: { error: 'Trop de tentatives de connexion. Réessayez dans 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // POST /api/auth/login
-router.post('/login', (req, res) => {
+router.post('/login', loginLimiter, (req, res) => {
   const { password } = req.body;
   if (password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Mot de passe incorrect' });

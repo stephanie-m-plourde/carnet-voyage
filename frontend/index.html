@@ -1355,7 +1355,7 @@ function renderHome() {
     const hasCover = !!v.cover;
     const headerHtml = hasCover
       ? `<div class="voyage-row-banner" onclick="openVoyage('${v.id}')">
-          <img src="${v.cover}" alt="${esc(v.name)}" loading="lazy">
+          <img src="${escAttr(v.cover)}" alt="${esc(v.name)}" loading="lazy">
           <div class="voyage-row-banner-overlay"></div>
           <div class="voyage-row-banner-content">
             <span class="voyage-row-flag">${v.flag||''}</span>
@@ -1398,7 +1398,7 @@ function scrollStrip(id, dir) {
 
 function miniCard(art) {
   const imgSrc = art.cover || (art.images&&art.images.length ? art.images[0] : null);
-  const cover = imgSrc ? `<div class="mini-card-img-wrap"><img class="mini-card-img" src="${imgSrc}" alt="" loading="lazy"><button class="mini-card-zoom" onclick="event.stopPropagation();openLightbox('${imgSrc}')" title="Agrandir">&#8689;</button></div>` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`;
+  const cover = imgSrc ? `<div class="mini-card-img-wrap"><img class="mini-card-img" src="${escAttr(imgSrc)}" alt="" loading="lazy"><button class="mini-card-zoom" onclick="event.stopPropagation();openLightbox('${escAttr(imgSrc)}')" title="Agrandir">&#8689;</button></div>` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`;
   return `<div class="mini-card" onclick="openArticle('${art.id}')">
     ${cover}
     <div class="mini-card-body">
@@ -1442,7 +1442,7 @@ function openVoyage(id) {
   empty.style.display='none';
 
   grid.innerHTML = arts.map((art,i) => {
-    const cover = art.cover ? `<img src="${art.cover}" alt="" loading="lazy">` : (art.images&&art.images.length ? `<img src="${art.images[0]}" alt="" loading="lazy">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
+    const cover = art.cover ? `<img src="${escAttr(art.cover)}" alt="" loading="lazy">` : (art.images&&art.images.length ? `<img src="${escAttr(art.images[0])}" alt="" loading="lazy">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
     if (i===0) return `<div class="article-card featured" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
     return `<div class="article-card" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
   }).join('');
@@ -1513,7 +1513,7 @@ function openArticle(id) {
   const galWrap = document.getElementById('art-gallery');
   const galGrid = document.getElementById('art-gallery-grid');
   if (gallery) {
-    galGrid.innerHTML = art.images.map(src => `<img src="${src}" alt="" loading="lazy" onclick="openLightbox('${src}')">`).join('');
+    galGrid.innerHTML = art.images.map(src => `<img src="${escAttr(src)}" alt="" loading="lazy" onclick="openLightbox('${escAttr(src)}')">`).join('');
     galWrap.style.display = 'block';
   } else {
     galWrap.style.display = 'none';
@@ -1618,7 +1618,7 @@ function editVoyage(id) {
   document.getElementById('vf-flag').value = v.flag||'';
   document.getElementById('vf-dates').value = v.dates||'';
   document.getElementById('vf-desc').value = v.desc||'';
-  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<img src="${v.cover}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">` : '';
+  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<img src="${escAttr(v.cover)}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">` : '';
   showPanel('voyage-form');
 }
 
@@ -1627,7 +1627,7 @@ function handleVoyageCover(e) {
   const reader = new FileReader();
   reader.onload = ev => {
     editVoyageCover = ev.target.result;
-    document.getElementById('voyage-cover-preview').innerHTML = `<img src="${editVoyageCover}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">`;
+    document.getElementById('voyage-cover-preview').innerHTML = `<img src="${escAttr(editVoyageCover)}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">`;
   };
   reader.readAsDataURL(file);
   e.target.value='';
@@ -1815,7 +1815,7 @@ function restoreAutosave() {
     editArticleImages = [];
     renderArtImgPreviews();
     const cp = document.getElementById('af-cover-preview');
-    if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+    if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
     // Re-add remove buttons to inline images
     if (ed) ed.querySelectorAll('figure.inline-img-wrap').forEach(fig => {
       fig.contentEditable = 'false';
@@ -1898,7 +1898,7 @@ function editArticle(id) {
   }
   renderArtImgPreviews();
   const cp = document.getElementById('af-cover-preview');
-  if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+  if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
   showPanel('article-form');
   startAutosave();
 }
@@ -1979,7 +1979,7 @@ function handleCoverImage(e) {
   const r = new FileReader();
   r.onload = ev => {
     editArticleCover = ev.target.result;
-    document.getElementById('af-cover-preview').innerHTML = `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>`;
+    document.getElementById('af-cover-preview').innerHTML = `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>`;
   };
   r.readAsDataURL(file);
   e.target.value='';
@@ -2308,6 +2308,7 @@ function md2html(md) {
 }
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return esc(s).replace(/'/g,'&#39;'); }
 function fdate(d) { if(!d) return ''; try{ return new Date(d+'T12:00:00').toLocaleDateString('fr-CA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){return d;} }
 function loadAproposForm() {
   const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
@@ -2384,7 +2385,7 @@ function previewArticle() {
   // Cover
   const coverEl = document.getElementById('preview-cover');
   if (editArticleCover) {
-    coverEl.innerHTML = '<div style="position:relative;width:100%;height:55vh;min-height:300px;overflow:hidden;margin-bottom:0;"><img src="' + editArticleCover + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,10,.5),transparent);"></div></div>';
+    coverEl.innerHTML = '<div style="position:relative;width:100%;height:55vh;min-height:300px;overflow:hidden;margin-bottom:0;"><img src="' + escAttr(editArticleCover) + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,10,.5),transparent);"></div></div>';
   } else {
     coverEl.innerHTML = '';
   }

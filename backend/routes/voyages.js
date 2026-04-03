@@ -1,14 +1,20 @@
-const router  = require('express').Router();
-const pool    = require('../db');
-const auth    = require('../middleware/auth');
-const multer  = require('multer');
-const sharp   = require('sharp');
-const path    = require('path');
-const fs      = require('fs');
+const router         = require('express').Router();
+const pool           = require('../db');
+const auth           = require('../middleware/auth');
+const { validateUUID } = require('../middleware/validate');
+const sharp          = require('sharp');
+const path           = require('path');
+const fs             = require('fs');
+const createUpload   = require('../middleware/upload');
 
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
-const storage = multer.memoryStorage();
-const upload  = multer({ storage, limits: { fileSize: 15 * 1024 * 1024 } });
+const upload    = createUpload();
+
+function removeFile(url) {
+  if (!url) return;
+  const filepath = path.join(uploadDir, path.basename(url));
+  if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
+}
 
 // GET /api/voyages — liste publique
 router.get('/', async (req, res) => {
@@ -19,7 +25,7 @@ router.get('/', async (req, res) => {
 });
 
 // GET /api/voyages/:id
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateUUID('id'), async (req, res) => {
   const { rows } = await pool.query('SELECT * FROM voyages WHERE id = $1', [req.params.id]);
   if (!rows.length) return res.status(404).json({ error: 'Voyage introuvable' });
   res.json(rows[0]);
@@ -37,7 +43,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // PUT /api/voyages/:id — admin
-router.put('/:id', auth, async (req, res) => {
+router.put('/:id', auth, validateUUID('id'), async (req, res) => {
   const { name, flag, dates, description, sort_year, sort_month } = req.body;
   const { rows } = await pool.query(
     `UPDATE voyages SET name=$1, flag=$2, dates=$3, description=$4,
@@ -50,8 +56,12 @@ router.put('/:id', auth, async (req, res) => {
 });
 
 // POST /api/voyages/:id/cover — upload photo de couverture
-router.post('/:id/cover', auth, upload.single('cover'), async (req, res) => {
+router.post('/:id/cover', auth, validateUUID('id'), upload.single('cover'), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Aucun fichier reçu' });
+
+  // Supprimer l'ancienne couverture
+  const { rows: old } = await pool.query('SELECT cover_url FROM voyages WHERE id=$1', [req.params.id]);
+  if (old.length) removeFile(old[0].cover_url);
 
   const filename = `voyage_${req.params.id}_cover_${Date.now()}.webp`;
   const filepath = path.join(uploadDir, filename);
@@ -67,8 +77,25 @@ router.post('/:id/cover', auth, upload.single('cover'), async (req, res) => {
 });
 
 // DELETE /api/voyages/:id — admin
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', auth, validateUUID('id'), async (req, res) => {
+  // Récupérer les fichiers à supprimer avant le CASCADE
+  const { rows: voyage } = await pool.query('SELECT cover_url FROM voyages WHERE id=$1', [req.params.id]);
+  const { rows: artImages } = await pool.query(
+    `SELECT ai.url FROM article_images ai
+     JOIN articles a ON a.id = ai.article_id
+     WHERE a.voyage_id = $1`, [req.params.id]
+  );
+  const { rows: artCovers } = await pool.query(
+    'SELECT cover_url FROM articles WHERE voyage_id=$1 AND cover_url IS NOT NULL', [req.params.id]
+  );
+
   await pool.query('DELETE FROM voyages WHERE id = $1', [req.params.id]);
+
+  // Nettoyage fichiers
+  if (voyage.length) removeFile(voyage[0].cover_url);
+  artCovers.forEach(r => removeFile(r.cover_url));
+  artImages.forEach(r => removeFile(r.url));
+
   res.json({ success: true });
 });
 
