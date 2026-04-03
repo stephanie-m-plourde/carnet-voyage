@@ -77,13 +77,13 @@ INSERT INTO settings (key, value) VALUES
   ('formspree-url', 'https://formspree.io/f/mreoaldl');
 
 -- Données initiales ──────────────────────────────────
-INSERT INTO voyages (id, name, flag, dates, description, sort_year, sort_month) VALUES
-  ('11111111-0000-0000-0000-000000000001', 'Japon 2026',               'JP', '4 – 25 avril 2026',       'Notre premier grand voyage en Asie — trois semaines à huit, oui, oui, huit, entre temples, montagnes et cerisiers. Nous avons la chance incroyable de voyager avec toute la famille pour un grand total de 6 adultes et 2 enfants!', 4, 0),
-  ('11111111-0000-0000-0000-000000000002', 'Îles-de-la-Madeleine 2025','QC', 'Juin – Juillet 2025',     'Les dunes, le vent, le homard et les plages qui n''en finissent plus.', 0, 0),
-  ('11111111-0000-0000-0000-000000000003', 'Péninsule de Bruce 2025',  'ON', 'Août 2025',               'Les eaux turquoise du lac Huron et les sentiers de la Bruce Trail.', 0, 0),
-  ('11111111-0000-0000-0000-000000000004', 'Guadeloupe 2024',          'GP', 'Avril 2024',              'Entre la Grande-Terre, la Basse-Terre et les Îles Saintes, les plages, les tortues et la forêt tropicale.', 0, 0),
-  ('11111111-0000-0000-0000-000000000005', 'Indonésie 2024',           'ID', 'Novembre – Décembre 2024','Java, Bali et Nusa Lembongan, les rizières, les temples millénaires et les fonds marins.', 0, 0),
-  ('11111111-0000-0000-0000-000000000006', 'Costa Rica 2022',          'CR', 'Mars 2022',               'Notre premier grand voyage en famille. La jungle, les volcans, les singes.', 0, 0);
+INSERT INTO voyages (id, name, flag, dates, description, cover_url, sort_year, sort_month) VALUES
+  ('11111111-0000-0000-0000-000000000001', 'Japon 2026',               'JP', '4 – 25 avril 2026',       'Notre premier grand voyage en Asie — trois semaines à huit, oui, oui, huit, entre temples, montagnes et cerisiers. Nous avons la chance incroyable de voyager avec toute la famille pour un grand total de 6 adultes et 2 enfants!', '/uploads/voyage_japon.webp', 4, 0),
+  ('11111111-0000-0000-0000-000000000002', 'Îles-de-la-Madeleine 2025','QC', 'Juin – Juillet 2025',     'Les dunes, le vent, le homard et les plages qui n''en finissent plus.', '/uploads/voyage_madeleine.webp', 0, 0),
+  ('11111111-0000-0000-0000-000000000003', 'Péninsule de Bruce 2025',  'ON', 'Août 2025',               'Les eaux turquoise du lac Huron et les sentiers de la Bruce Trail.', '/uploads/voyage_bruce.webp', 0, 0),
+  ('11111111-0000-0000-0000-000000000004', 'Guadeloupe 2024',          'GP', 'Avril 2024',              'Entre la Grande-Terre, la Basse-Terre et les Îles Saintes, les plages, les tortues et la forêt tropicale.', '/uploads/voyage_guadeloupe.webp', 0, 0),
+  ('11111111-0000-0000-0000-000000000005', 'Indonésie 2024',           'ID', 'Novembre – Décembre 2024','Java, Bali et Nusa Lembongan, les rizières, les temples millénaires et les fonds marins.', '/uploads/voyage_indonesie.webp', 0, 0),
+  ('11111111-0000-0000-0000-000000000006', 'Costa Rica 2022',          'CR', 'Mars 2022',               'Notre premier grand voyage en famille. La jungle, les volcans, les singes.', '/uploads/voyage_costarica.webp', 0, 0);
 
 INSERT INTO articles (voyage_id, title, category, excerpt, body, status, article_date, sort_order) VALUES
   ('11111111-0000-0000-0000-000000000001', 'Arrivée à Tokyo — le choc des contraires', 'Tokyo',

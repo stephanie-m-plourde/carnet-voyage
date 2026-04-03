@@ -32,6 +32,9 @@ services:
       UPLOAD_DIR: /app/uploads
     volumes:
       - uploads_data:/app/uploads
+      - ./uploads:/app/seed-uploads
+    command: >
+      sh -c "cp -n /app/seed-uploads/*.webp /app/uploads/ 2>/dev/null; node server.js"
     depends_on:
       db:
         condition: service_healthy
