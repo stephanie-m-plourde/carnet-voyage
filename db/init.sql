@@ -76,24 +76,30 @@ INSERT INTO settings (key, value) VALUES
   ('ap-quote-attr', '— Proverbe de famille'),
   ('formspree-url', 'https://formspree.io/f/mreoaldl');
 
--- Données de démonstration ────────────────────────────
+-- Données initiales ──────────────────────────────────
 INSERT INTO voyages (id, name, flag, dates, description, sort_year, sort_month) VALUES
-  ('11111111-0000-0000-0000-000000000001', 'Japon 2026',               'JP', '4 – 25 avril 2026',       'Notre premier grand voyage en Asie — trois semaines à quatre, entre temples et cerisiers.', 2026, 4),
-  ('11111111-0000-0000-0000-000000000002', 'Îles-de-la-Madeleine 2025','QC', 'Juin – Juillet 2025',     'Les dunes, le vent, le homard et les plages qui n''en finissent plus.', 2025, 6),
-  ('11111111-0000-0000-0000-000000000003', 'Péninsule de Bruce 2025',  'ON', 'Août 2025',               'Les eaux turquoise du lac Huron et les sentiers de la Bruce Trail.', 2025, 8),
-  ('11111111-0000-0000-0000-000000000004', 'Guadeloupe 2024',          'GP', 'Avril 2024',              'Entre la Grande-Terre et la Basse-Terre, les plages et la forêt tropicale.', 2024, 4),
-  ('11111111-0000-0000-0000-000000000005', 'Indonésie 2024',           'ID', 'Novembre – Décembre 2024','Bali, Lombok, les rizières en terrasses et les temples millénaires.', 2024, 11),
-  ('11111111-0000-0000-0000-000000000006', 'Costa Rica 2022',          'CR', 'Mars 2022',               'Notre premier grand voyage en famille. La jungle, les volcans, les singes.', 2022, 3);
+  ('11111111-0000-0000-0000-000000000001', 'Japon 2026',               'JP', '4 – 25 avril 2026',       'Notre premier grand voyage en Asie — trois semaines à huit, oui, oui, huit, entre temples, montagnes et cerisiers. Nous avons la chance incroyable de voyager avec toute la famille pour un grand total de 6 adultes et 2 enfants!', 4, 0),
+  ('11111111-0000-0000-0000-000000000002', 'Îles-de-la-Madeleine 2025','QC', 'Juin – Juillet 2025',     'Les dunes, le vent, le homard et les plages qui n''en finissent plus.', 0, 0),
+  ('11111111-0000-0000-0000-000000000003', 'Péninsule de Bruce 2025',  'ON', 'Août 2025',               'Les eaux turquoise du lac Huron et les sentiers de la Bruce Trail.', 0, 0),
+  ('11111111-0000-0000-0000-000000000004', 'Guadeloupe 2024',          'GP', 'Avril 2024',              'Entre la Grande-Terre, la Basse-Terre et les Îles Saintes, les plages, les tortues et la forêt tropicale.', 0, 0),
+  ('11111111-0000-0000-0000-000000000005', 'Indonésie 2024',           'ID', 'Novembre – Décembre 2024','Java, Bali et Nusa Lembongan, les rizières, les temples millénaires et les fonds marins.', 0, 0),
+  ('11111111-0000-0000-0000-000000000006', 'Costa Rica 2022',          'CR', 'Mars 2022',               'Notre premier grand voyage en famille. La jungle, les volcans, les singes.', 0, 0);
 
-INSERT INTO articles (voyage_id, title, category, excerpt, body, status, article_date) VALUES
+INSERT INTO articles (voyage_id, title, category, excerpt, body, status, article_date, sort_order) VALUES
   ('11111111-0000-0000-0000-000000000001', 'Arrivée à Tokyo — le choc des contraires', 'Tokyo',
    'Atterrir à Tokyo avec deux fillettes après 14 heures de vol. Les voir sortir du métro de Shinjuku, les yeux grands comme des soucoupes.',
    '<h2>Premier contact</h2><p>On ne dormait plus depuis 20 heures quand le Narita Express nous a déposés à Shinjuku. Tokyo les avait coupé le souffle.</p>',
-   'published', '2026-04-04'),
+   'draft', '2026-04-04', 0),
   ('11111111-0000-0000-0000-000000000001', 'Kyoto et les cerisiers en fleur', 'Kyoto',
    'Notre cadette a demandé si on pouvait rester vivre ici, sous les cerisiers. On a failli dire oui.',
    '<h2>Le hanami vu par des enfants</h2><p>Notre cadette a passé une heure à ramasser des pétales tombés et à les remettre sur les branches.</p>',
-   'published', '2026-04-10');
+   'draft', '2026-04-10', 0),
+  ('11111111-0000-0000-0000-000000000001', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0),
+  ('11111111-0000-0000-0000-000000000002', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0),
+  ('11111111-0000-0000-0000-000000000003', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0),
+  ('11111111-0000-0000-0000-000000000004', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0),
+  ('11111111-0000-0000-0000-000000000005', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0),
+  ('11111111-0000-0000-0000-000000000006', 'Articles à venir', '', '', '', 'published', '2026-04-02', 0);
 
 -- Index pour les performances
 CREATE INDEX idx_articles_voyage ON articles(voyage_id);
