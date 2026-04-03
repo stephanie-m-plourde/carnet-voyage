@@ -2,6 +2,7 @@ require('express-async-errors');
 require('dotenv').config();
 const express = require('express');
 const cors    = require('cors');
+const helmet  = require('helmet');
 const path    = require('path');
 const fs      = require('fs');
 
@@ -11,9 +12,13 @@ const app = express();
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
 if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 
-app.use(cors({ origin: '*' }));
-app.use(express.json({ limit: '50mb' }));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use(helmet({ contentSecurityPolicy: false }));
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true,
+}));
+app.use(express.json({ limit: '2mb' }));
+app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 
 // Serve uploaded files
 app.use('/uploads', express.static(uploadDir));
@@ -31,7 +36,10 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok', time: new Date() }
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.status || 500).json({ error: err.message || 'Erreur serveur' });
+  // Ne pas exposer les détails internes en production
+  const status = err.status || 500;
+  const message = status < 500 ? err.message : 'Erreur serveur';
+  res.status(status).json({ error: message });
 });
 
 // Auto-migration: add sort_order column if missing

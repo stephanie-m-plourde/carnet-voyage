@@ -1,8 +1,17 @@
-const router = require('express').Router();
-const jwt    = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
-const pool   = require('../db');
-const auth   = require('../middleware/auth');
+const router    = require('express').Router();
+const jwt       = require('jsonwebtoken');
+const bcrypt    = require('bcryptjs');
+const pool      = require('../db');
+const auth      = require('../middleware/auth');
+const rateLimit = require('express-rate-limit');
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,                   // 10 tentatives par fenêtre
+  message: { error: 'Trop de tentatives de connexion. Réessayez dans 15 minutes.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
 
 // Helper: get hashed password from DB, fallback to env
 async function getStoredPassword() {
@@ -14,18 +23,16 @@ async function getStoredPassword() {
 }
 
 // POST /api/auth/login
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
   const { password } = req.body;
   if (!password) return res.status(401).json({ error: 'Mot de passe requis' });
 
   const stored = await getStoredPassword();
 
   if (stored.fromDb && stored.hash) {
-    // Compare against bcrypt hash in DB
     const valid = await bcrypt.compare(password, stored.hash);
     if (!valid) return res.status(401).json({ error: 'Mot de passe incorrect' });
   } else {
-    // Fallback to env variable (first-time setup)
     if (password !== process.env.ADMIN_PASSWORD) {
       return res.status(401).json({ error: 'Mot de passe incorrect' });
     }

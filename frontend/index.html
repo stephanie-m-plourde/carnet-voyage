@@ -1484,13 +1484,13 @@ function renderHome() {
     const nameParts = v.name.replace(/\s*\d{4}$/, '');
 
     const bgHtml = v.cover
-      ? `<div class="voyage-slide-bg"><img src="${v.cover}" alt="${esc(v.name)}" loading="lazy"><div class="voyage-slide-bg-overlay"></div></div>`
+      ? `<div class="voyage-slide-bg"><img src="${escAttr(v.cover)}" alt="${esc(v.name)}" loading="lazy"><div class="voyage-slide-bg-overlay"></div></div>`
       : `<div class="voyage-slide-bg voyage-slide-no-cover"><div class="voyage-slide-bg-overlay"></div></div>`;
 
     const cardsHtml = arts.map(a => {
       const imgSrc = a.cover || (a.images&&a.images.length ? a.images[0] : null);
       return `<div class="voyage-slide-card" onclick="openArticle('${a.id}')">
-        ${imgSrc ? `<img src="${imgSrc}" alt="" loading="lazy">` : `<div class="voyage-slide-card-ph">${glyphForArt(a)}</div>`}
+        ${imgSrc ? `<img src="${escAttr(imgSrc)}" alt="" loading="lazy">` : `<div class="voyage-slide-card-ph">${glyphForArt(a)}</div>`}
         <div class="voyage-slide-card-title">${esc(a.title)}</div>
       </div>`;
     }).join('');
@@ -1561,7 +1561,7 @@ function openVoyage(id) {
   empty.style.display='none';
 
   grid.innerHTML = arts.map((art,i) => {
-    const cover = art.cover ? `<img src="${art.cover}" alt="" loading="lazy">` : (art.images&&art.images.length ? `<img src="${art.images[0]}" alt="" loading="lazy">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
+    const cover = art.cover ? `<img src="${escAttr(art.cover)}" alt="" loading="lazy">` : (art.images&&art.images.length ? `<img src="${escAttr(art.images[0])}" alt="" loading="lazy">` : `<div class="article-card-ph">${glyphForArt(art)}</div>`);
     if (i===0) return `<div class="article-card featured" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
     return `<div class="article-card" onclick="openArticle('${art.id}')">${cover}<div class="article-card-body"><div class="article-card-cat">${esc(art.category||'')}</div><div class="article-card-title">${esc(art.title)}</div><div class="article-card-excerpt">${esc(art.excerpt||'')}</div><div class="article-card-foot"><span class="article-card-date">${fdate(art.date)}</span><span class="article-card-read">Lire →</span></div></div></div>`;
   }).join('');
@@ -1632,7 +1632,7 @@ function openArticle(id) {
   const galWrap = document.getElementById('art-gallery');
   const galGrid = document.getElementById('art-gallery-grid');
   if (gallery) {
-    galGrid.innerHTML = art.images.map(src => `<img src="${src}" alt="" loading="lazy" onclick="openLightbox('${src}')">`).join('');
+    galGrid.innerHTML = art.images.map(src => `<img src="${escAttr(src)}" alt="" loading="lazy" onclick="openLightbox('${escAttr(src)}')">`).join('');
     galWrap.style.display = 'block';
   } else {
     galWrap.style.display = 'none';
@@ -1738,7 +1738,7 @@ function editVoyage(id) {
   document.getElementById('vf-flag').value = v.flag||'';
   document.getElementById('vf-dates').value = v.dates||'';
   document.getElementById('vf-desc').value = v.desc||'';
-  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<div class="img-preview" style="max-width:260px"><img src="${v.cover}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>` : '';
+  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<div class="img-preview" style="max-width:260px"><img src="${escAttr(v.cover)}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>` : '';
   showPanel('voyage-form');
 }
 
@@ -1747,7 +1747,7 @@ function handleVoyageCover(e) {
   const reader = new FileReader();
   reader.onload = ev => {
     editVoyageCover = ev.target.result;
-    document.getElementById('voyage-cover-preview').innerHTML = `<div class="img-preview" style="max-width:260px"><img src="${editVoyageCover}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>`;
+    document.getElementById('voyage-cover-preview').innerHTML = `<div class="img-preview" style="max-width:260px"><img src="${escAttr(editVoyageCover)}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>`;
   };
   reader.readAsDataURL(file);
   e.target.value='';
@@ -1935,7 +1935,7 @@ function restoreAutosave() {
     editArticleImages = [];
     renderArtImgPreviews();
     const cp = document.getElementById('af-cover-preview');
-    if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+    if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
     // Re-add remove buttons to inline images
     if (ed) ed.querySelectorAll('figure.inline-img-wrap').forEach(fig => {
       fig.contentEditable = 'false';
@@ -2018,7 +2018,7 @@ function editArticle(id) {
   }
   renderArtImgPreviews();
   const cp = document.getElementById('af-cover-preview');
-  if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
+  if (cp) cp.innerHTML = editArticleCover ? `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>` : '';
   showPanel('article-form');
   startAutosave();
 }
@@ -2099,7 +2099,7 @@ function handleCoverImage(e) {
   const r = new FileReader();
   r.onload = ev => {
     editArticleCover = ev.target.result;
-    document.getElementById('af-cover-preview').innerHTML = `<div class="img-preview" style="max-width:200px"><img src="${editArticleCover}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>`;
+    document.getElementById('af-cover-preview').innerHTML = `<div class="img-preview" style="max-width:200px"><img src="${escAttr(editArticleCover)}" alt=""><button class="img-preview-rm" onclick="removeCover()"></button></div>`;
   };
   r.readAsDataURL(file);
   e.target.value='';
@@ -2447,6 +2447,7 @@ function md2html(md) {
 }
 
 function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function escAttr(s) { return esc(s).replace(/'/g,'&#39;'); }
 function fdate(d) { if(!d) return ''; try{ return new Date(d+'T12:00:00').toLocaleDateString('fr-CA',{year:'numeric',month:'long',day:'numeric'}); }catch(e){return d;} }
 function loadAproposForm() {
   const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
@@ -2523,7 +2524,7 @@ function previewArticle() {
   // Cover
   const coverEl = document.getElementById('preview-cover');
   if (editArticleCover) {
-    coverEl.innerHTML = '<div style="position:relative;width:100%;height:55vh;min-height:300px;overflow:hidden;margin-bottom:0;"><img src="' + editArticleCover + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,10,.5),transparent);"></div></div>';
+    coverEl.innerHTML = '<div style="position:relative;width:100%;height:55vh;min-height:300px;overflow:hidden;margin-bottom:0;"><img src="' + escAttr(editArticleCover) + '" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"><div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(15,13,10,.5),transparent);"></div></div>';
   } else {
     coverEl.innerHTML = '';
   }

@@ -1,4 +1,9 @@
 node_modules/
+backups/
+*.sql
+.env
+.claude/
+.playwright-mcp/
+tmp-screenshots/
 test-results/
 playwright-report/
-.claude/
