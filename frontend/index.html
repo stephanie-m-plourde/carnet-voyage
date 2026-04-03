@@ -66,6 +66,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 .nav-theme-btn{background:none;border:1px solid var(--border-strong);color:var(--ink-muted);cursor:pointer;font-size:18px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0;}
 .nav-theme-btn:hover{border-color:var(--accent);color:var(--accent);}
 
+/* Hamburger & mobile menu */
+.nav-hamburger{display:none;background:none;border:none;color:var(--ink);font-size:22px;cursor:pointer;padding:4px 8px;}
+.mobile-menu{position:fixed;top:50px;right:0;width:280px;background:var(--paper-card);border-left:1px solid var(--border);border-bottom:1px solid var(--border);z-index:199;transform:translateX(100%);transition:transform .3s ease;padding:1.5rem;display:none;flex-direction:column;gap:1.5rem;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:198;display:none;}
+.mobile-menu-overlay.open{display:block;}
+.mobile-menu-search-input{width:100%;font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.05em;background:var(--paper-warm);border:1px solid var(--border-strong);color:var(--ink);padding:10px 14px;outline:none;}
+.mobile-menu-search-input:focus{border-color:var(--accent);}
+.mobile-menu-search-input::placeholder{color:var(--ink-muted);}
+.mobile-menu-links{display:flex;flex-direction:column;gap:0;}
+.mobile-menu-link{font-family:'Space Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;padding:.9rem 0;border-bottom:1px solid var(--border);transition:color .2s;text-decoration:none;}
+.mobile-menu-link:hover{color:var(--accent);}
+.mobile-menu-footer{display:flex;justify-content:center;padding-top:.5rem;}
+
 /* ── HOME HERO ── */
 .home-hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding-top:60px;}
 .hero-bg-wrap{position:absolute;inset:0;z-index:0;}
@@ -74,14 +88,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 @keyframes drift{0%{opacity:0;transform:translateY(100vh) scale(0);}10%{opacity:.6;}90%{opacity:.3;}100%{opacity:0;transform:translateY(-20vh) scale(1.5);}}
 .hero-lines-h{position:absolute;inset:0;}
 .hero-lines-h::before,.hero-lines-h::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);}
-.hero-lines-h::before{top:30%;}
+.hero-lines-h::before{top:25%;}
 .hero-lines-h::after{top:70%;}
 .hero-inner{position:relative;z-index:2;text-align:center;padding:4rem 2rem 0;max-width:900px;}
 .hero-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--accent);margin-bottom:2rem;opacity:0;animation:fadeUp .8s .3s ease forwards;}
 .hero-title{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(52px,9vw,120px);line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:.75rem;opacity:0;animation:fadeUp .9s .5s ease forwards;}
 .hero-title em{font-style:italic;color:var(--accent);font-weight:400;}
 .hero-title-line2{display:block;font-weight:400;font-style:italic;font-size:.65em;color:var(--ink-soft);}
-.hero-sub{font-family:'Lora',serif;font-style:italic;font-size:20px;color:var(--ink-muted);margin-bottom:5rem;line-height:1.6;opacity:0;animation:fadeUp .8s .7s ease forwards;}
+.hero-sub{font-family:'Lora',serif;font-style:italic;font-size:20px;color:var(--ink-muted);margin-bottom:8rem;line-height:1.6;opacity:0;animation:fadeUp .8s .7s ease forwards;}
 .hero-cta-wrap{display:flex;gap:1rem;justify-content:center;align-items:center;opacity:0;animation:fadeUp .8s .9s ease forwards;}
 .hero-cta{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--paper);background:var(--accent);border:none;padding:14px 28px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;}
 .hero-cta::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);opacity:0;transition:opacity .2s;}
@@ -95,57 +109,48 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 .hero-deco-num{position:absolute;font-family:'Playfair Display',serif;font-weight:900;font-size:320px;color:rgba(232,184,109,.03);line-height:1;pointer-events:none;user-select:none;top:50%;left:50%;transform:translate(-50%,-50%);}
 
-/* ── VOYAGES LIST (home) ── */
-.voyages-section{max-width:1160px;margin:0 auto;padding:5rem 2rem 8rem;}
-.voyages-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:3rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
-.voyages-title{font-family:'Playfair Display',serif;font-weight:700;font-size:38px;color:var(--ink);}
-.voyages-title em{font-style:italic;color:var(--accent);font-weight:400;}
-.voyages-count{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-muted);}
+/* ── VOYAGES LIST (home) — fullscreen timeline ── */
+.voyages-section{position:relative;padding-top:6rem;}
+.voyages-header{display:none;}
+.voyages-count{display:none;}
 
-/* Voyage cards row */
-.voyage-row{margin-bottom:5rem;}
-.voyage-row-banner{position:relative;height:320px;overflow:hidden;margin-bottom:0;cursor:pointer;background:var(--paper);}
-.voyage-row-banner img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease;}
-.voyage-row-banner:hover img{transform:scale(1.03);}
-.voyage-row-banner-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,12,9,.68) 0%,rgba(15,12,9,.28) 60%,rgba(15,12,9,.04) 100%);}
-.voyage-row-banner-content{position:absolute;inset:0;display:flex;align-items:center;gap:1rem;padding:0 2rem;}
-.voyage-row-banner-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--paper-warm);}
-.voyage-row-flag{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.1em;background:var(--accent-soft);border:1px solid var(--accent);color:var(--accent);padding:3px 8px;line-height:1.4;font-weight:400;}
-.voyage-row-info{}
-.voyage-row-name{font-family:'Playfair Display',serif;font-weight:700;font-size:34px;cursor:pointer;transition:color .2s;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.5);display:block;line-height:1.1;}
-.voyage-row-name-plain{font-family:'Playfair Display',serif;font-weight:700;font-size:28px;cursor:pointer;transition:color .2s;color:var(--ink);}
-.voyage-row-name-plain:hover{color:var(--accent);}
-.voyage-row-meta{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.35rem;display:block;}
-.voyage-row-meta-plain{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);}
-.voyage-row-more-banner{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.6);cursor:pointer;transition:all .2s;background:none;border:1px solid rgba(255,255,255,.25);padding:6px 12px;margin-left:auto;}
-.voyage-row-more-banner:hover{color:#fff;border-color:rgba(255,255,255,.6);}
-.voyage-row-header{display:flex;align-items:baseline;gap:1.5rem;margin-bottom:1.5rem;}
-.voyage-row-more{margin-left:auto;font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;transition:color .2s;background:none;border:none;}
-.voyage-row-more:hover{color:var(--accent);}
 
-/* Article mini-grid per voyage */
-.voyage-articles-wrap{position:relative;}
-.voyage-articles-strip{display:flex;overflow-x:hidden;scroll-behavior:smooth;gap:1px;border:1px solid var(--border);}
-.voyage-articles-strip .mini-card{min-width:260px;flex:1 0 calc(25% - 1px);max-width:calc(25% - 1px);}
-@media(max-width:1100px){.voyage-articles-strip .mini-card{flex:1 0 calc(33.333% - 1px);max-width:calc(33.333% - 1px);}}
-@media(max-width:760px){.voyage-articles-strip .mini-card{flex:1 0 calc(50% - 1px);max-width:calc(50% - 1px);}}
-.strip-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,opacity .2s;opacity:.85;}
-.strip-arrow:hover{background:rgba(0,0,0,.85);opacity:1;}
-.strip-arrow.left{left:6px;}
-.strip-arrow.right{right:6px;}
-.mini-card{background:var(--paper-card);cursor:pointer;overflow:hidden;transition:transform .3s,box-shadow .3s;border:1px solid var(--border);}
-.mini-card:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.4);}
-.mini-card-img{width:100%;height:170px;object-fit:cover;display:block;transition:transform .4s;}
-.mini-card:hover .mini-card-img{transform:scale(1.04);}
-.mini-card-img-ph{width:100%;height:170px;background:var(--paper-warm);display:flex;align-items:center;justify-content:center;font-size:36px;color:var(--border-strong);}
-.mini-card-body{padding:1rem 1.25rem;}
-.mini-card-cat{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:.3rem;}
-.mini-card-title{font-family:'Playfair Display',serif;font-weight:400;font-size:17px;line-height:1.3;color:var(--ink);margin-bottom:.5rem;}
-.mini-card-date{font-family:'Space Mono',monospace;font-size:9px;color:var(--ink-muted);}
-.mini-card-img-wrap{position:relative;overflow:hidden;}
-.mini-card-zoom{position:absolute;bottom:8px;right:8px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;z-index:2;}
-.mini-card:hover .mini-card-zoom{opacity:1;}
-.mini-card-zoom:hover{background:var(--accent);}
+/* Fullscreen voyage slide */
+.voyage-slide{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:center;}
+.voyage-slide-bg{position:fixed;inset:0;z-index:0;clip-path:inset(0);}
+.voyage-slide{clip-path:inset(0);}
+.voyage-slide-bg img{width:100%;height:100%;object-fit:cover;display:block;}
+.voyage-slide-bg-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(15,12,9,.75) 0%,rgba(15,12,9,.4) 50%,rgba(15,12,9,.2) 100%);}
+.voyage-slide-no-cover{background:var(--paper-warm);}
+.voyage-slide-content{position:relative;z-index:2;display:flex;align-items:center;width:100%;height:100%;padding:0 5rem;gap:3rem;}
+.voyage-slide-info{flex:0 0 400px;max-width:420px;}
+.voyage-slide-dates{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;}
+.voyage-slide-name{font-family:'Playfair Display',serif;font-weight:900;font-size:clamp(48px,6vw,90px);line-height:.95;color:#fff;text-transform:uppercase;letter-spacing:-.02em;margin-bottom:1rem;cursor:pointer;transition:color .2s;}
+.voyage-slide-name:hover{color:var(--accent);}
+.voyage-slide-desc{font-family:'Lora',serif;font-size:16px;line-height:1.6;color:rgba(255,255,255,.7);margin-bottom:1.5rem;}
+.voyage-slide-cta{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);cursor:pointer;background:none;border:none;padding:0;transition:color .2s;}
+.voyage-slide-cta:hover{color:#fff;}
+
+/* Articles carrousel on right side */
+.voyage-slide-articles{flex:1;position:relative;display:flex;align-items:center;justify-content:flex-end;overflow:visible;padding-right:2rem;}
+.voyage-slide-strip{display:flex;gap:14px;overflow-x:auto;scroll-behavior:smooth;padding:1rem;align-items:flex-start;}
+.voyage-slide-strip::-webkit-scrollbar{display:none;}
+.voyage-slide-strip{-ms-overflow-style:none;scrollbar-width:none;}
+.voyage-slide-card{flex:0 0 270px;background:rgba(20,18,15,.85);border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;cursor:pointer;transition:transform .3s,border-color .3s;}
+.voyage-slide-card:hover{transform:translateY(-4px);border-color:var(--accent);}
+.voyage-slide-card img{width:100%;height:200px;object-fit:cover;object-position:center;display:block;}
+.voyage-slide-card-ph{width:100%;height:200px;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;font-size:32px;color:rgba(255,255,255,.15);}
+.voyage-slide-card-title{font-family:'Playfair Display',serif;font-size:17px;color:#fff;padding:.9rem 1rem;line-height:1.3;}
+.voyage-slide-arrows{display:flex;gap:.5rem;margin-top:1rem;justify-content:flex-end;padding-right:1rem;}
+.voyage-slide-arrows button{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.voyage-slide-arrows button:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);}
+
+@media(max-width:900px){
+  .voyage-slide-content{flex-direction:column;padding:100px 2rem 2rem;align-items:flex-start;}
+  .voyage-slide-info{flex:none;max-width:100%;}
+  .voyage-slide-articles{width:100%;}
+  .voyage-slide-card{flex:0 0 180px;}
+}
 .empty-voyage{padding:2rem;text-align:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);border:1px solid var(--border);}
 
 /* ── VOYAGE DETAIL PAGE ── */
@@ -243,6 +248,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 .preview-device-toggle{display:flex;gap:2px;background:var(--input-bg);border-radius:6px;padding:2px;}
 .preview-device-btn{width:32px;height:32px;border:none;background:transparent;color:var(--ink-muted);cursor:pointer;border-radius:4px;font-size:18px;display:flex;align-items:center;justify-content:center;transition:all .2s;}
 .preview-device-btn.active{background:var(--accent);color:#0f0d0a;}
+.mobile-preview-device{width:390px;height:844px;border:3px solid var(--border-strong);border-radius:40px;overflow:hidden;position:relative;box-shadow:0 0 80px rgba(0,0,0,.4),inset 0 0 0 2px rgba(0,0,0,.3);}
+.mobile-preview-notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:28px;background:var(--border-strong);border-radius:0 0 16px 16px;z-index:2;}
 .preview-mobile-frame{max-width:390px !important;margin:0 auto !important;border:2px solid var(--border-strong);border-radius:24px;padding:2rem 1.25rem 4rem !important;box-shadow:0 0 60px rgba(0,0,0,.4);}
 .art-gallery-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;}
 .art-gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px;}
@@ -443,6 +450,81 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
   .stats-grid{grid-template-columns:1fr 1fr;}
   .form-grid-2{grid-template-columns:1fr;}
 }
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  /* Nav */
+  nav{padding:0 1rem;height:50px;}
+  .nav-logo{font-size:13px;}
+  .nav-logo em{font-size:11px;}
+  .nav-right{display:none !important;}
+  .nav-hamburger{display:block;}
+  .mobile-menu{display:flex;top:50px;}
+
+  /* Hero */
+  .home-hero{min-height:100vh;}
+  .hero-inner{padding:2rem 1.25rem 8rem;}
+  .hero-eyebrow{font-size:8px;letter-spacing:.25em;margin-bottom:1rem;}
+  .hero-title{font-size:clamp(36px,12vw,60px);}
+  .hero-sub{font-size:16px;margin-bottom:6rem;}
+  .hero-cta{padding:12px 20px;font-size:10px;}
+  .hero-scroll{bottom:20px;}
+  .hero-deco-num{font-size:160px;}
+
+  /* Voyage slides */
+  .voyage-slide{min-height:auto;height:auto;padding:80px 0 2rem;}
+  .voyage-slide-content{flex-direction:column;padding:0 1.25rem;gap:1.5rem;align-items:flex-start;}
+  .voyage-slide-info{flex:none;max-width:100%;}
+  .voyage-slide-name{font-size:clamp(36px,10vw,56px);}
+  .voyage-slide-desc{font-size:14px;}
+  .voyage-slide-dates{font-size:9px;}
+  .voyage-slide-articles{width:100%;padding-right:0;justify-content:flex-start;}
+  .voyage-slide-card{flex:0 0 160px;border-radius:8px;}
+  .voyage-slide-card img{height:140px;}
+  .voyage-slide-card-ph{height:140px;}
+  .voyage-slide-card-title{font-size:13px;padding:.6rem .7rem;}
+  .voyage-slide-arrows button{width:30px;height:30px;font-size:14px;}
+
+  /* Voyage detail */
+  .voyage-detail-hero{min-height:300px;}
+  .voyage-detail-hero-content{padding:2rem 1.25rem;}
+  .voyage-detail-name{font-size:clamp(32px,8vw,48px);}
+  .voyage-detail-desc{font-size:16px;}
+  .voyage-articles-section{padding:1.5rem 1rem 4rem;}
+  .voyage-articles-grid{grid-template-columns:1fr;}
+  .article-card img,.article-card-ph{height:180px;}
+
+  /* Article detail */
+  .art-cover-hero.has-cover{height:40vh;min-height:240px;}
+  .art-header{margin:1.5rem auto 2rem;padding:0 1.25rem;}
+  .art-title{font-size:clamp(26px,7vw,40px);}
+  .art-body{padding:0 1.25rem 4rem;font-size:17px;line-height:1.8;}
+  .art-body h2{font-size:22px;}
+  .breadcrumb{padding:.7rem 1.25rem;flex-wrap:wrap;}
+  .art-gallery-grid{grid-template-columns:1fr 1fr;}
+
+  /* Search */
+  .search-results-panel{width:100%;max-width:100%;left:0;transform:none;}
+
+  /* À propos / Contact */
+  .page-hero-inner{padding:2rem 1.25rem;}
+  .page-title{font-size:clamp(32px,8vw,48px);}
+  .about-blocks{grid-template-columns:1fr;}
+  .contact-layout{grid-template-columns:1fr;gap:2rem;}
+  .contact-layout>div{padding:1.5rem 1.25rem;}
+
+  /* Admin */
+  .admin-main{padding:1rem;}
+  .admin-topbar{flex-direction:column;gap:.75rem;align-items:flex-start;}
+  .stats-grid{grid-template-columns:1fr;}
+  .admin-table{font-size:12px;}
+  .admin-table th,.admin-table td{padding:8px 6px;}
+  .drag-handle{display:none;}
+  .tbl-actions{flex-wrap:wrap;}
+  .editor-toolbar{flex-wrap:wrap;}
+  .wysiwyg-editor{min-height:300px;padding:1rem;font-size:16px;}
+  .mobile-preview-device{width:320px;height:700px;border-radius:30px;}
+}
 </style>
 </head>
 <body>
@@ -450,6 +532,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 <!-- NAV -->
 <nav>
   <div class="nav-logo" onclick="showView('home');renderHome()">Carnets de voyage <em>· Famille Gagnon</em></div>
+  <button class="nav-hamburger" onclick="toggleMobileMenu()" id="nav-hamburger">&#9776;</button>
   <div class="nav-right">
     <span id="nav-accueil-link" class="nav-link" onclick="showView('home');renderHome()">Accueil</span>
     <span id="nav-voyage-link" class="nav-link" style="display:none" onclick="goBackToVoyage()"></span>
@@ -468,6 +551,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
   </div>
 </nav>
 
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-search">
+    <input type="text" class="mobile-menu-search-input" placeholder="Rechercher…" oninput="doSearch(this.value)" onkeydown="if(event.key==='Escape')closeMobileMenu()">
+  </div>
+  <div class="mobile-menu-links">
+    <a class="mobile-menu-link" onclick="showView('home');renderHome();closeMobileMenu()">Accueil</a>
+    <a class="mobile-menu-link" onclick="showView('apropos');closeMobileMenu()">À propos</a>
+    <a class="mobile-menu-link" onclick="showView('contact');checkContactConfig();closeMobileMenu()">Contact</a>
+    <a class="mobile-menu-link" onclick="openAdmin();closeMobileMenu()">Admin</a>
+  </div>
+  <div class="mobile-menu-footer">
+    <button class="nav-theme-btn" id="theme-toggle-mobile" onclick="toggleTheme()" title="Mode clair / sombre">&#9789;</button>
+  </div>
+</div>
+<div class="mobile-menu-overlay" id="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+
 <!-- ═══ HOME ═══ -->
 <div id="view-home" class="view active">
   <div class="home-hero">
@@ -477,7 +577,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
     </div>
     <div class="hero-deco-num">∞</div>
     <div class="hero-inner">
-      <div class="hero-eyebrow">2 adultes · 2 fillettes · 1 soif de monde</div>
+      <div class="hero-eyebrow">2 adultes · 2 fillettes · 1 soif d'aventure</div>
       <h1 class="hero-title">Voir le monde<br><span class="hero-title-line2">pour mieux le comprendre</span></h1>
       <p class="hero-sub">Nous croyons que les plus belles leçons de vie ne sont pas dans les livres scolaires — elles sont dans la forêt du Costa Rica, sur les plages des Îles de la Madeleine, dans la rue de Kyoto — dans les yeux de nos filles qui découvrent que le monde est grand et magnifique.</p>
       <div class="hero-cta-wrap">
@@ -488,13 +588,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
   </div>
 
   <section class="voyages-section" id="voyages-list">
-    <div class="voyages-header">
-      <h2 class="voyages-title">Nos <em>aventures</em></h2>
-      <span class="voyages-count" id="home-voyages-count">0 voyage</span>
-    </div>
+    <span class="voyages-count" id="home-voyages-count" style="display:none">0 voyage</span>
     <div id="home-voyages-container"></div>
     <div id="home-empty" style="display:none;text-align:center;padding:4rem 0;">
-      <div style="font-size:48px;opacity:.12;margin-bottom:1rem;"></div>
       <p style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-muted);">La prochaine aventure arrive bientôt…</p>
     </div>
   </section>
@@ -719,6 +815,7 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
         <div class="admin-topbar">
           <h2 class="admin-page-title">Tableau de bord</h2>
           <div style="display:flex;gap:.5rem;">
+            <button class="btn-secondary" onclick="openMobilePreview()">&#9647; Aperçu mobile</button>
             <button class="btn-secondary" onclick="startNewVoyage()">+ Voyage</button>
             <button class="btn-primary" onclick="startNewArticle()">+ Article</button>
           </div>
@@ -1042,6 +1139,22 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
         </div>
       </div>
 
+      <!-- MOBILE PREVIEW -->
+      <div id="panel-mobile-preview" style="display:none">
+        <div class="preview-bar">
+          <span class="preview-bar-label">Aperçu mobile</span>
+          <div class="preview-bar-actions">
+            <button class="btn-secondary" onclick="closeMobilePreview()">← Retour</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:center;padding:2rem 0 4rem;background:var(--paper-warm);min-height:calc(100vh - 120px);">
+          <div class="mobile-preview-device">
+            <div class="mobile-preview-notch"></div>
+            <iframe id="mobile-preview-iframe" src="" style="width:100%;height:100%;border:none;background:#fff;"></iframe>
+          </div>
+        </div>
+      </div>
+
       <!-- CONTACT EDIT -->
       <div id="panel-contact-edit" style="display:none">
         <div class="admin-topbar">
@@ -1352,61 +1465,54 @@ function renderHome() {
 
   container.innerHTML = pub.map(v => {
     const arts = articles.filter(a => a.voyageId === v.id && a.status === 'published');
-    const hasCover = !!v.cover;
-    const headerHtml = hasCover
-      ? `<div class="voyage-row-banner" onclick="openVoyage('${v.id}')">
-          <img src="${escAttr(v.cover)}" alt="${esc(v.name)}" loading="lazy">
-          <div class="voyage-row-banner-overlay"></div>
-          <div class="voyage-row-banner-content">
-            <span class="voyage-row-flag">${v.flag||''}</span>
-            <div class="voyage-row-info">
-              <span class="voyage-row-name">${esc(v.name)}</span>
-              <span class="voyage-row-meta">${esc(v.dates||'')} · ${arts.length} article${arts.length!==1?'s':''}</span>
-            </div>
-            <button class="voyage-row-more-banner" onclick="event.stopPropagation();openVoyage('${v.id}')">Lire les carnets →</button>
-          </div>
-        </div>`
-      : `<div class="voyage-row-header">
-          <span class="voyage-row-flag" style="font-size:26px">${v.flag||''}</span>
-          <span class="voyage-row-name-plain" onclick="openVoyage('${v.id}')">${esc(v.name)}</span>
-          <span class="voyage-row-meta-plain">${esc(v.dates||'')} · ${arts.length} article${arts.length!==1?'s':''}</span>
-          <button class="voyage-row-more" onclick="openVoyage('${v.id}')">Lire les carnets →</button>
-        </div>`;
+    const yearMatch = (v.dates||'').match(/\d{4}/);
+    const year = yearMatch ? yearMatch[0] : '';
     const stripId = 'strip-' + v.id;
+    const nameParts = v.name.replace(/\s*\d{4}$/, '');
+
+    const bgHtml = v.cover
+      ? `<div class="voyage-slide-bg"><img src="${escAttr(v.cover)}" alt="${esc(v.name)}" loading="lazy"><div class="voyage-slide-bg-overlay"></div></div>`
+      : `<div class="voyage-slide-bg voyage-slide-no-cover"><div class="voyage-slide-bg-overlay"></div></div>`;
+
+    const cardsHtml = arts.map(a => {
+      const imgSrc = a.cover || (a.images&&a.images.length ? a.images[0] : null);
+      return `<div class="voyage-slide-card" onclick="openArticle('${a.id}')">
+        ${imgSrc ? `<img src="${escAttr(imgSrc)}" alt="" loading="lazy">` : `<div class="voyage-slide-card-ph">${glyphForArt(a)}</div>`}
+        <div class="voyage-slide-card-title">${esc(a.title)}</div>
+      </div>`;
+    }).join('');
+
     return `
-      <div class="voyage-row">
-        ${headerHtml}
-        ${arts.length
-          ? `<div class="voyage-articles-wrap">
-              ${arts.length > 4 ? `<button class="strip-arrow left" onclick="event.stopPropagation();scrollStrip('${stripId}',-1)">&#8249;</button>` : ''}
-              <div class="voyage-articles-strip" id="${stripId}">${arts.map(a => miniCard(a)).join('')}</div>
-              ${arts.length > 4 ? `<button class="strip-arrow right" onclick="event.stopPropagation();scrollStrip('${stripId}',1)">&#8250;</button>` : ''}
-            </div>`
-          : `<div class="empty-voyage">Les carnets de ce voyage arrivent bientôt…</div>`
-        }
+      <div class="voyage-slide" id="vslide-${year}" data-year="${year}">
+        ${bgHtml}
+        <div class="voyage-slide-content">
+          <div class="voyage-slide-info">
+            <div class="voyage-slide-dates">${esc(v.dates||'')}</div>
+            <div class="voyage-slide-name" onclick="openVoyage('${v.id}')">${esc(nameParts)}</div>
+            <div class="voyage-slide-desc">${esc(v.desc||'')}</div>
+            <button class="voyage-slide-cta" onclick="openVoyage('${v.id}')">Découvrir →</button>
+          </div>
+          <div class="voyage-slide-articles">
+            <div>
+              <div class="voyage-slide-strip" id="${stripId}">${cardsHtml || '<div style="color:rgba(255,255,255,.4);font-family:\'Space Mono\',monospace;font-size:10px;letter-spacing:.1em;">Les carnets arrivent bientôt…</div>'}</div>
+              ${arts.length > 2 ? `<div class="voyage-slide-arrows">
+                <button onclick="scrollStrip('${stripId}',-1)">&#8249;</button>
+                <button onclick="scrollStrip('${stripId}',1)">&#8250;</button>
+              </div>` : ''}
+            </div>
+          </div>
+        </div>
       </div>`;
   }).join('');
+
 }
 
 function scrollStrip(id, dir) {
   const el = document.getElementById(id);
   if (!el) return;
-  const card = el.querySelector('.mini-card');
-  const step = card ? card.offsetWidth + 1 : 280;
-  el.scrollBy({ left: dir * step * 2, behavior: 'smooth' });
-}
-
-function miniCard(art) {
-  const imgSrc = art.cover || (art.images&&art.images.length ? art.images[0] : null);
-  const cover = imgSrc ? `<div class="mini-card-img-wrap"><img class="mini-card-img" src="${escAttr(imgSrc)}" alt="" loading="lazy"><button class="mini-card-zoom" onclick="event.stopPropagation();openLightbox('${escAttr(imgSrc)}')" title="Agrandir">&#8689;</button></div>` : `<div class="mini-card-img-ph">${glyphForArt(art)}</div>`;
-  return `<div class="mini-card" onclick="openArticle('${art.id}')">
-    ${cover}
-    <div class="mini-card-body">
-      <div class="mini-card-cat">${esc(art.category||'')}</div>
-      <div class="mini-card-title">${esc(art.title)}</div>
-      <div class="mini-card-date">${fdate(art.date)}</div>
-    </div>
-  </div>`;
+  const card = el.querySelector('.voyage-slide-card');
+  const step = card ? card.offsetWidth + 12 : 232;
+  el.scrollBy({ left: dir * step, behavior: 'smooth' });
 }
 
 function openVoyage(id) {
@@ -1618,7 +1724,7 @@ function editVoyage(id) {
   document.getElementById('vf-flag').value = v.flag||'';
   document.getElementById('vf-dates').value = v.dates||'';
   document.getElementById('vf-desc').value = v.desc||'';
-  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<img src="${escAttr(v.cover)}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">` : '';
+  document.getElementById('voyage-cover-preview').innerHTML = v.cover ? `<div class="img-preview" style="max-width:260px"><img src="${escAttr(v.cover)}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>` : '';
   showPanel('voyage-form');
 }
 
@@ -1627,7 +1733,7 @@ function handleVoyageCover(e) {
   const reader = new FileReader();
   reader.onload = ev => {
     editVoyageCover = ev.target.result;
-    document.getElementById('voyage-cover-preview').innerHTML = `<img src="${escAttr(editVoyageCover)}" style="max-height:120px;max-width:260px;display:block;border:1px solid var(--border);">`;
+    document.getElementById('voyage-cover-preview').innerHTML = `<div class="img-preview" style="max-width:260px"><img src="${escAttr(editVoyageCover)}" alt=""><button class="img-preview-rm" onclick="removeVoyageCover()">✕</button></div>`;
   };
   reader.readAsDataURL(file);
   e.target.value='';
@@ -1986,8 +2092,20 @@ function handleCoverImage(e) {
 }
 
 function removeCover() {
+  // Si c'est un article existant avec une couverture serveur, la supprimer
+  if (editArticleId && editArticleCover && !editArticleCover.startsWith('data:')) {
+    apiFetch('/api/articles/' + editArticleId + '/cover', { method: 'DELETE' }).catch(() => {});
+  }
   editArticleCover = null;
   document.getElementById('af-cover-preview').innerHTML = '';
+}
+
+function removeVoyageCover() {
+  if (editVoyageId && editVoyageCover && !editVoyageCover.startsWith('data:')) {
+    apiFetch('/api/voyages/' + editVoyageId + '/cover', { method: 'DELETE' }).catch(() => {});
+  }
+  editVoyageCover = null;
+  document.getElementById('voyage-cover-preview').innerHTML = '';
 }
 
 function handleGalleryImages(e) {
@@ -2035,7 +2153,14 @@ function renderArtImgPreviews() {
   });
 }
 
-function removeArtImg(i) { editArticleImages.splice(i,1); renderArtImgPreviews(); }
+function removeArtImg(i) {
+  const img = editArticleImages[i];
+  if (editArticleId && img && img.dataUrl && !img.dataUrl.startsWith('data:')) {
+    apiFetch('/api/articles/' + editArticleId + '/images-by-url', { method: 'DELETE', body: JSON.stringify({ url: img.dataUrl }) }).catch(() => {});
+  }
+  editArticleImages.splice(i,1);
+  renderArtImgPreviews();
+}
 
 function openLightbox(src) {
   document.getElementById('art-lightbox-img').src = src;
@@ -2423,6 +2548,40 @@ function previewArticle() {
   window.scrollTo(0, 0);
 }
 
+function toggleMobileMenu() {
+  const menu = document.getElementById('mobile-menu');
+  const overlay = document.getElementById('mobile-menu-overlay');
+  const btn = document.getElementById('nav-hamburger');
+  const isOpen = menu.classList.contains('open');
+  menu.classList.toggle('open');
+  overlay.classList.toggle('open');
+  btn.innerHTML = isOpen ? '&#9776;' : '&#10005;';
+}
+function closeMobileMenu() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('mobile-menu-overlay').classList.remove('open');
+  document.getElementById('nav-hamburger').innerHTML = '&#9776;';
+}
+
+function openMobilePreview() {
+  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','preview'].forEach(p => {
+    const el = document.getElementById('panel-' + p);
+    if (el) el.style.display = 'none';
+  });
+  document.getElementById('panel-mobile-preview').style.display = 'block';
+  const iframe = document.getElementById('mobile-preview-iframe');
+  iframe.src = window.location.origin;
+  window.scrollTo(0, 0);
+}
+
+function closeMobilePreview() {
+  document.getElementById('panel-mobile-preview').style.display = 'none';
+  document.getElementById('mobile-preview-iframe').src = '';
+  document.getElementById('panel-dashboard').style.display = 'block';
+  document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+  document.getElementById('anav-dashboard').classList.add('active');
+}
+
 function setPreviewDevice(mode, btn) {
   document.querySelectorAll('.preview-device-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -2599,8 +2758,11 @@ function toggleTheme() {
   updateThemeIcon(next);
 }
 function updateThemeIcon(theme) {
+  const icon = theme === 'dark' ? '&#9788;' : '&#9789;';
   const btn = document.getElementById('theme-toggle');
-  if (btn) btn.innerHTML = theme === 'dark' ? '&#9788;' : '&#9789;';
+  if (btn) btn.innerHTML = icon;
+  const btn2 = document.getElementById('theme-toggle-mobile');
+  if (btn2) btn2.innerHTML = icon;
 }
 initTheme();
 

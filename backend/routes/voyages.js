@@ -76,6 +76,12 @@ router.post('/:id/cover', auth, validateUUID('id'), upload.single('cover'), asyn
   res.json({ url });
 });
 
+// DELETE /api/voyages/:id/cover — supprimer couverture
+router.delete('/:id/cover', auth, async (req, res) => {
+  await pool.query('UPDATE voyages SET cover_url=NULL, updated_at=NOW() WHERE id=$1', [req.params.id]);
+  res.json({ success: true });
+});
+
 // DELETE /api/voyages/:id — admin
 router.delete('/:id', auth, validateUUID('id'), async (req, res) => {
   // Récupérer les fichiers à supprimer avant le CASCADE
