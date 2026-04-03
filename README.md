@@ -55,8 +55,6 @@ Navigateur (port 3000)
 ```text
 carnet-voyage/
 ├── docker-compose.yml
-├── backup.sh               # Sauvegarde complète (DB + images)
-├── restore.sh              # Restauration complète
 ├── backend/
 │   ├── server.js           # Serveur Express, enregistrement des routes
 │   ├── db.js               # Pool de connexion PostgreSQL
@@ -136,24 +134,8 @@ Les données du site vivent dans deux volumes Docker :
 - `postgres_data` — base de données (voyages, articles, paramètres)
 - `uploads_data` — images uploadées (couvertures, galeries, médiathèque)
 
-### Sauvegarde complète (DB + images)
-
 ```powershell
-bash backup.sh
-```
-
-Crée un dossier horodaté dans `./backups/` contenant `database.sql` et le dossier `uploads/`.
-
-### Restauration complète
-
-```powershell
-bash restore.sh ./backups/backup_2026-04-02_143000
-```
-
-### Commandes manuelles
-
-```powershell
-# Sauvegarder la base de données seule
+# Sauvegarder la base de données
 docker exec carnets_db pg_dump -U carnets_user carnets_voyage > backup.sql
 
 # Restaurer la base de données
