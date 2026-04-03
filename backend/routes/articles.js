@@ -108,6 +108,12 @@ router.post('/:id/cover', auth, upload.single('cover'), async (req, res) => {
   res.json({ url });
 });
 
+// DELETE /api/articles/:id/cover — supprimer couverture
+router.delete('/:id/cover', auth, async (req, res) => {
+  await pool.query('UPDATE articles SET cover_url=NULL, updated_at=NOW() WHERE id=$1', [req.params.id]);
+  res.json({ success: true });
+});
+
 // POST /api/articles/:id/images — upload photos galerie
 router.post('/:id/images', auth, upload.array('images', 50), async (req, res) => {
   const urls = [];
@@ -129,6 +135,14 @@ router.post('/:id/images', auth, upload.array('images', 50), async (req, res) =>
 // DELETE /api/articles/:id/images/:imageId
 router.delete('/:id/images/:imageId', auth, async (req, res) => {
   await pool.query('DELETE FROM article_images WHERE id=$1 AND article_id=$2', [req.params.imageId, req.params.id]);
+  res.json({ success: true });
+});
+
+// DELETE /api/articles/:id/images-by-url — supprimer une image de galerie par URL
+router.delete('/:id/images-by-url', auth, async (req, res) => {
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: 'url required' });
+  await pool.query('DELETE FROM article_images WHERE url=$1 AND article_id=$2', [url, req.params.id]);
   res.json({ success: true });
 });
 
