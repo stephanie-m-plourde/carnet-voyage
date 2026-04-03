@@ -34,6 +34,7 @@ Plateforme de blogue de voyage familial permettant de documenter et partager des
 | Base de données | PostgreSQL 16 |
 | Authentification | JWT (expiration 7 jours) |
 | Upload/Images | Multer + Sharp (conversion WebP automatique) |
+| Sécurité | Helmet, express-rate-limit, sanitize-html |
 | Déploiement | Docker Compose (3 conteneurs) |
 
 ## Architecture
@@ -60,7 +61,9 @@ carnet-voyage/
 │   ├── server.js           # Serveur Express, enregistrement des routes
 │   ├── db.js               # Pool de connexion PostgreSQL
 │   ├── middleware/
-│   │   └── auth.js         # Middleware JWT
+│   │   ├── auth.js         # Middleware JWT
+│   │   ├── upload.js       # Validation MIME des uploads
+│   │   └── validate.js     # Validation UUID des paramètres
 │   └── routes/
 │       ├── auth.js          # Login et vérification de token
 │       ├── voyages.js       # CRUD voyages + couverture
@@ -69,6 +72,7 @@ carnet-voyage/
 │       └── settings.js      # Paramètres du site (À propos, contact)
 ├── db/
 │   └── init.sql            # Schéma SQL + données de démonstration
+├── uploads/                # Photos de couverture initiales (seed)
 └── frontend/
     ├── nginx.conf          # Routing SPA + proxy API
     └── index.html          # Application complète (HTML + CSS + JS)
@@ -89,8 +93,11 @@ carnet-voyage/
 ```powershell
 git clone <url-du-repo>
 cd carnet-voyage
+cp .env.example .env        # Configurer les secrets dans .env
 docker-compose up -d --build
 ```
+
+Le fichier `.env` contient les mots de passe et secrets du projet. Modifier les valeurs par défaut avant le premier lancement.
 
 La première fois prend 3-5 minutes (téléchargement des images Docker).
 
@@ -105,7 +112,7 @@ La première fois prend 3-5 minutes (téléchargement des images Docker).
 
 ### Changer le mot de passe admin
 
-Dans `docker-compose.yml`, modifier la variable `ADMIN_PASSWORD`, puis redémarrer :
+Dans le fichier `.env`, modifier la variable `ADMIN_PASSWORD`, puis redémarrer :
 
 ```powershell
 docker-compose down
