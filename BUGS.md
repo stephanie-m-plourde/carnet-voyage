@@ -5,14 +5,14 @@
 - **Where:** Home page article cards, Voyage detail article list, Article detail header
 - **Affected sizes:** All (desktop, tablet, mobile)
 - **Details:** The API returns valid ISO dates (e.g. `"2026-04-10T00:00:00.000Z"`) but the frontend displays "Invalid Date". The JavaScript date formatting function fails to convert the `article_date` field.
-- **Status:** Open
+- **Status:** Fixed — `fdate()` now detects ISO strings containing `T` and skips appending `T12:00:00`
 
 ## BUG-002: Hidden views block navigation clicks (z-index / pointer-events)
 - **Severity:** Critical
 - **Where:** Main nav bar links ("À propos", "Contact")
 - **Affected sizes:** All
-- **Details:** All SPA views (`view-home`, `view-voyage`, `view-article`, `view-apropos`, `view-contact`, `view-admin`) are rendered as `display: block`, `opacity: 1`, `pointer-events: auto` even when not the active view. The inactive views' breadcrumb navs stack on top of the main navigation bar, making "À propos" and "Contact" nav links unclickable. The `<nav class="breadcrumb" id="art-breadcrumb">` inside `view-article` is the specific element intercepting clicks. Inactive views should have `pointer-events: none` or `display: none`.
-- **Status:** Open
+- **Details:** The CSS `nav` selector applied `position:fixed; z-index:100` to all `<nav>` elements, including `<nav class="breadcrumb">` inside voyage/article views. These breadcrumb navs stacked on top of the main navigation bar, making nav links unclickable.
+- **Status:** Fixed — scoped the fixed nav CSS to `#main-nav` instead of bare `nav`
 
 ## BUG-003: Nav bar shows stale breadcrumbs after view change
 - **Severity:** Medium
