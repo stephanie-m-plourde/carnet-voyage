@@ -1668,6 +1668,7 @@ function tryLogin() {
     jwtToken = data.token;
     localStorage.setItem('tb_jwt', jwtToken);
     adminOk = true;
+    document.getElementById('admin-pw').value = '';
     document.getElementById('login-modal').style.display = 'none';
     loadAdminData().then(() => showPanel('dashboard'));
   })
@@ -2564,6 +2565,9 @@ function logoutAdmin() {
   jwtToken = null;
   localStorage.removeItem('tb_jwt');
   adminOk = false;
+  document.getElementById('admin-pw').value = '';
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('admin-content').style.display = 'none';
   showView('home');
   renderHome();
   showToast('Déconnecté');
