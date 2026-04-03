@@ -266,7 +266,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
 /* ── ADMIN ── */
 #view-admin{padding-top:60px;min-height:100vh;background:var(--paper);}
 .admin-layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 60px);}
-.admin-sidebar{background:var(--paper);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto;}
+.admin-sidebar{background:var(--paper);border-right:1px solid var(--border);padding:1.5rem 0;position:sticky;top:60px;height:calc(100vh - 60px);overflow:hidden;}
 .sidebar-section{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--ink-muted);opacity:.5;padding:.5rem 1.5rem .25rem;margin-top:.75rem;}
 .admin-nav-item{display:flex;align-items:center;gap:10px;padding:.65rem 1.5rem;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--ink-muted);cursor:pointer;transition:all .2s;border-left:3px solid transparent;}
 .admin-nav-item:hover{color:var(--ink);background:var(--input-bg);}
@@ -792,20 +792,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--paper);bord
       <div class="sidebar-section">Site</div>
       <div class="admin-nav-item" onclick="showPanel('apropos-edit')" id="anav-apropos-edit">≈ &ensp;À propos</div>
       <div class="admin-nav-item" onclick="showPanel('contact-edit')" id="anav-contact-edit">&#9993; &ensp;Contact</div>
-      <div style="position:absolute;bottom:1.5rem;left:0;right:0;padding:0 1.5rem;">
-        <div onclick="loadPublicData();showView('home');
-applyAproposSaved();
-// Pre-configure Formspree if not already set
-(function() {
-  const d = JSON.parse(localStorage.getItem('tb_apropos') || '{}');
-  if (!d['ap-formspree-url']) {
-    d['ap-formspree-url'] = 'https://formspree.io/f/mreoaldl';
-    localStorage.setItem('tb_apropos', JSON.stringify(d));
-  }
-})();
-checkContactConfig();
-applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);cursor:pointer;padding-top:.9rem;border-top:1px solid var(--border);">← Voir le blog</div>
-      </div>
+      <div class="sidebar-section">Sécurité</div>
+      <div class="admin-nav-item" onclick="showPanel('password-edit')" id="anav-password-edit">&#9919; &ensp;Mot de passe</div>
+      <div class="admin-nav-item" onclick="logoutAdmin()" style="color:var(--red);border-top:1px solid var(--border);margin-top:1rem;padding-top:1rem;">&#9211; &ensp;Déconnexion</div>
     </div>
 
     <div class="admin-main">
@@ -1107,6 +1096,30 @@ applyContactSaved();" style="font-family:'Space Mono',monospace;font-size:10px;l
           <div class="form-footer">
             <button class="btn-primary" onclick="saveApropos()">Sauvegarder →</button>
             <button class="btn-ghost" onclick="showPanel('dashboard')">Annuler</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div id="panel-password-edit" style="display:none">
+        <div class="admin-topbar">
+          <h2 class="admin-page-title">Changer le mot de passe</h2>
+        </div>
+        <div class="admin-form" style="max-width:480px;">
+          <div class="form-group">
+            <label class="form-label">Mot de passe actuel</label>
+            <input type="password" id="pw-current" class="form-input" placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nouveau mot de passe</label>
+            <input type="password" id="pw-new" class="form-input" placeholder="Minimum 6 caractères">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirmer le nouveau mot de passe</label>
+            <input type="password" id="pw-confirm" class="form-input" placeholder="••••••••">
+          </div>
+          <div class="form-footer">
+            <button class="btn-primary" onclick="changePassword()">Modifier le mot de passe →</button>
           </div>
         </div>
       </div>
@@ -1663,7 +1676,7 @@ function tryLogin() {
   });
 }
 function showPanel(name) {
-  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','preview'].forEach(p => {
+  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','password-edit','preview','mobile-preview'].forEach(p => {
     const el = document.getElementById('panel-'+p);
     if (el) el.style.display = p===name?'block':'none';
     const nav = document.getElementById('anav-'+p);
@@ -2547,6 +2560,35 @@ function previewArticle() {
   window.scrollTo(0, 0);
 }
 
+function logoutAdmin() {
+  jwtToken = null;
+  localStorage.removeItem('tb_jwt');
+  adminOk = false;
+  showView('home');
+  renderHome();
+  showToast('Déconnecté');
+}
+
+function changePassword() {
+  const current = document.getElementById('pw-current').value;
+  const newPw = document.getElementById('pw-new').value;
+  const confirm = document.getElementById('pw-confirm').value;
+  if (!current) { showToast('Entrez votre mot de passe actuel'); return; }
+  if (!newPw || newPw.length < 6) { showToast('Le nouveau mot de passe doit contenir au moins 6 caractères'); return; }
+  if (newPw !== confirm) { showToast('Les mots de passe ne correspondent pas'); return; }
+  apiFetch('/api/auth/password', {
+    method: 'PUT',
+    body: JSON.stringify({ current_password: current, new_password: newPw })
+  })
+  .then(() => {
+    showToast('Mot de passe modifié avec succès');
+    document.getElementById('pw-current').value = '';
+    document.getElementById('pw-new').value = '';
+    document.getElementById('pw-confirm').value = '';
+  })
+  .catch(e => showToast('Erreur: ' + e.message));
+}
+
 function toggleMobileMenu() {
   const menu = document.getElementById('mobile-menu');
   const overlay = document.getElementById('mobile-menu-overlay');
@@ -2563,7 +2605,7 @@ function closeMobileMenu() {
 }
 
 function openMobilePreview() {
-  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','preview'].forEach(p => {
+  ['dashboard','voyages-list','voyage-form','articles-list','article-form','media','apropos-edit','contact-edit','password-edit','preview','mobile-preview'].forEach(p => {
     const el = document.getElementById('panel-' + p);
     if (el) el.style.display = 'none';
   });
