@@ -67,6 +67,7 @@ router.post('/:id/cover', auth, validateUUID('id'), upload.single('cover'), asyn
   const filepath = path.join(uploadDir, filename);
 
   await sharp(req.file.buffer)
+    .rotate()
     .resize(1600, 900, { fit: 'cover' })
     .webp({ quality: 85 })
     .toFile(filepath);

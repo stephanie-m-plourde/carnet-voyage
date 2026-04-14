@@ -7,6 +7,7 @@ const path    = require('path');
 const fs      = require('fs');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Ensure uploads dir exists
 const uploadDir = process.env.UPLOAD_DIR || './uploads';
@@ -17,8 +18,8 @@ app.use(cors({
   origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
   credentials: true,
 }));
-app.use(express.json({ limit: '2mb' }));
-app.use(express.urlencoded({ extended: true, limit: '2mb' }));
+app.use(express.json({ limit: '20mb' }));
+app.use(express.urlencoded({ extended: true, limit: '20mb' }));
 
 // Serve uploaded files
 app.use('/uploads', express.static(uploadDir));

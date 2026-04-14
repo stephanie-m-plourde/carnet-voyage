@@ -2062,9 +2062,10 @@ function saveArticle(status) {
         method:'POST', headers:{ 'Authorization':'Bearer '+jwtToken }, body:fd,
       });
     }
-    if (editArticleImages.length) {
+    const newImages = editArticleImages.filter(img => img.dataUrl && img.dataUrl.startsWith('data:'));
+    if (newImages.length) {
       const fd = new FormData();
-      for (const img of editArticleImages) {
+      for (const img of newImages) {
         const blob = await (await fetch(img.dataUrl)).blob();
         fd.append('images', blob, img.name || 'img.jpg');
       }
@@ -2124,10 +2125,18 @@ function removeVoyageCover() {
 }
 
 function handleGalleryImages(e) {
-  Array.from(e.target.files).forEach(file => {
-    if (!file.type.startsWith('image/')) return;
+  const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+  if (!files.length) return;
+  const startIdx = editArticleImages.length;
+  const slots = files.map((file, i) => { editArticleImages.push(null); return { idx: startIdx + i, file }; });
+  let loaded = 0;
+  slots.forEach(({ idx, file }) => {
     const r = new FileReader();
-    r.onload = ev => { editArticleImages.push({name:file.name,dataUrl:ev.target.result}); renderArtImgPreviews(); };
+    r.onload = ev => {
+      editArticleImages[idx] = { name: file.name, dataUrl: ev.target.result };
+      loaded++;
+      if (loaded === slots.length) renderArtImgPreviews();
+    };
     r.readAsDataURL(file);
   });
   e.target.value='';

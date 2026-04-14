@@ -129,7 +129,7 @@ router.post('/:id/cover', auth, validateUUID('id'), upload.single('cover'), asyn
   if (old.length) removeFile(old[0].cover_url);
 
   const filename = `article_${req.params.id}_cover_${Date.now()}.webp`;
-  await sharp(req.file.buffer).resize(1600, 900, { fit: 'cover' }).webp({ quality: 85 })
+  await sharp(req.file.buffer).rotate().resize(1600, 900, { fit: 'cover' }).webp({ quality: 85 })
     .toFile(path.join(uploadDir, filename));
   const url = `/uploads/${filename}`;
   await pool.query('UPDATE articles SET cover_url=$1, updated_at=NOW() WHERE id=$2', [url, req.params.id]);
@@ -147,7 +147,7 @@ router.post('/:id/images', auth, validateUUID('id'), upload.array('images', 50),
   const urls = [];
   for (const file of req.files) {
     const filename = `article_${req.params.id}_img_${Date.now()}_${Math.random().toString(36).slice(2,6)}.webp`;
-    await sharp(file.buffer).resize(1200, 900, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 })
+    await sharp(file.buffer).rotate().resize(1200, 900, { fit: 'inside', withoutEnlargement: true }).webp({ quality: 82 })
       .toFile(path.join(uploadDir, filename));
     const url = `/uploads/${filename}`;
     const pos = urls.length;

@@ -20,7 +20,7 @@ router.post('/', auth, upload.array('files', 20), async (req, res) => {
   const items = [];
   for (const file of req.files) {
     const filename = `media_${Date.now()}_${Math.random().toString(36).slice(2,6)}.webp`;
-    await sharp(file.buffer).resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
+    await sharp(file.buffer).rotate().resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
       .webp({ quality: 85 }).toFile(path.join(uploadDir, filename));
     const url = `/uploads/${filename}`;
     const { rows } = await pool.query(
